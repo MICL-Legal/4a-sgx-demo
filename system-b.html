@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>重大訊息通報與簽核控制表｜範例集團 法務</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ECEEEF; --sheet:#FBFBFA; --ink:#1A1F24; --ink2:#454E56; --muted:#78838C;
+  --rule:#C7CDD2; --rule-soft:#E1E5E8;
+  --seal:#A8322A; --seal-soft:#F6EAE8;
+  --flag:#9A6A10; --flag-soft:#FAF2E0;
+  --ok:#1E6E53; --ok-soft:#E7F1EC;
+  --data:#1F4E6B;
+  --sans:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  --serif:"Noto Serif TC",serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.72}
+.wrap{max-width:1160px;margin:0 auto;padding:0 18px 90px}
+
+/* masthead — 公文感 */
+.mast{border-bottom:2px solid var(--ink);padding:26px 0 14px;margin-bottom:0}
+.mast .org{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.mast h1{font-family:var(--serif);font-weight:900;font-size:clamp(22px,3.6vw,31px);margin:8px 0 6px;letter-spacing:.01em;line-height:1.3}
+.mast .meta{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:var(--ink2)}
+.mast .meta b{color:var(--seal);font-weight:600}
+.tagB{
+  display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;
+  border:1px solid var(--seal);color:var(--seal);padding:3px 9px;margin-top:10px;
+}
+
+/* the one banner that changes everything */
+.default-note{
+  margin-top:18px;border:1px solid var(--rule);border-left:4px solid var(--flag);
+  background:var(--flag-soft);padding:13px 16px;font-size:14px;line-height:1.75;color:#5C4308;
+}
+.default-note b{color:#7A5808}
+
+/* gap panel */
+.section{margin-top:30px}
+.section > h2{
+  font-family:var(--serif);font-size:18px;font-weight:700;margin:0 0 3px;
+  padding-bottom:8px;border-bottom:1px solid var(--rule);display:flex;align-items:baseline;gap:10px;
+}
+.section > h2 .q{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;font-weight:600;
+  background:var(--ink);color:var(--sheet);padding:2px 7px;
+}
+.section > .cap{font-size:13px;color:var(--muted);margin:9px 0 15px;line-height:1.7}
+
+.roster{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
+.ent{background:var(--sheet);border:1px solid var(--rule);padding:13px}
+.ent .nm{font-size:14px;font-weight:700;line-height:1.4}
+.ent .rp{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:2px}
+.ent .st{margin-top:10px;font-family:var(--mono);font-size:11.5px;font-weight:600;padding:3px 8px;display:inline-block;border:1px solid}
+.ent .st.done{color:var(--ok);border-color:var(--ok);background:var(--ok-soft)}
+.ent .st.zero{color:var(--data);border-color:var(--data);background:#E9F0F5}
+.ent .st.miss{color:var(--seal);border-color:var(--seal);background:var(--seal-soft)}
+.ent .act{margin-top:9px}
+.zbtn{
+  font-family:var(--sans);font-size:12px;font-weight:700;background:#fff;border:1px solid var(--rule);
+  padding:5px 10px;cursor:pointer;color:var(--ink2);
+}
+.zbtn:hover{border-color:var(--ink);color:var(--ink)}
+.zbtn:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+.gapline{
+  margin-top:12px;font-family:var(--mono);font-size:13px;padding:10px 14px;
+  border:1px solid var(--seal);background:var(--seal-soft);color:#7E2620;
+}
+.gapline.clear{border-color:var(--ok);background:var(--ok-soft);color:var(--ok)}
+
+/* form grid */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:15px;align-items:start}
+.sheet{background:var(--sheet);border:1px solid var(--rule);padding:20px}
+.sheet h3{font-family:var(--serif);font-size:16px;margin:0 0 3px;font-weight:700}
+.sheet .sc{font-size:12.5px;color:var(--muted);margin:0 0 15px;line-height:1.65}
+
+label{display:block;font-size:12.5px;font-weight:700;margin:0 0 5px}
+label .req{color:var(--seal);font-family:var(--mono);font-size:11px;margin-left:4px}
+textarea,input[type=text],select{
+  width:100%;font-family:var(--sans);font-size:14px;color:var(--ink);background:#fff;
+  border:1px solid var(--rule);border-radius:2px;padding:9px 11px;
+}
+textarea{min-height:80px;resize:vertical;line-height:1.7}
+select{cursor:pointer}
+textarea:focus,input:focus,select:focus{outline:2px solid var(--ink);outline-offset:0;border-color:var(--ink)}
+.fld{margin-bottom:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+
+.abtn{
+  font-family:var(--sans);font-size:14px;font-weight:700;background:var(--ink);color:var(--sheet);
+  border:0;padding:11px 17px;cursor:pointer;width:100%;border-radius:2px;
+}
+.abtn:hover{background:#000}
+.abtn:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+.abtn[disabled]{background:var(--rule);color:#8D959B;cursor:not-allowed}
+.abtn.seal{background:var(--seal)}
+.abtn.seal:hover{background:#8E271F}
+.abtn.out{background:#fff;color:var(--ink);border:1px solid var(--ink)}
+.err{color:var(--seal);font-size:12.5px;font-family:var(--mono);margin:8px 0 0;min-height:18px}
+
+.presets{margin-top:14px;border-top:1px dashed var(--rule);padding-top:12px}
+.presets .lb{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:7px}
+.pbtn{
+  display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--rule);
+  padding:8px 11px;font-family:var(--sans);font-size:12.5px;color:var(--ink2);cursor:pointer;
+  margin-bottom:5px;line-height:1.6;border-radius:2px;
+}
+.pbtn:hover{border-color:var(--ink);color:var(--ink)}
+.pbtn:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+
+/* screening result */
+.screen{border:1px solid var(--rule);background:#fff;padding:15px;margin-top:14px;display:none}
+.screen.on{display:block}
+.screen .lv{font-family:var(--mono);font-size:12px;font-weight:600;padding:3px 9px;border:1px solid;display:inline-block}
+.screen .lv.s2{color:var(--seal);border-color:var(--seal);background:var(--seal-soft)}
+.screen .lv.s1{color:var(--flag);border-color:var(--flag);background:var(--flag-soft)}
+.screen .lv.s0{color:var(--data);border-color:var(--data);background:#E9F0F5}
+.screen ul{margin:11px 0 0;padding-left:20px;font-size:13.5px;line-height:1.8;color:var(--ink2)}
+.screen .disc{
+  margin:13px 0 0;padding-top:11px;border-top:1px dashed var(--rule);
+  font-family:var(--mono);font-size:11.5px;line-height:1.8;color:var(--seal);
+}
+
+/* docket */
+.docket{margin-top:15px}
+.rec{background:var(--sheet);border:1px solid var(--rule);border-left:4px solid var(--flag);padding:15px;margin-bottom:12px}
+.rec.signed{border-left-color:var(--ok)}
+.rec .rh{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
+.rec .rid{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--data)}
+.rec .rs{font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 7px;border:1px solid}
+.rec .rs.wait{color:var(--flag);border-color:var(--flag);background:var(--flag-soft)}
+.rec .rs.ok{color:var(--ok);border-color:var(--ok);background:var(--ok-soft)}
+.rec .rd{font-size:14px;line-height:1.65;margin:0 0 9px}
+.rec .chain{font-family:var(--mono);font-size:11.5px;line-height:1.95;color:var(--ink2);background:#fff;border:1px solid var(--rule-soft);padding:10px 12px}
+.rec .chain b{color:var(--data);font-weight:600}
+.rec .chain .sg{color:var(--seal);font-weight:600}
+.signbox{margin-top:12px;padding-top:12px;border-top:1px dashed var(--rule)}
+.radios{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:11px}
+.radios label{display:flex;align-items:center;gap:6px;font-weight:500;font-size:13.5px;margin:0;cursor:pointer}
+.radios input{width:auto;margin:0;cursor:pointer}
+.draftbox{
+  margin-top:11px;background:#fff;border:1px solid var(--rule);padding:12px;
+  font-family:var(--mono);font-size:12px;line-height:1.9;white-space:pre-wrap;color:var(--ink2);
+}
+.draftbox .stamp{color:var(--seal);font-weight:600}
+.emptydk{background:var(--sheet);border:1px dashed var(--rule);padding:26px;text-align:center;color:var(--muted);font-size:13.5px}
+
+.exp{margin-top:15px;display:flex;gap:9px;flex-wrap:wrap}
+.expout{
+  margin-top:13px;background:#fff;border:1px solid var(--ink);padding:14px;
+  font-family:var(--mono);font-size:11.5px;line-height:1.9;white-space:pre-wrap;color:var(--ink);
+  max-height:340px;overflow:auto;display:none;
+}
+.expout.on{display:block}
+
+@media (max-width:920px){
+  .cols,.two{grid-template-columns:1fr}
+  .roster{grid-template-columns:1fr 1fr}
+}
+@media (max-width:520px){ .roster{grid-template-columns:1fr} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav style="background:#0B1015;padding:9px 18px;display:flex;gap:7px;flex-wrap:wrap;align-items:center;border-bottom:1px solid #33414D"><span style="font:600 10.5px/1 ui-monospace,monospace;letter-spacing:.16em;color:#5F707C;margin-right:5px;text-transform:uppercase">4A · 例① SGX 重大訊息</span><a href="./" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#9FB2C0;border:1px solid #33414D;">講師版 · 兩邊同時跑</a><a href="./why.html" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#9FB2C0;border:1px solid #33414D;">為什麼有差別</a><a href="./system-a.html" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#9FB2C0;border:1px solid #33414D;">系統 A · 沒六問</a><a href="./system-b.html" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#2A1B00;background:#FFD9A0;border:1px solid #FFD9A0;" aria-current="page">系統 B · 有六問</a></nav>
+<div class="wrap">
+
+  <div class="mast">
+    <span class="org">範例集團 Sample Group · Legal &amp; Corporate Affairs</span>
+    <h1>重大訊息通報與簽核控制表</h1>
+    <div class="meta">
+      <span>表單編號　<b>DISC-2026</b></span>
+      <span>適用　SGX-ST Listing Rules Ch.7</span>
+      <span>時區　全部以 UTC 記錄</span>
+    </div>
+    <span class="tagB">系統 B · 先問完六問才動手</span>
+  </div>
+
+  <div class="default-note">
+    <b>這套系統的預設值是「叫人來看」，不是「不重大」。</b><br>
+    比對不到、判不出來、資料不足——一律標成「需人工判斷」送到法務桌上。系統從不下「不重大」的結論，因為重大性是法律判斷，責任在公司與董事身上，不在系統。
+  </div>
+
+  <!-- ===== 雷① 角色：通報缺口 ===== -->
+  <section class="section">
+    <h2><span class="q">問 角色 → 拆雷 ①</span>子公司通報缺口</h2>
+    <p class="cap">真瓶頸不是判斷工具，是子公司願不願意通報。所以先做名單：每家指定通報人，沒事也要每月零申報——這樣「沒回報」才會變成一個看得見的紅字。</p>
+    <div class="roster" id="roster"></div>
+    <div class="gapline" id="gapline"></div>
+  </section>
+
+  <div class="cols">
+
+    <!-- ===== 通報 + 初篩 ===== -->
+    <div class="sheet">
+      <h3>通報單（含初篩）</h3>
+      <p class="sc">通報人與所屬公司為必填——漏報要找得到人。</p>
+
+      <div class="two">
+        <div class="fld">
+          <label for="ent">所屬公司<span class="req">必填</span></label>
+          <select id="ent"></select>
+        </div>
+        <div class="fld">
+          <label for="rep">通報人<span class="req">必填</span></label>
+          <select id="rep"><option value="">— 選擇公司後自動帶入 —</option></select>
+        </div>
+      </div>
+
+      <div class="fld">
+        <label for="desc">事項描述<span class="req">必填</span></label>
+        <textarea id="desc" placeholder="發生了什麼事，寫清楚。涉及金額、營收比重、停工天數請一併寫入。"></textarea>
+      </div>
+
+      <div class="two">
+        <div class="fld">
+          <label for="amt">金額（新台幣元）</label>
+          <input type="text" id="amt" placeholder="留空＝金額不明，會被標為需人工判斷">
+        </div>
+        <div class="fld">
+          <label for="date">發生日</label>
+          <input type="text" id="date" value="2026-07-30">
+        </div>
+      </div>
+
+      <button class="abtn" id="go">送出通報並執行初篩</button>
+      <p class="err" id="err"></p>
+
+      <div class="screen" id="screen">
+        <span class="lv" id="lv"></span>
+        <ul id="reasons"></ul>
+        <p class="disc">本系統不判定重大性。以上僅為初篩結果，重大性須由法務判斷並簽核後方生效。</p>
+      </div>
+
+      <div class="presets">
+        <span class="lb">試試這五筆（和系統 A 是同一組）</span>
+        <button class="pbtn" data-d="主要客戶 A（占去年營收 18%）來函通知不再續約，明年起停止下單" data-a="">1 · 主要客戶占營收 18%，來函不再續約</button>
+        <button class="pbtn" data-d="某海外子公司廠房昨夜火災，防護產品產線預計停工三週" data-a="">2 · 某海外子公司廠火災，產線停工三週</button>
+        <button class="pbtn" data-d="與海外政府單位簽署防護產品供貨合約，總金額 12.4 億元" data-a="1240000000">3 · 簽署 12.4 億元供貨合約</button>
+        <button class="pbtn" data-d="更換財務長，李副總自 8 月 1 日到任" data-a="">4 · 更換財務長</button>
+        <button class="pbtn" data-d="採購辦公室影印機一台，簽署維護合約，金額 8 萬元" data-a="80000">5 · 影印機維護合約 8 萬元</button>
+      </div>
+    </div>
+
+    <!-- ===== 判斷簽核 + 留痕 ===== -->
+    <div class="sheet">
+      <h3>判斷與簽核卷宗</h3>
+      <p class="sc">
+        <b style="color:var(--seal)">問 責任 → 拆雷 ②</b>：最後一關一定要人簽字，簽了才成立。<br>
+        <b style="color:var(--seal)">問 異常＋檢查 → 拆雷 ③</b>：每一步寫入通報人、簽核人與 UTC 時間戳。
+      </p>
+      <div class="docket" id="docket"></div>
+      <div class="exp">
+        <button class="abtn out" id="expBtn" style="width:auto">🔎 稽核一鍵匯出全鏈</button>
+        <button class="abtn out" id="dlBtn" style="width:auto">下載 .txt</button>
+      </div>
+      <div class="expout" id="expout"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+
+  var ENTITIES = [
+    { id:'子公司甲', nm:'子公司甲（本地製造）',    rep:['陳美玲','王志明'],  status:'done' },
+    { id:'子公司乙', nm:'子公司乙（海外製造）',            rep:['李文凱'],            status:'miss' },
+    { id:'RMSG', nm:'子公司丙（海外貿易）', rep:['黃淑芬'],          status:'zero' },
+    { id:'子公司丁（保稅園區）',nm:'子公司丁（保稅園區）',                    rep:['張建國'],             status:'done' }
+  ];
+  var STLABEL = { done:'本月已通報', zero:'本月零申報', miss:'本月未回報' };
+
+  var recs = [];
+  var seq  = 0;
+
+  function nowUTC(){ return new Date().toISOString().replace('T',' ').slice(0,19) + ' UTC'; }
+  function money(v){ var n = String(v||'').replace(/[^0-9]/g,''); return n ? Number(n) : null; }
+  function fmt(n){ return n.toLocaleString('en-US'); }
+  function plusDays(iso,d){
+    var p = iso.split('-'), dt = new Date(Date.UTC(+p[0],+p[1]-1,+p[2]));
+    dt.setUTCDate(dt.getUTCDate()+d);
+    return dt.toISOString().slice(0,10);
+  }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  // ---------- roster ----------
+  function renderRoster(){
+    $('roster').innerHTML = ENTITIES.map(function(e){
+      return '<div class="ent">'
+        + '<div class="nm">' + e.nm + '</div>'
+        + '<div class="rp">通報人：' + e.rep.join(' / ') + '</div>'
+        + '<span class="st ' + e.status + '">' + STLABEL[e.status] + '</span>'
+        + (e.status === 'miss' ? '<div class="act"><button class="zbtn" data-z="' + e.id + '">補零申報</button></div>' : '')
+        + '</div>';
+    }).join('');
+
+    var miss = ENTITIES.filter(function(e){ return e.status === 'miss'; });
+    var g = $('gapline');
+    if(miss.length){
+      g.className = 'gapline';
+      g.textContent = '⚠ 通報缺口：' + miss.length + ' 家未回報（' + miss.map(function(e){return e.nm;}).join('、') + '）— 這是你真正的風險，不是判斷準不準。';
+    }else{
+      g.className = 'gapline clear';
+      g.textContent = '✓ 通報缺口：0 家。全部 ' + ENTITIES.length + ' 家本月都有回報（含零申報）。';
+    }
+  }
+  $('roster').addEventListener('click', function(e){
+    var id = e.target.getAttribute && e.target.getAttribute('data-z');
+    if(!id) return;
+    ENTITIES.forEach(function(x){ if(x.id === id) x.status = 'zero'; });
+    renderRoster();
+  });
+
+  // ---------- selects ----------
+  $('ent').innerHTML = '<option value="">— 請選擇 —</option>'
+    + ENTITIES.map(function(e){ return '<option value="'+e.id+'">'+e.nm+'</option>'; }).join('');
+  $('ent').addEventListener('change', function(){
+    var e = ENTITIES.filter(function(x){ return x.id === $('ent').value; })[0];
+    $('rep').innerHTML = e
+      ? '<option value="">— 請選擇 —</option>' + e.rep.map(function(r){ return '<option>'+r+'</option>'; }).join('')
+      : '<option value="">— 選擇公司後自動帶入 —</option>';
+  });
+
+  // ---------- 初篩：不下結論，只分流。判不出來就往「需人工判斷」倒。 ----------
+  var SIGNALS = [
+    { re:/營收|比重|%|％|主要客戶|大客戶/, r:'涉及營收比重或主要客戶，可能觸及重大性門檻' },
+    { re:/火災|停工|停產|產線|災損|中斷/,   r:'影響產能或營運中斷，須評估對財務與交期的影響' },
+    { re:/合約|簽署|供貨|標案|得標/,        r:'契約類事項，須確認金額佔比與交易相對人' },
+    { re:/董事|經理人|財務長|執行長|總經理|辭任|到任|更換/, r:'重要人事變動，屬應公告事項範圍' },
+    { re:/訴訟|被告|假扣押|裁罰|調查|函文/, r:'法律爭訟或主管機關程序' },
+    { re:/處分|出售|併購|收購|增資|重整|股利/, r:'資產處分或股權／股利事項' }
+  ];
+  var THRESHOLD = 10000000; // 1,000 萬：低於此且無其他訊號 → 明顯不需公告
+
+  function screen(desc, amount){
+    var reasons = SIGNALS.filter(function(s){ return s.re.test(desc); }).map(function(s){ return s.r; });
+
+    if(amount !== null && amount < THRESHOLD && reasons.length <= 1){
+      return { level:0, label:'明顯不需公告（仍留紀錄）', reasons:[
+        '金額 NT$ ' + fmt(amount) + ' 低於內部門檻 NT$ ' + fmt(THRESHOLD),
+        '未偵測到營收比重、營運中斷或人事／爭訟訊號',
+        '仍寫入卷宗並留時間戳，日後可調閱'
+      ]};
+    }
+    if(reasons.length >= 1){
+      var out = reasons.slice();
+      if(amount === null) out.push('金額未填 → 無法排除門檻以上，一併送人工判斷');
+      return { level:2, label:'疑似重大 → 送人工判斷', reasons: out };
+    }
+    // 判不出來。這裡是整套系統最重要的一行。
+    return { level:1, label:'無法歸類 → 送人工判斷', reasons:[
+      '未命中任何既有訊號',
+      '系統無法排除重大性，依預設規則升級為需人工判斷',
+      '註：預設值不是「不重大」'
+    ]};
+  }
+
+  // ---------- submit ----------
+  $('go').addEventListener('click', function(){
+    var ent = $('ent').value, rep = $('rep').value, desc = $('desc').value.trim();
+    if(!ent){ $('err').textContent = '✕ 請選擇所屬公司（必填）'; $('ent').focus(); return; }
+    if(!rep){ $('err').textContent = '✕ 請選擇通報人（必填）— 漏報要找得到人'; $('rep').focus(); return; }
+    if(!desc){ $('err').textContent = '✕ 請填寫事項描述（必填）'; $('desc').focus(); return; }
+    $('err').textContent = '';
+
+    var amount = money($('amt').value);
+    var date   = $('date').value.trim() || '2026-07-30';
+    var sc     = screen(desc, amount);
+    var entity = ENTITIES.filter(function(x){ return x.id === ent; })[0];
+    var ts     = nowUTC();
+
+    var rec = {
+      id: 'DISC-2026-' + String(++seq).padStart(3,'0'),
+      entity: entity.nm, reporter: rep, desc: desc, amount: amount, date: date,
+      reportedAt: ts, screen: sc, decision: null,
+      log: ['[' + ts + '] ' + rep + ' (' + entity.nm + ') 送出通報',
+            '[' + ts + '] 系統初篩：' + sc.label]
+    };
+    recs.unshift(rec);
+
+    entity.status = (entity.status === 'miss') ? 'done' : entity.status;
+    renderRoster();
+
+    var s = $('screen');
+    s.className = 'screen on';
+    $('lv').className = 'lv s' + sc.level;
+    $('lv').textContent = sc.label;
+    $('reasons').innerHTML = sc.reasons.map(function(r){ return '<li>' + esc(r) + '</li>'; }).join('');
+
+    renderDocket();
+  });
+
+  document.querySelectorAll('.pbtn').forEach(function(b){
+    b.addEventListener('click', function(){
+      if(!$('ent').value){
+        $('ent').value = '子公司乙';
+        $('ent').dispatchEvent(new Event('change'));
+        $('rep').value = '李文凱';
+      }
+      $('desc').value = b.getAttribute('data-d');
+      $('amt').value  = b.getAttribute('data-a');
+      $('go').click();
+    });
+  });
+
+  // ---------- docket ----------
+  function renderDocket(){
+    var d = $('docket');
+    if(!recs.length){
+      d.innerHTML = '<div class="emptydk">卷宗還是空的。左邊送一筆通報進來。</div>';
+      return;
+    }
+    d.innerHTML = recs.map(function(r){
+      var signed = !!r.decision;
+      var chain = '<b>通報</b>　' + esc(r.reporter) + ' · ' + esc(r.entity) + '\n'
+                + '<b>時間戳</b>　' + r.reportedAt + '\n'
+                + '<b>初篩</b>　' + esc(r.screen.label) + '（系統不下結論）\n';
+      if(signed){
+        chain += '<span class="sg">判斷</span>　' + esc(r.decision.result) + '\n'
+               + '<span class="sg">依據</span>　' + esc(r.decision.basis) + '\n'
+               + '<span class="sg">簽核</span>　' + esc(r.decision.signer) + '\n'
+               + '<span class="sg">簽核時間</span>　' + r.decision.at + '\n';
+        if(r.decision.result === '重大' ) chain += '<b>公告期限</b>　' + plusDays(r.date,1) + '\n';
+      }else{
+        chain += '<b>判斷</b>　未簽核 — 尚未生效\n';
+      }
+
+      var draft = '';
+      if(signed && r.decision.result === '重大'){
+        draft = '<div class="draftbox">範例集團 SAMPLE GROUP\n'
+              + '重大訊息公告草稿　' + r.id + '\n'
+              + '─────────────────────\n'
+              + '發生日期　' + r.date + '\n'
+              + '公告期限　' + plusDays(r.date,1) + '\n'
+              + '金額　　　' + (r.amount ? 'NT$ ' + fmt(r.amount) : '未填') + '\n'
+              + '事項　　　' + esc(r.desc) + '\n'
+              + '─────────────────────\n'
+              + '<span class="stamp">✓ 已由 ' + esc(r.decision.signer) + ' 於 ' + r.decision.at + ' 簽核，得以發布。</span></div>';
+      }else if(signed){
+        draft = '<div class="draftbox">已簽核判定「不重大」，無需公告。判斷依據與簽核人已入卷，日後可調閱抗辯。</div>';
+      }else{
+        draft = '<div class="draftbox"><span class="stamp">⚠ 草稿：未經簽核不得發布。</span>\n'
+              + '重大性尚未經人工判斷，本系統不代為認定。</div>';
+      }
+
+      var signbox = signed ? '' :
+        '<div class="signbox">'
+        + '<label>法務判斷結果<span class="req">必填</span></label>'
+        + '<div class="radios">'
+        +   '<label><input type="radio" name="rs-' + r.id + '" value="重大"> 重大（須公告）</label>'
+        +   '<label><input type="radio" name="rs-' + r.id + '" value="不重大"> 不重大（不公告）</label>'
+        + '</div>'
+        + '<div class="fld"><label>判斷依據<span class="req">必填</span></label>'
+        +   '<textarea data-basis="' + r.id + '" placeholder="寫下法律依據與理由。這一欄是你日後唯一的抗辯。" style="min-height:64px"></textarea></div>'
+        + '<div class="fld"><label>簽核人<span class="req">必填</span></label>'
+        +   '<select data-signer="' + r.id + '"><option value="">— 請選擇 —</option>'
+        +   '<option>王志明 · Assistant General Counsel</option>'
+        +   '<option>劉靜怡 · Chief Legal Officer</option>'
+        +   '<option>外部顧問 · 聯合法律事務所</option></select></div>'
+        + '<button class="abtn seal" data-sign="' + r.id + '">簽核（寫入時間戳，不可撤回）</button>'
+        + '<p class="err" data-err="' + r.id + '"></p>'
+        + '</div>';
+
+      return '<div class="rec ' + (signed ? 'signed' : '') + '">'
+        + '<div class="rh"><span class="rid">' + r.id + '</span>'
+        + '<span class="rs ' + (signed ? 'ok' : 'wait') + '">' + (signed ? '已簽核' : '待法務判斷') + '</span></div>'
+        + '<p class="rd">' + esc(r.desc) + '</p>'
+        + '<div class="chain">' + chain.replace(/\n$/,'') + '</div>'
+        + draft + signbox
+        + '</div>';
+    }).join('');
+  }
+
+  $('docket').addEventListener('click', function(e){
+    var id = e.target.getAttribute && e.target.getAttribute('data-sign');
+    if(!id) return;
+    var r  = recs.filter(function(x){ return x.id === id; })[0];
+    var rs = document.querySelector('input[name="rs-' + id + '"]:checked');
+    var bs = document.querySelector('[data-basis="' + id + '"]');
+    var sg = document.querySelector('[data-signer="' + id + '"]');
+    var er = document.querySelector('[data-err="' + id + '"]');
+
+    if(!rs){ er.textContent = '✕ 請選擇判斷結果'; return; }
+    if(!bs.value.trim()){ er.textContent = '✕ 判斷依據必填 — 沒有理由的簽核，稽核時等於沒簽'; bs.focus(); return; }
+    if(!sg.value){ er.textContent = '✕ 請選擇簽核人 — 責任要落到具名的人身上'; sg.focus(); return; }
+
+    var at = nowUTC();
+    r.decision = { result: rs.value, basis: bs.value.trim(), signer: sg.value, at: at };
+    r.log.push('[' + at + '] ' + sg.value + ' 簽核：' + rs.value);
+    r.log.push('[' + at + '] 依據：' + bs.value.trim());
+    renderDocket();
+  });
+
+  // ---------- audit export ----------
+  function buildExport(){
+    var miss = ENTITIES.filter(function(e){ return e.status === 'miss'; });
+    var out = '範例集團 SAMPLE GROUP\n'
+            + '重大訊息通報與簽核 — 稽核調閱全鏈\n'
+            + '匯出時間　' + nowUTC() + '\n'
+            + '========================================\n\n'
+            + '【通報覆蓋率】\n';
+    ENTITIES.forEach(function(e){
+      out += '  ' + e.nm + '　' + STLABEL[e.status] + '　通報人：' + e.rep.join(' / ') + '\n';
+    });
+    out += '  通報缺口：' + miss.length + ' 家\n\n【個案全鏈】\n';
+    if(!recs.length){ out += '  （尚無案件）\n'; }
+    recs.slice().reverse().forEach(function(r){
+      out += '\n' + r.id + '　' + r.entity + '\n'
+           + '  事項：' + r.desc + '\n'
+           + '  金額：' + (r.amount ? 'NT$ ' + fmt(r.amount) : '未填') + '　發生日：' + r.date + '\n';
+      r.log.forEach(function(l){ out += '  ' + l + '\n'; });
+      out += '  狀態：' + (r.decision
+        ? '已簽核 → ' + r.decision.result + (r.decision.result === '重大' ? '（公告期限 ' + plusDays(r.date,1) + '）' : '')
+        : '待法務判斷 — 未生效，不得發布') + '\n';
+    });
+    out += '\n========================================\n'
+        +  '本紀錄含通報人、UTC 時間戳、判斷依據與具名簽核，可作為抗辯依據。\n';
+    return out;
+  }
+
+  $('expBtn').addEventListener('click', function(){
+    var o = $('expout');
+    o.textContent = buildExport();
+    o.classList.add('on');
+    o.scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
+  $('dlBtn').addEventListener('click', function(){
+    var blob = new Blob([buildExport()], {type:'text/plain;charset=utf-8'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'DISC-audit-' + new Date().toISOString().slice(0,10) + '.txt';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  renderRoster();
+  renderDocket();
+})();
+</script>
+</body>
+</html>

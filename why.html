@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>例① 法務 · SGX 重大訊息揭露｜同一句需求，兩種產出</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&family=IBM+Plex+Mono:wght@400;600&family=Saira+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#0C1C2C;
+  --ground2:#122A3E;
+  --line:#2E5372;
+  --line-soft:rgba(127,178,217,.26);
+  --cyan:#7FB2D9;
+  --cyan-b:#B4DCF3;
+  --paper:#FAF9F6;
+  --paper-line:#E2E6EA;
+  --ink:#16202B;
+  --muted:#6E7C89;
+  --red:#D6382B;
+  --red-soft:rgba(214,56,43,.12);
+  --amber:#E8A93A;
+  --amber-soft:rgba(232,169,58,.14);
+  --ok:#2F8E70;
+  --sans:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  --serif:"Noto Serif TC",serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --cond:"Saira Condensed","Noto Sans TC",sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--ground);color:#DCE8F2;font-family:var(--sans);
+  line-height:1.75;
+  background-image:
+    linear-gradient(var(--line-soft) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);
+  background-size:52px 52px;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:34px 20px 90px}
+
+/* ---------- header ---------- */
+.eyebrow{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--cyan);border:1px solid var(--line);border-radius:2px;
+  padding:5px 10px;display:inline-block;
+}
+h1{
+  font-family:var(--serif);font-weight:900;color:#fff;
+  font-size:clamp(30px,5.4vw,54px);line-height:1.16;letter-spacing:-.01em;
+  margin:20px 0 12px;
+}
+h1 em{font-style:normal;color:var(--cyan-b);}
+.lede{max-width:62ch;color:#9FB6C9;font-size:16px;margin:0}
+.lede b{color:#DCE8F2;font-weight:700}
+
+/* ---------- pasted prompt ---------- */
+.prompt{
+  margin:34px 0 0;border:1px solid var(--line);border-left:3px solid var(--cyan);
+  background:rgba(18,42,62,.72);padding:18px 20px;border-radius:3px;
+}
+.prompt .tag{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.14em;display:block;margin-bottom:9px}
+.prompt p{margin:0;font-family:var(--mono);font-size:14.5px;line-height:1.85;color:#CFE0EE}
+
+/* ---------- timeline ---------- */
+.timeline{margin:38px 0 8px;border-top:1px solid var(--line);padding-top:22px}
+.tl-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.tl-head .label{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;color:var(--cyan);text-transform:uppercase}
+.tl-head .hint{font-size:13px;color:#8FA6B9}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:34px;background:transparent;margin:0;cursor:grab;
+}
+input[type=range]::-webkit-slider-runnable-track{height:3px;background:var(--line)}
+input[type=range]::-moz-range-track{height:3px;background:var(--line)}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+  background:var(--cyan-b);border:4px solid var(--ground);margin-top:-10px;
+  box-shadow:0 0 0 1px var(--cyan);
+}
+input[type=range]::-moz-range-thumb{
+  width:22px;height:22px;border-radius:50%;background:var(--cyan-b);
+  border:4px solid var(--ground);box-shadow:0 0 0 1px var(--cyan);
+}
+input[type=range]:focus-visible{outline:2px solid var(--cyan-b);outline-offset:6px}
+.stops{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:2px}
+.stop{background:none;border:0;padding:8px 4px;text-align:left;cursor:pointer;color:#7C91A4;font-family:inherit}
+.stop:nth-child(2){text-align:center}
+.stop:nth-child(3){text-align:right}
+.stop .d{font-family:var(--cond);font-size:26px;font-weight:700;letter-spacing:.02em;display:block;line-height:1}
+.stop .n{font-size:12.5px;letter-spacing:.04em}
+.stop[aria-current="true"]{color:var(--cyan-b)}
+.stop[aria-current="true"] .d{color:#fff}
+.stop:focus-visible{outline:2px solid var(--cyan-b);outline-offset:3px;border-radius:3px}
+
+/* ---------- panels ---------- */
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:26px;align-items:start}
+.panel{border-radius:4px;overflow:hidden}
+.p-head{padding:14px 18px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.p-head .no{font-family:var(--cond);font-size:15px;font-weight:700;letter-spacing:.14em}
+.p-head h2{margin:0;font-family:var(--serif);font-size:18.5px;font-weight:700;letter-spacing:.01em}
+.p-head .sub{font-size:12.5px;font-family:var(--mono)}
+
+/* LEFT — the glossy pitch deck */
+.pitch{background:var(--paper);color:var(--ink);box-shadow:0 18px 44px rgba(0,0,0,.34)}
+.pitch .p-head{background:#F0F2F4;border-bottom:1px solid var(--paper-line)}
+.pitch .p-head .no{color:var(--red)}
+.pitch .p-head h2{color:var(--ink)}
+.pitch .p-head .sub{color:var(--muted)}
+.pitch-body{padding:18px}
+.feat{
+  display:flex;gap:12px;align-items:flex-start;padding:11px 12px;
+  border:1px solid var(--paper-line);border-radius:3px;background:#fff;
+  margin-bottom:8px;position:relative;
+  transition:background .35s ease,border-color .35s ease;
+}
+.feat .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);flex:none;margin-top:8px;transition:background .3s ease}
+.feat .txt{flex:1;min-width:0}
+.feat .name{font-size:14.5px;font-weight:700;line-height:1.5}
+.feat .state{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:2px;display:block}
+.feat .pin{
+  font-family:var(--mono);font-size:11px;font-weight:600;flex:none;
+  border:1px solid var(--amber);color:#8A6110;background:var(--amber-soft);
+  padding:2px 7px;border-radius:2px;margin-top:5px;opacity:0;transform:translateY(-3px);
+  transition:opacity .3s ease,transform .3s ease;pointer-events:none;
+}
+.feat.show-pin .pin{opacity:1;transform:none}
+.feat.dead{background:#FBF4F3;border-color:rgba(214,56,43,.4)}
+.feat.dead .dot{background:var(--red)}
+.feat.dead .state{color:var(--red);font-weight:600}
+.feat.stale .dot{background:#B9C2CB}
+.feat.stale .state{color:#8B96A1}
+.feat.dead .pin{border-color:var(--red);color:var(--red);background:var(--red-soft)}
+
+.verdict{
+  margin-top:14px;padding:13px 14px;border-radius:3px;font-size:14px;line-height:1.7;
+  background:#F1F3F5;border-left:3px solid #B9C2CB;color:#42505C;
+  transition:background .35s ease,border-color .35s ease,color .35s ease;
+}
+.verdict.bad{background:var(--red-soft);border-left-color:var(--red);color:#8E241A;font-weight:700}
+.reveal-btn{
+  margin-top:14px;width:100%;font-family:var(--sans);font-size:13.5px;font-weight:700;
+  padding:11px 14px;border:1px dashed var(--amber);border-radius:3px;
+  background:var(--amber-soft);color:#7C560D;cursor:pointer;
+}
+.reveal-btn:hover{background:rgba(232,169,58,.24)}
+.reveal-btn:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.reveal-note{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:8px 0 0;text-align:center}
+.reveal-note b{color:var(--red)}
+
+/* RIGHT — the mine-survey blueprint */
+.survey{background:var(--ground2);border:1px solid var(--line)}
+.survey .p-head{background:rgba(46,83,114,.34);border-bottom:1px solid var(--line)}
+.survey .p-head .no{color:var(--cyan)}
+.survey .p-head h2{color:#fff}
+.survey .p-head .sub{color:var(--cyan)}
+.survey-body{padding:18px}
+.mine{
+  border:1px solid var(--line);border-radius:3px;padding:13px 14px;margin-bottom:10px;
+  background:rgba(12,28,44,.5);position:relative;
+}
+.mine .row1{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:7px}
+.mine .q{
+  font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;
+  color:var(--ground);background:var(--cyan-b);padding:2px 8px;border-radius:2px;
+}
+.mine .mn{font-family:var(--mono);font-size:11.5px;color:var(--amber)}
+.mine .see{font-size:14px;color:#DCE8F2;line-height:1.65}
+.mine .see b{color:#fff}
+.mine .did{
+  font-size:13.5px;color:#9FB6C9;margin-top:7px;padding-top:7px;
+  border-top:1px dashed var(--line-soft);line-height:1.65;
+}
+.mine .did span{color:var(--cyan-b);font-family:var(--mono);font-size:11.5px;letter-spacing:.06em}
+.mine .stamp{
+  position:absolute;top:11px;right:12px;font-family:var(--mono);font-size:11px;font-weight:600;
+  letter-spacing:.1em;color:var(--ok);border:1px solid var(--ok);border-radius:2px;padding:2px 7px;
+  opacity:0;transform:rotate(-4deg) scale(.9);transition:opacity .4s ease,transform .4s ease;
+}
+.mine.cleared .stamp{opacity:1;transform:rotate(-4deg) scale(1)}
+.mine.cleared{border-color:rgba(47,142,112,.5)}
+.log{
+  margin-top:14px;border:1px solid var(--line);border-radius:3px;background:rgba(12,28,44,.62);
+  padding:12px 14px;font-family:var(--mono);font-size:12.5px;line-height:1.95;color:#A9C6DC;
+}
+.log .ln{display:block;white-space:pre-wrap}
+.log .ln b{color:var(--cyan-b);font-weight:600}
+.log .ok{color:#6ED2AC}
+
+/* ---------- diff table ---------- */
+.diff{margin-top:56px;border-top:1px solid var(--line);padding-top:34px}
+.diff h2{
+  font-family:var(--serif);font-size:clamp(22px,3.4vw,32px);color:#fff;margin:0 0 8px;font-weight:900;
+}
+.diff .say{max-width:64ch;color:#9FB6C9;font-size:15px;margin:0 0 24px}
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.col{border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.col > .ch{
+  padding:11px 15px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;
+  border-bottom:1px solid var(--line);
+}
+.col.a > .ch{background:rgba(214,56,43,.16);color:#F2A79E}
+.col.b > .ch{background:rgba(47,142,112,.16);color:#8FE0C1}
+.col ul{list-style:none;margin:0;padding:10px 12px}
+.col li{display:flex;gap:10px;padding:8px 2px;font-size:14px;line-height:1.6;border-bottom:1px dashed var(--line-soft)}
+.col li:last-child{border-bottom:0}
+.badge{
+  flex:none;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;
+  padding:2px 6px;border-radius:2px;margin-top:3px;height:fit-content;min-width:38px;text-align:center;
+}
+.b-keep{background:rgba(127,178,217,.14);color:var(--cyan);border:1px solid var(--line)}
+.b-new{background:rgba(47,142,112,.16);color:#6ED2AC;border:1px solid rgba(47,142,112,.5)}
+.b-edit{background:var(--amber-soft);color:var(--amber);border:1px solid rgba(232,169,58,.5)}
+.b-cut{background:var(--red-soft);color:#EE8A80;border:1px solid rgba(214,56,43,.45)}
+.col li s{color:#7C91A4;text-decoration-color:var(--red)}
+
+/* ---------- closing ---------- */
+.close{
+  margin-top:52px;border:1px solid var(--cyan);border-left-width:4px;border-radius:4px;
+  background:rgba(127,178,217,.07);padding:24px 26px;
+}
+.close p{margin:0;font-family:var(--serif);font-weight:700;font-size:clamp(17px,2.5vw,23px);line-height:1.7;color:#fff}
+.close p em{font-style:normal;color:var(--cyan-b)}
+.close .tail{font-family:var(--sans);font-weight:400;font-size:15px;color:#9FB6C9;margin-top:12px;line-height:1.8}
+
+@media (max-width:880px){
+  .panels,.diff-grid{grid-template-columns:1fr}
+  .wrap{padding:26px 15px 70px}
+  .stop .d{font-size:21px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<nav style="background:#0B1015;padding:9px 18px;display:flex;gap:7px;flex-wrap:wrap;align-items:center;border-bottom:1px solid #33414D"><span style="font:600 10.5px/1 ui-monospace,monospace;letter-spacing:.16em;color:#5F707C;margin-right:5px;text-transform:uppercase">4A · 例① SGX 重大訊息</span><a href="./" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#9FB2C0;border:1px solid #33414D;">講師版 · 兩邊同時跑</a><a href="./why.html" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#2A1B00;background:#FFD9A0;border:1px solid #FFD9A0;" aria-current="page">為什麼有差別</a><a href="./system-a.html" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#9FB2C0;border:1px solid #33414D;">系統 A · 沒六問</a><a href="./system-b.html" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#9FB2C0;border:1px solid #33414D;">系統 B · 有六問</a></nav>
+<div class="wrap">
+
+  <span class="eyebrow">4A 工作坊 · 例① 法務 · SGX 重大訊息揭露</span>
+  <h1>同一句需求，<br>做出來的是<em>兩個不同的系統</em>。</h1>
+  <p class="lede">六問不是把答案分類，是<b>在你動手前，讓那三顆雷變成看得見的</b>。拖動下面的時間軸——左邊那三顆雷會一顆一顆爆，右邊在第 0 天就拆掉了。</p>
+
+  <div class="prompt">
+    <span class="tag">你貼給 AI 的原話（兩邊完全一樣）</span>
+    <p>我是公司的法務，常常有大大小小的事，簽了很大的案件、被告、處分資產、換了重要主管，我永遠搞不清楚哪些要在 SGX 公告、什麼時候公告，我想要一個東西幫我判斷這件事，但不知道怎麼做。</p>
+  </div>
+
+  <section class="timeline" aria-label="時間軸">
+    <div class="tl-head">
+      <span class="label">拖動時間軸</span>
+      <span class="hint" id="hint">現在停在：第 0 天（還沒動手）</span>
+    </div>
+    <input type="range" id="slider" min="0" max="2" step="1" value="0"
+           aria-label="時間軸：第 0 天、第 30 天、第 90 天" aria-describedby="hint">
+    <div class="stops" role="tablist" aria-label="時間點">
+      <button class="stop" data-i="0" role="tab" aria-current="true"><span class="d">DAY 0</span><span class="n">還沒動手</span></button>
+      <button class="stop" data-i="1" role="tab" aria-current="false"><span class="d">DAY 30</span><span class="n">系統上線一個月</span></button>
+      <button class="stop" data-i="2" role="tab" aria-current="false"><span class="d">DAY 90</span><span class="n">出事了</span></button>
+    </div>
+  </section>
+
+  <div class="panels">
+
+    <!-- ================= LEFT ================= -->
+    <div class="panel pitch">
+      <div class="p-head">
+        <span class="no">A</span>
+        <h2>沒六問</h2>
+        <span class="sub">AI 直接給你一份功能清單</span>
+      </div>
+      <div class="pitch-body">
+        <div class="feat" id="f1">
+          <span class="dot"></span>
+          <span class="txt"><span class="name">① 表單登記每件事</span><span class="state" data-s0="設計完成" data-s1="本月進件 0 筆" data-s2="上線 90 天，總進件 3 筆">設計完成</span></span>
+          <span class="pin">⚠ 雷 ①</span>
+        </div>
+        <div class="feat" id="f2">
+          <span class="dot"></span>
+          <span class="txt"><span class="name">② 關鍵字自動判斷是不是重大</span><span class="state" data-s0="設計完成" data-s1="運作中，判過 3 件" data-s2="誤判 1 件為「不重大」→ SGX 來函">設計完成</span></span>
+          <span class="pin">⚠ 雷 ②</span>
+        </div>
+        <div class="feat" id="f3">
+          <span class="dot"></span>
+          <span class="txt"><span class="name">③ 到期自動提醒</span><span class="state" data-s0="設計完成" data-s1="運作中" data-s2="運作中（但沒東西可提醒）">設計完成</span></span>
+          <span class="pin"></span>
+        </div>
+        <div class="feat" id="f4">
+          <span class="dot"></span>
+          <span class="txt"><span class="name">④ 自動生成公告草稿</span><span class="state" data-s0="設計完成" data-s1="運作中" data-s2="運作中">設計完成</span></span>
+          <span class="pin"></span>
+        </div>
+        <div class="feat" id="f5">
+          <span class="dot"></span>
+          <span class="txt"><span class="name">⑤ 主管審核 dashboard</span><span class="state" data-s0="設計完成" data-s1="運作中，無人點過" data-s2="稽核調閱：查無簽核人、查無時間戳">設計完成</span></span>
+          <span class="pin">⚠ 雷 ③</span>
+        </div>
+
+        <div class="verdict" id="verdict">看起來什麼都想到了。你很滿意，直接開始做。</div>
+
+        <button class="reveal-btn" id="revealBtn">⚠ 顯示藏在這份功能清單底下的雷</button>
+        <p class="reveal-note" id="revealNote">真實世界裡<b>沒有這個按鈕</b>。這三顆雷第 0 天就在了，你只是看不到。</p>
+      </div>
+    </div>
+
+    <!-- ================= RIGHT ================= -->
+    <div class="panel survey">
+      <div class="p-head">
+        <span class="no">B</span>
+        <h2>有六問</h2>
+        <span class="sub">動手前先把雷區走一遍</span>
+      </div>
+      <div class="survey-body">
+        <div class="mine" id="m1">
+          <span class="stamp">已排除</span>
+          <div class="row1"><span class="q">問 角色</span><span class="mn">雷 ①　空系統</span></div>
+          <p class="see">你當場看見：真瓶頸是<b>子公司願不願意通報</b>，不是判斷工具。事情沒進來，畫面再漂亮都是零。</p>
+          <p class="did"><span>你的決定 →</span> 先做通報入口，指定每家子公司的通報人，沒事也要每月零申報。</p>
+        </div>
+        <div class="mine" id="m2">
+          <span class="stamp">已排除</span>
+          <div class="row1"><span class="q">問 責任</span><span class="mn">雷 ②　AI 誤判重大性</span></div>
+          <p class="see">你當場看見：漏報罰的是<b>公司與董事</b>，不是 AI。「是不是重大」是法律判斷，不是關鍵字比對。</p>
+          <p class="did"><span>你的決定 →</span> AI 只做初篩並標「疑似重大」；最後一關一定要人簽字才成立。</p>
+        </div>
+        <div class="mine" id="m3">
+          <span class="stamp">已排除</span>
+          <div class="row1"><span class="q">問 異常＋檢查</span><span class="mn">雷 ③　拿不出抗辯</span></div>
+          <p class="see">你當場看見：出事回頭查，<b>沒有簽名、沒有時間戳</b>，稽核問起來你兩手空空。</p>
+          <p class="did"><span>你的決定 →</span> 改金額、跨時區都要留時間戳與修改人，全鏈可一鍵匯出。</p>
+        </div>
+
+        <div class="log" id="log" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= DIFF ================= -->
+  <section class="diff">
+    <h2>所以差別到底在哪？在最後端出來的東西不一樣。</h2>
+    <p class="say">如果六問只是把答案分類，那你說得對——反正都是 AI 給結果，用不用沒差。<br>但它改的不是版面，是<b style="color:#DCE8F2">功能清單本身</b>：一項被刪掉、一項被改寫、三項是原本不存在的。</p>
+    <div class="diff-grid">
+      <div class="col a">
+        <div class="ch">A · 沒六問做出來的（5 項）</div>
+        <ul>
+          <li><span class="badge b-keep">保留</span><span>表單登記每件事</span></li>
+          <li><span class="badge b-cut">刪除</span><span><s>關鍵字自動判斷是不是重大</s>（把法律判斷交給比對）</span></li>
+          <li><span class="badge b-keep">保留</span><span>到期自動提醒</span></li>
+          <li><span class="badge b-keep">保留</span><span>自動生成公告草稿</span></li>
+          <li><span class="badge b-edit">改寫</span><span>主管審核 dashboard（看得到，但不留痕）</span></li>
+        </ul>
+      </div>
+      <div class="col b">
+        <div class="ch">B · 六問後長出來的（7 項）</div>
+        <ul>
+          <li><span class="badge b-edit">改寫</span><span><b>子公司通報入口</b>：指定通報人＋每月零申報（從「等它進來」變成「逼它進來」）</span></li>
+          <li><span class="badge b-edit">改寫</span><span><b>AI 初篩</b>：只輸出「疑似重大／待人工判斷」，不下結論</span></li>
+          <li><span class="badge b-new">新增</span><span><b>重大性簽核</b>：法務（必要時外部顧問）簽字才成立</span></li>
+          <li><span class="badge b-new">新增</span><span><b>時間戳留痕</b>：改金額、跨時區一律記 UTC ＋修改人</span></li>
+          <li><span class="badge b-new">新增</span><span><b>稽核一鍵匯出</b>：通報 → 判斷 → 簽核全鏈</span></li>
+          <li><span class="badge b-keep">保留</span><span>到期自動提醒</span></li>
+          <li><span class="badge b-keep">保留</span><span>公告草稿（標示「未經簽核不得發布」）</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="close">
+    <p>差別不在「答案有沒有分類」，在<em>你看不看得見雷</em>。</p>
+    <p class="tail">沒六問，你會很滿意地做出一個在關鍵時刻害你的系統——因為你根本沒看見雷。<br>功能是最後長出來的果實。六問是先幫你把地雷排乾淨。</p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var STOPS = [
+    {
+      hint:"現在停在：第 0 天（還沒動手）",
+      verdict:"看起來什麼都想到了。你很滿意，直接開始做。",
+      verdictBad:false,
+      dead:[], stale:[],
+      log:[
+        {t:"DAY 0", s:"你還沒寫一行東西，先問了三個問題。"},
+        {t:"結果", s:"三顆雷在動手前被找出來，功能清單被改掉。", ok:true}
+      ],
+      showBtn:true
+    },
+    {
+      hint:"現在停在：第 30 天（上線一個月）",
+      verdict:"系統天天在跑，畫面很漂亮——內容却幾乎是空的。",
+      verdictBad:false,
+      dead:[], stale:["f1","f5"],
+      log:[
+        {t:"DAY 30", s:"通報 12 筆（含 4 筆零申報）。指定通報人有名有姓，漏報找得到人。"},
+        {t:"DAY 30", s:"AI 標出 2 筆疑似重大 → 都送到人手上判斷。"},
+        {t:"狀態", s:"三顆雷：全部已排除。", ok:true}
+      ],
+      showBtn:false
+    },
+    {
+      hint:"現在停在：第 90 天（出事了）",
+      verdict:"你滿意地做出了一個、在關鍵時刻害你的系統。",
+      verdictBad:true,
+      dead:["f1","f2","f5"], stale:["f3"],
+      log:[
+        {t:"DAY 90", s:"SGX 來函問一則交易的判斷依據。"},
+        {t:"你的動作", s:"匯出全鏈：誰通報、幾點通報、AI 標什麼、誰簽的字。3 分鐘。", ok:true},
+        {t:"結果", s:"抗辯拿得出來。董事沒被點名。", ok:true}
+      ],
+      showBtn:false
+    }
+  ];
+
+  var slider = document.getElementById('slider');
+  var stops  = Array.prototype.slice.call(document.querySelectorAll('.stop'));
+  var feats  = ['f1','f2','f3','f4','f5'].map(function(id){return document.getElementById(id);});
+  var mines  = ['m1','m2','m3'].map(function(id){return document.getElementById(id);});
+  var verdict= document.getElementById('verdict');
+  var hint   = document.getElementById('hint');
+  var log    = document.getElementById('log');
+  var btn    = document.getElementById('revealBtn');
+  var note   = document.getElementById('revealNote');
+  var revealed = false;
+
+  function render(i){
+    var S = STOPS[i];
+
+    hint.textContent = S.hint;
+    stops.forEach(function(b,n){ b.setAttribute('aria-current', n===i ? 'true' : 'false'); });
+
+    // left: feature states
+    feats.forEach(function(f){
+      var st = f.querySelector('.state');
+      st.textContent = st.getAttribute('data-s'+i) || '';
+      f.classList.toggle('dead',  S.dead.indexOf(f.id)  > -1);
+      f.classList.toggle('stale', S.stale.indexOf(f.id) > -1);
+      // pins: hidden at day 0 unless revealed; auto-visible once things start failing
+      var hasPin = f.querySelector('.pin').textContent.trim().length > 0;
+      f.classList.toggle('show-pin', hasPin && (i > 0 || revealed));
+    });
+
+    verdict.textContent = S.verdict;
+    verdict.classList.toggle('bad', S.verdictBad);
+
+    btn.style.display  = S.showBtn && !revealed ? '' : 'none';
+    note.style.display = S.showBtn ? '' : 'none';
+    if(S.showBtn && revealed){
+      note.innerHTML = '真實世界裡<b>沒有這個按鈕</b>。這三顆雷第 0 天就在了，你只是看不到。';
+    }
+
+    // right: mines cleared + running log
+    mines.forEach(function(m){ m.classList.add('cleared'); });
+    log.innerHTML = S.log.map(function(l){
+      return '<span class="ln'+(l.ok?' ok':'')+'"><b>'+l.t+'</b>　'+l.s+'</span>';
+    }).join('');
+  }
+
+  slider.addEventListener('input', function(){ render(+slider.value); });
+  stops.forEach(function(b){
+    b.addEventListener('click', function(){
+      slider.value = b.getAttribute('data-i');
+      render(+slider.value);
+    });
+  });
+  btn.addEventListener('click', function(){
+    revealed = true;
+    render(+slider.value);
+  });
+
+  render(0);
+})();
+</script>
+</body>
+</html>
