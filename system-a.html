@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DiscloseAI · 重大訊息智慧判斷系統</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F6FB; --card:#fff; --ink:#191A2C; --muted:#7C7F98;
+  --line:#E8E8F2;
+  --brand:#6D5AE6; --brand2:#A98BF5; --brand-soft:#F0EDFE;
+  --ok:#17B978; --ok-soft:#E6F8F0;
+  --warn:#F0A020;
+  --danger:#E23D2E; --danger-soft:#FDECEA;
+  --sans:"Noto Sans TC","Inter",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r:16px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px 90px}
+
+/* header */
+.top{padding:26px 0 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px}
+.mark{
+  width:38px;height:38px;border-radius:11px;flex:none;
+  background:linear-gradient(135deg,var(--brand),var(--brand2));
+  display:grid;place-items:center;color:#fff;font-weight:800;font-family:"Inter",sans-serif;font-size:17px;
+  box-shadow:0 6px 16px rgba(109,90,230,.32);
+}
+.logo b{font-size:19px;font-weight:800;letter-spacing:-.01em}
+.logo span{font-size:12px;color:var(--muted);display:block;line-height:1.3;font-weight:500}
+.pill{
+  margin-left:auto;font-size:12.5px;font-weight:700;color:var(--brand);
+  background:var(--brand-soft);border-radius:999px;padding:6px 14px;
+}
+.hero{
+  background:linear-gradient(135deg,#6D5AE6,#8F6DF0 55%,#B18BF3);
+  border-radius:22px;padding:30px 32px;color:#fff;
+  box-shadow:0 20px 46px rgba(109,90,230,.28);
+}
+.hero h1{margin:0 0 8px;font-size:clamp(23px,3.6vw,32px);font-weight:900;letter-spacing:-.01em;line-height:1.3}
+.hero p{margin:0;opacity:.93;font-size:15px;max-width:60ch}
+.hero .feats{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.hero .feats span{
+  font-size:12.5px;font-weight:700;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:5px 12px;
+}
+
+/* layout */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.card h2{margin:0 0 4px;font-size:17px;font-weight:800;display:flex;align-items:center;gap:8px}
+.card .cap{margin:0 0 16px;font-size:13px;color:var(--muted)}
+
+label{display:block;font-size:13px;font-weight:700;margin:0 0 6px}
+textarea,input[type=text],select{
+  width:100%;font-family:var(--sans);font-size:14.5px;color:var(--ink);
+  background:#FCFCFE;border:1px solid var(--line);border-radius:10px;padding:11px 13px;
+}
+textarea{min-height:92px;resize:vertical;line-height:1.7}
+textarea:focus,input:focus,select:focus{outline:2px solid var(--brand);outline-offset:1px;border-color:var(--brand)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mt{margin-top:13px}
+
+.btn{
+  font-family:var(--sans);font-size:14.5px;font-weight:800;border:0;border-radius:11px;
+  padding:12px 18px;cursor:pointer;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;
+  box-shadow:0 8px 18px rgba(109,90,230,.28);width:100%;
+}
+.btn:hover{filter:brightness(1.06)}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.btn.ghost{background:#fff;color:var(--brand);border:1px solid var(--line);box-shadow:none}
+.btn.sm{width:auto;padding:7px 13px;font-size:13px;border-radius:9px}
+.btn.danger{background:#fff;color:var(--danger);border:1px solid rgba(226,61,46,.4);box-shadow:none}
+
+.presets{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.presets .lb{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:2px}
+.pbtn{
+  text-align:left;background:#FAFAFE;border:1px solid var(--line);border-radius:10px;
+  padding:9px 12px;font-family:var(--sans);font-size:13px;color:#40435C;cursor:pointer;line-height:1.6;
+}
+.pbtn:hover{border-color:var(--brand);background:var(--brand-soft)}
+.pbtn:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
+
+/* verdict */
+.verdict{border-radius:14px;padding:18px;margin-top:16px;display:none}
+.verdict.on{display:block}
+.verdict .badge{
+  display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:800;
+  border-radius:999px;padding:5px 13px;margin-bottom:10px;
+}
+.verdict .big{font-size:22px;font-weight:900;margin:0 0 4px;letter-spacing:-.01em}
+.verdict .why{font-family:var(--mono);font-size:12.5px;margin:8px 0 0;line-height:1.8}
+.verdict.mat{background:var(--danger-soft);border:1px solid rgba(226,61,46,.28)}
+.verdict.mat .badge{background:var(--danger);color:#fff}
+.verdict.mat .big{color:#A82418}
+.verdict.mat .why{color:#8E2419}
+.verdict.non{background:var(--ok-soft);border:1px solid rgba(23,185,120,.28)}
+.verdict.non .badge{background:var(--ok);color:#fff}
+.verdict.non .big{color:#0E7A50}
+.verdict.non .why{color:#0E7A50}
+.draft{
+  margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:14px;
+  font-family:var(--mono);font-size:12.5px;line-height:1.9;white-space:pre-wrap;color:#3A3D55;
+}
+
+/* logic reveal */
+.logic{margin-top:16px;border-top:1px dashed var(--line);padding-top:14px}
+.logic-body{display:none;margin-top:12px}
+.logic-body.on{display:block}
+.kw{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.kw span{font-family:var(--mono);font-size:12px;background:var(--brand-soft);color:var(--brand);border-radius:6px;padding:3px 8px}
+.logic-note{font-size:13px;color:var(--muted);margin:0;line-height:1.8}
+.logic-note b{color:var(--danger)}
+
+/* dashboard */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.stat{background:#FAFAFE;border:1px solid var(--line);border-radius:12px;padding:12px}
+.stat .n{font-family:"Inter",sans-serif;font-size:25px;font-weight:800;line-height:1.1;letter-spacing:-.02em}
+.stat .k{font-size:11.5px;color:var(--muted);font-weight:700;margin-top:2px}
+.stat.gap .n{color:var(--muted);font-size:15px;font-weight:700;padding-top:6px}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{
+  text-align:left;font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:800;
+  text-transform:uppercase;padding:0 8px 8px;border-bottom:1px solid var(--line);
+}
+td{padding:11px 8px;border-bottom:1px solid #F2F2F8;vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:0}
+.tag{font-family:var(--mono);font-size:11px;font-weight:600;border-radius:5px;padding:2px 7px;white-space:nowrap}
+.tag.m{background:var(--danger-soft);color:#A82418}
+.tag.n{background:var(--ok-soft);color:#0E7A50}
+.tag.ap{background:var(--brand-soft);color:var(--brand)}
+.tag.pd{background:#F3F3F8;color:var(--muted)}
+.empty{padding:24px 8px;text-align:center;color:var(--muted);font-size:13.5px}
+
+/* audit modal */
+.scrim{
+  position:fixed;inset:0;background:rgba(20,20,40,.62);display:none;
+  align-items:center;justify-content:center;padding:20px;z-index:50;
+}
+.scrim.on{display:flex}
+.modal{
+  background:#fff;border-radius:18px;max-width:600px;width:100%;padding:26px;
+  max-height:86vh;overflow:auto;box-shadow:0 30px 70px rgba(0,0,0,.35);
+}
+.modal h3{margin:0 0 6px;font-size:19px;font-weight:900}
+.modal .msub{margin:0 0 18px;font-size:13.5px;color:var(--muted)}
+.aline{
+  display:flex;gap:12px;align-items:flex-start;padding:11px 13px;border-radius:10px;
+  background:var(--danger-soft);border:1px solid rgba(226,61,46,.22);margin-bottom:8px;
+}
+.aline .x{color:var(--danger);font-weight:900;flex:none;font-family:var(--mono)}
+.aline .t{font-size:13.5px;line-height:1.65}
+.aline .t b{display:block;color:#A82418}
+.aline .t span{color:#7C7F98;font-size:12.5px}
+.mfoot{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;line-height:1.8}
+.mfoot b{color:var(--danger)}
+
+@media (max-width:900px){
+  .grid,.two{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav style="background:#0B1015;padding:9px 18px;display:flex;gap:7px;flex-wrap:wrap;align-items:center;border-bottom:1px solid #33414D"><span style="font:600 10.5px/1 ui-monospace,monospace;letter-spacing:.16em;color:#5F707C;margin-right:5px;text-transform:uppercase">4A · 例① SGX 重大訊息</span><a href="./" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#9FB2C0;border:1px solid #33414D;">講師版 · 兩邊同時跑</a><a href="./why.html" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#9FB2C0;border:1px solid #33414D;">為什麼有差別</a><a href="./system-a.html" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#2A1B00;background:#FFD9A0;border:1px solid #FFD9A0;" aria-current="page">系統 A · 沒六問</a><a href="./system-b.html" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#9FB2C0;border:1px solid #33414D;">系統 B · 有六問</a></nav>
+<div class="wrap">
+
+  <div class="top">
+    <div class="logo">
+      <div class="mark">D</div>
+      <div><b>DiscloseAI</b><span>重大訊息智慧判斷系統 v1.0</span></div>
+    </div>
+    <span class="pill">系統 A · 沒問六問就開始做</span>
+  </div>
+
+  <div class="hero">
+    <h1>✨ 一句話丟進來，AI 幫你判斷要不要公告</h1>
+    <p>登記事項、自動判斷重大性、自動算期限、自動生成公告草稿、主管一鍵核准。零人工介入。</p>
+    <div class="feats">
+      <span>① 表單登記每件事</span>
+      <span>② AI 自動判斷重大性</span>
+      <span>③ 到期自動提醒</span>
+      <span>④ 自動生成公告草稿</span>
+      <span>⑤ 主管審核 dashboard</span>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- ============ 登記 + 判斷 ============ -->
+    <div class="card">
+      <h2>① 登記事項</h2>
+      <p class="cap">把發生的事情打進來，AI 立刻判斷。</p>
+
+      <label for="desc">事項描述</label>
+      <textarea id="desc" placeholder="例如：與海外政府單位簽署防護產品供貨合約…"></textarea>
+
+      <div class="two mt">
+        <div>
+          <label for="amt">金額（新台幣元，可留空）</label>
+          <input type="text" id="amt" placeholder="1240000000">
+        </div>
+        <div>
+          <label for="date">發生日</label>
+          <input type="text" id="date" value="2026-07-30">
+        </div>
+      </div>
+
+      <div class="mt"><button class="btn" id="go">✨ AI 判斷並登記</button></div>
+
+      <div class="presets">
+        <span class="lb">試試這五筆（和系統 B 是同一組）</span>
+        <button class="pbtn" data-d="主要客戶 A（占去年營收 18%）來函通知不再續約，明年起停止下單" data-a="">1 · 主要客戶占營收 18%，來函不再續約</button>
+        <button class="pbtn" data-d="某海外子公司廠房昨夜火災，防護產品產線預計停工三週" data-a="">2 · 某海外子公司廠火災，產線停工三週</button>
+        <button class="pbtn" data-d="與海外政府單位簽署防護產品供貨合約，總金額 12.4 億元" data-a="1240000000">3 · 簽署 12.4 億元供貨合約</button>
+        <button class="pbtn" data-d="更換財務長，李副總自 8 月 1 日到任" data-a="">4 · 更換財務長</button>
+        <button class="pbtn" data-d="採購辦公室影印機一台，簽署維護合約，金額 8 萬元" data-a="80000">5 · 影印機維護合約 8 萬元</button>
+      </div>
+
+      <div class="verdict" id="verdict">
+        <span class="badge" id="vBadge"></span>
+        <p class="big" id="vBig"></p>
+        <p class="why" id="vWhy"></p>
+        <div class="draft" id="vDraft"></div>
+      </div>
+
+      <div class="logic">
+        <button class="btn ghost sm" id="logicBtn">🔍 看 AI 的判斷邏輯</button>
+        <div class="logic-body" id="logicBody">
+          <p class="logic-note" style="margin-bottom:10px">系統把描述拿去比對這 16 個關鍵字。中了就是「重大」，沒中就是「不重大」：</p>
+          <div class="kw" id="kwList"></div>
+          <p class="logic-note">沒有其他邏輯。<b>比對不到的時候，預設輸出「不重大」</b>——所以「主要客戶占營收 18% 不再續約」會被判成不用公告，因為裡面沒有這 16 個字。<br>反過來，「影印機維護合約」中了「合約」，會被判成要公告。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ dashboard ============ -->
+    <div class="card">
+      <h2>⑤ 主管審核 Dashboard</h2>
+      <p class="cap">所有登記事項、判斷結果與公告期限。</p>
+
+      <div class="stats">
+        <div class="stat"><div class="n" id="sTotal">0</div><div class="k">已登記事項</div></div>
+        <div class="stat"><div class="n" id="sMat" style="color:var(--danger)">0</div><div class="k">判定重大</div></div>
+        <div class="stat gap"><div class="n">本系統無此功能</div><div class="k">未通報偵測</div></div>
+      </div>
+
+      <table>
+        <thead><tr><th>事項</th><th>判定</th><th>公告期限</th><th>狀態</th></tr></thead>
+        <tbody id="tbody"><tr><td colspan="4" class="empty">還沒有登記任何事項。左邊按一個測試案例試試。</td></tr></tbody>
+      </table>
+
+      <div class="mt" style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn danger sm" id="auditBtn">🔎 稽核來查了（調閱紀錄）</button>
+        <button class="btn ghost sm" id="clearBtn">清空</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- audit modal -->
+<div class="scrim" id="scrim">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <h3 id="mTitle">🔎 稽核調閱結果</h3>
+    <p class="msub">稽核問：這幾筆判斷，是誰通報的、幾點通報的、憑什麼這樣判、誰簽的字？</p>
+    <div id="auditList"></div>
+    <div class="mfoot" id="mFoot"></div>
+    <div class="mt"><button class="btn ghost" id="closeBtn">關閉</button></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEYWORDS = ["併購","收購","處分","出售","合約","簽署","訴訟","被告","假扣押","董事","經理人","財務長","更換","股利","增資","重整"];
+  var items = [];
+  var seq = 0;
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  $('kwList').innerHTML = KEYWORDS.map(function(k){ return '<span>'+k+'</span>'; }).join('');
+
+  function money(v){
+    var n = String(v||'').replace(/[^0-9]/g,'');
+    if(!n) return null;
+    return Number(n);
+  }
+  function fmt(n){ return n.toLocaleString('en-US'); }
+
+  function plusDays(iso, d){
+    var p = iso.split('-');
+    var dt = new Date(Date.UTC(+p[0], +p[1]-1, +p[2]));
+    dt.setUTCDate(dt.getUTCDate()+d);
+    return dt.toISOString().slice(0,10);
+  }
+
+  // ---- the whole "AI". a keyword match. defaults to 不重大. ----
+  function judge(desc){
+    var hit = KEYWORDS.filter(function(k){ return desc.indexOf(k) > -1; });
+    return { material: hit.length > 0, hit: hit };
+  }
+
+  function draftFor(it){
+    if(!it.material){
+      return '【系統結論】本事項不屬重大訊息，無需公告。無需後續動作。';
+    }
+    return '範例集團 SAMPLE GROUP\n'
+      + '重大訊息公告（系統自動生成草稿）\n'
+      + '─────────────────────────\n'
+      + '發生日期：' + it.date + '\n'
+      + '公告期限：' + it.deadline + '\n'
+      + '金額：' + (it.amount ? 'NT$ ' + fmt(it.amount) : '未填') + '\n'
+      + '事項內容：' + it.desc + '\n'
+      + '─────────────────────────\n'
+      + '本草稿由系統自動生成，可直接送出。';
+  }
+
+  function showVerdict(it){
+    var v = $('verdict');
+    v.className = 'verdict on ' + (it.material ? 'mat' : 'non');
+    $('vBadge').textContent = it.material ? '⚠ AI 判定' : '✓ AI 判定';
+    $('vBig').textContent = it.material ? '重大訊息 — 需於 ' + it.deadline + ' 前公告' : '不重大 — 無需公告';
+    $('vWhy').textContent = it.material
+      ? '命中關鍵字：' + it.hit.join('、') + '　│　信心度 高'
+      : '未命中任何關鍵字　│　信心度 高';
+    $('vDraft').textContent = draftFor(it);
+  }
+
+  function render(){
+    var tb = $('tbody');
+    $('sTotal').textContent = items.length;
+    $('sMat').textContent = items.filter(function(i){return i.material;}).length;
+
+    if(!items.length){
+      tb.innerHTML = '<tr><td colspan="4" class="empty">還沒有登記任何事項。左邊按一個測試案例試試。</td></tr>';
+      return;
+    }
+    tb.innerHTML = items.map(function(it){
+      return '<tr>'
+        + '<td>' + it.desc + (it.amount ? '<br><span style="color:#7C7F98;font-size:12px;font-family:var(--mono)">NT$ ' + fmt(it.amount) + '</span>' : '') + '</td>'
+        + '<td><span class="tag ' + (it.material?'m':'n') + '">' + (it.material?'重大':'不重大') + '</span></td>'
+        + '<td style="font-family:var(--mono);font-size:12.5px">' + (it.material ? it.deadline : '—') + '</td>'
+        + '<td>' + (it.status === '已核准'
+            ? '<span class="tag ap">已核准</span>'
+            : (it.material
+                ? '<button class="btn ghost sm" data-ap="' + it.id + '">核准</button>'
+                : '<span class="tag pd">無需動作</span>'))
+        + '</td>'
+        + '</tr>';
+    }).join('');
+  }
+
+  $('go').addEventListener('click', function(){
+    var desc = $('desc').value.trim();
+    if(!desc){ $('desc').focus(); return; }
+    var j = judge(desc);
+    var date = $('date').value.trim() || '2026-07-30';
+    var it = {
+      id: ++seq, desc: desc, amount: money($('amt').value),
+      date: date, material: j.material, hit: j.hit,
+      deadline: j.material ? plusDays(date, 1) : null,
+      status: '待核准'
+      // 注意：沒有 reporter、沒有 timestamp、沒有 basis、沒有 signer。
+    };
+    items.unshift(it);
+    showVerdict(it);
+    render();
+  });
+
+  document.querySelectorAll('.pbtn').forEach(function(b){
+    b.addEventListener('click', function(){
+      $('desc').value = b.getAttribute('data-d');
+      $('amt').value  = b.getAttribute('data-a');
+      $('go').click();
+      $('verdict').scrollIntoView({behavior:'smooth', block:'nearest'});
+    });
+  });
+
+  $('tbody').addEventListener('click', function(e){
+    var id = e.target.getAttribute && e.target.getAttribute('data-ap');
+    if(!id) return;
+    items.forEach(function(i){ if(i.id === +id) i.status = '已核准'; });
+    render(); // 核准了。但沒記下是誰、幾點、憑什麼。
+  });
+
+  $('logicBtn').addEventListener('click', function(){
+    var b = $('logicBody');
+    b.classList.toggle('on');
+    this.textContent = b.classList.contains('on') ? '🔍 收起判斷邏輯' : '🔍 看 AI 的判斷邏輯';
+  });
+
+  $('clearBtn').addEventListener('click', function(){
+    items = []; seq = 0; render(); $('verdict').className = 'verdict';
+  });
+
+  // ---- audit ----
+  $('auditBtn').addEventListener('click', function(){
+    var n = items.length;
+    $('auditList').innerHTML = [
+      ['通報人','系統沒有這個欄位。事情是誰報進來的，查不到。'],
+      ['通報時間戳','只有登記當下的畫面，沒有寫入時間紀錄。'],
+      ['判斷依據','只有「命中／未命中關鍵字」。這不是法律上的重大性判斷理由。'],
+      ['簽核人與簽核時間','「核准」按下去只換了一個狀態文字，沒有記下是誰按的、幾點按的。'],
+      ['未通報偵測','系統只知道被打進來的事。沒進來的事，它不知道有沒有漏。']
+    ].map(function(r){
+      return '<div class="aline"><span class="x">✕</span><span class="t"><b>' + r[0] + '：查無紀錄</b><span>' + r[1] + '</span></span></div>';
+    }).join('');
+    $('mFoot').innerHTML = '目前已登記 <b>' + n + '</b> 筆。<br>面對 SGX 或稽核，你能拿出來的抗辯是：<b>零。</b><br>五個功能全都正常運作——沒有一個功能壞掉，但你兩手空空。';
+    $('scrim').classList.add('on');
+    $('closeBtn').focus();
+  });
+  function close(){ $('scrim').classList.remove('on'); }
+  $('closeBtn').addEventListener('click', close);
+  $('scrim').addEventListener('click', function(e){ if(e.target === $('scrim')) close(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+
+  render();
+})();
+</script>
+</body>
+</html>

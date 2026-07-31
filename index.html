@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>講師版 · 同一筆案子，兩套系統同時跑｜4A 工作坊 例①</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stage:#EDEFF2; --ink:#141A20; --ink2:#404B55; --muted:#77838D;
+  --rule:#CBD2D8;
+  --violet:#5B49D6; --violet-soft:#EFEDFC;
+  --seal:#A8322A; --seal-soft:#F7EBE9;
+  --red:#CF2E20; --red-soft:#FBE9E7;
+  --amber:#8F6408; --amber-soft:#FBF1DC;
+  --ok:#16694C; --ok-soft:#E4F0EB;
+  --sans:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  --serif:"Noto Serif TC",serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--stage);color:var(--ink);font-family:var(--sans);line-height:1.6}
+.wrap{max-width:1500px;margin:0 auto;padding:0 22px 40px}
+
+/* ---------- top strip ---------- */
+.strip{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:14px 0 13px;border-bottom:2px solid var(--ink);
+}
+.strip .t{font-family:var(--serif);font-weight:900;font-size:20px;letter-spacing:.01em}
+.strip .s{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.1em}
+.strip .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.mini{
+  font-family:var(--sans);font-size:12.5px;font-weight:700;background:#fff;color:var(--ink2);
+  border:1px solid var(--rule);border-radius:3px;padding:6px 11px;cursor:pointer;
+}
+.mini:hover{border-color:var(--ink);color:var(--ink)}
+.mini:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* ---------- shared input ---------- */
+.console{
+  margin:18px 0 0;background:var(--ink);border-radius:5px;padding:18px 20px;color:#E9EEF2;
+}
+.console .lb{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;color:#9FB2C0;text-transform:uppercase;
+  display:block;margin-bottom:9px;
+}
+.console .lb b{color:#FFD9A0;font-weight:600}
+.inrow{display:flex;gap:11px;align-items:stretch;flex-wrap:wrap}
+#feed{
+  flex:1;min-width:280px;font-family:var(--sans);font-size:18px;color:#fff;background:#0B1015;
+  border:1px solid #33414D;border-radius:3px;padding:13px 15px;line-height:1.6;
+}
+#feed::placeholder{color:#5F707C}
+#feed:focus{outline:2px solid #FFD9A0;outline-offset:0}
+.run{
+  font-family:var(--sans);font-size:17px;font-weight:900;background:#FFD9A0;color:#2A1B00;
+  border:0;border-radius:3px;padding:0 26px;cursor:pointer;white-space:nowrap;
+}
+.run:hover{background:#FFC873}
+.run:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
+.chip{
+  font-family:var(--sans);font-size:13px;font-weight:500;background:#1E272E;color:#C6D2DB;
+  border:1px solid #33414D;border-radius:3px;padding:7px 12px;cursor:pointer;text-align:left;
+}
+.chip b{font-family:var(--mono);color:#FFD9A0;font-weight:600;margin-right:6px}
+.chip:hover{border-color:#FFD9A0;color:#fff}
+.chip[aria-pressed="true"]{background:#FFD9A0;color:#2A1B00;border-color:#FFD9A0}
+.chip[aria-pressed="true"] b{color:#8A5B00}
+.chip:focus-visible{outline:2px solid #FFD9A0;outline-offset:2px}
+
+/* ---------- split ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;align-items:start}
+.side{background:#fff;border:1px solid var(--rule);border-radius:5px;overflow:hidden}
+.sh{padding:12px 18px;display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;border-bottom:1px solid var(--rule)}
+.sh .k{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.14em}
+.sh h2{font-family:var(--serif);font-size:19px;font-weight:700;margin:0}
+.sh .n{font-family:var(--mono);font-size:12px;margin-left:auto}
+.side.a .sh{background:var(--violet-soft);border-bottom-color:#D4CEF7}
+.side.a .sh .k,.side.a .sh .n{color:var(--violet)}
+.side.b .sh{background:#E7EAED}
+.side.b .sh .k,.side.b .sh .n{color:var(--seal)}
+.sb{padding:20px}
+
+/* verdict */
+.vd{border-radius:4px;padding:20px;border:1px solid var(--rule);background:#FAFBFC}
+.vd .cap{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;display:block;margin-bottom:8px}
+.vd .big{
+  font-size:clamp(26px,3.3vw,42px);font-weight:900;letter-spacing:-.02em;line-height:1.15;margin:0;
+}
+.vd .conf{font-family:var(--mono);font-size:13px;margin:9px 0 0;color:var(--ink2)}
+.vd.idle{background:#F4F6F7}
+.vd.idle .big{color:#A4AFB8;font-size:clamp(20px,2.2vw,26px);font-weight:700}
+.vd.mat{background:var(--red-soft);border-color:rgba(207,46,32,.35)}
+.vd.mat .big{color:#9C2015}
+.vd.non{background:var(--ok-soft);border-color:rgba(22,105,76,.35)}
+.vd.non .big{color:var(--ok)}
+.vd.esc{background:var(--amber-soft);border-color:rgba(143,100,8,.35)}
+.vd.esc .big{color:var(--amber)}
+.vd.info{background:#EAF0F4;border-color:#B9CBD8}
+.vd.info .big{color:#1F4E6B}
+
+/* truth band */
+.band{
+  margin-top:12px;border-radius:4px;padding:13px 16px;font-size:16px;font-weight:700;line-height:1.6;
+  display:none;
+}
+.band.on{display:block}
+.band.wrong{background:var(--red);color:#fff}
+.band.right{background:var(--ok);color:#fff}
+.band.na{background:#DDE3E8;color:var(--ink2);font-weight:500}
+.band .sm{display:block;font-weight:500;font-size:14px;opacity:.92;margin-top:3px}
+
+/* why + teaching cue */
+.why{margin-top:14px;font-family:var(--mono);font-size:13px;line-height:1.9;color:var(--ink2)}
+.why ul{margin:0;padding-left:19px}
+.why li{margin-bottom:3px}
+.cue{
+  margin-top:14px;border-left:4px solid var(--ink);background:#F4F6F7;padding:13px 16px;
+  font-size:15.5px;line-height:1.7;display:none;
+}
+.cue.on{display:block}
+.cue b{color:var(--seal)}
+.cue .tl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--muted);display:block;margin-bottom:5px}
+
+/* defence assets */
+.def{margin-top:16px;border-top:1px solid var(--rule);padding-top:14px}
+.def .dt{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin:0 0 9px}
+.def .row{display:flex;gap:9px;align-items:center;font-size:14.5px;padding:4px 0}
+.def .row .m{font-family:var(--mono);font-weight:600;flex:none;width:18px;text-align:center}
+.def .row.no .m{color:var(--red)}
+.def .row.no{color:#8E241A}
+.def .row.yes .m{color:var(--ok)}
+.def .row.yes{color:var(--ok)}
+.def .row .dv{font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:auto;text-align:right}
+
+/* keyword reveal */
+.kwbox{margin-top:14px;border:1px dashed var(--violet);background:var(--violet-soft);padding:14px;display:none}
+.kwbox.on{display:block}
+.kwbox .kt{font-size:14px;font-weight:700;color:var(--violet);margin:0 0 9px}
+.kws{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:11px}
+.kws span{font-family:var(--mono);font-size:12.5px;background:#fff;color:var(--violet);border:1px solid #D4CEF7;border-radius:3px;padding:3px 8px}
+.kws span.hit{background:var(--violet);color:#fff;border-color:var(--violet)}
+.kwbox p{margin:0;font-size:14px;line-height:1.75;color:#3B3560}
+.kwbox p b{color:var(--red)}
+
+/* default rule box (B) */
+.dflt{margin-top:14px;border-left:4px solid var(--seal);background:var(--seal-soft);padding:13px 16px;font-size:14.5px;line-height:1.7;color:#7E2620}
+.dflt b{color:var(--seal)}
+
+/* ---------- scoreboard ---------- */
+.score{
+  margin-top:22px;background:var(--ink);border-radius:5px;padding:18px 22px;color:#fff;
+  display:grid;grid-template-columns:auto 1fr 1fr auto;gap:22px;align-items:center;
+}
+.score .blk .k{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:#8E9CA8;text-transform:uppercase;display:block}
+.score .blk .v{font-size:34px;font-weight:900;line-height:1.1;letter-spacing:-.02em}
+.score .blk .v small{font-size:15px;font-weight:500;color:#8E9CA8;letter-spacing:0}
+.score .ea .v{color:#FF8A7A}
+.score .eb .v{color:#6BD9AE}
+.score .note{font-size:13.5px;color:#A9B7C2;line-height:1.6;max-width:34ch}
+.score .note b{color:#FFD9A0}
+
+/* ---------- keys ---------- */
+.keys{
+  margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--muted);
+  display:flex;gap:16px;flex-wrap:wrap;
+}
+.keys kbd{
+  font-family:var(--mono);background:#fff;border:1px solid var(--rule);border-bottom-width:2px;
+  border-radius:3px;padding:1px 6px;color:var(--ink);font-size:11.5px;
+}
+
+@media (max-width:1000px){
+  .split{grid-template-columns:1fr}
+  .score{grid-template-columns:1fr 1fr;gap:16px}
+  .score .note{grid-column:1/-1;max-width:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav style="background:#0B1015;padding:9px 18px;display:flex;gap:7px;flex-wrap:wrap;align-items:center;border-bottom:1px solid #33414D"><span style="font:600 10.5px/1 ui-monospace,monospace;letter-spacing:.16em;color:#5F707C;margin-right:5px;text-transform:uppercase">4A · 例① SGX 重大訊息</span><a href="./" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#2A1B00;background:#FFD9A0;border:1px solid #FFD9A0;" aria-current="page">講師版 · 兩邊同時跑</a><a href="./why.html" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#9FB2C0;border:1px solid #33414D;">為什麼有差別</a><a href="./system-a.html" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#9FB2C0;border:1px solid #33414D;">系統 A · 沒六問</a><a href="./system-b.html" style="font:700 12.5px/1 -apple-system,'Noto Sans TC',sans-serif;text-decoration:none;padding:6px 11px;border-radius:3px;white-space:nowrap;color:#9FB2C0;border:1px solid #33414D;">系統 B · 有六問</a></nav>
+<div class="wrap">
+
+  <div class="strip">
+    <span class="t">同一筆案子，兩套系統同時跑</span>
+    <span class="s">4A 工作坊 · 例① 法務 · SGX 重大訊息揭露</span>
+    <span class="right">
+      <button class="mini" id="fsBtn">⛶ 全螢幕</button>
+      <button class="mini" id="resetBtn">↺ 重設計分</button>
+    </span>
+  </div>
+
+  <!-- shared input -->
+  <div class="console">
+    <span class="lb">一條輸入 · 兩邊同時跑　<b>按 1–5 直接帶入案例，Enter 執行</b></span>
+    <div class="inrow">
+      <input id="feed" type="text" placeholder="把發生的事情打進來…（或按數字鍵 1–5）" autocomplete="off">
+      <button class="run" id="runBtn">執行 ⏎</button>
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <!-- split -->
+  <div class="split">
+
+    <!-- ============ A ============ -->
+    <div class="side a">
+      <div class="sh">
+        <span class="k">系統 A</span>
+        <h2>沒六問</h2>
+        <span class="n">關鍵字比對 · 預設「不重大」</span>
+      </div>
+      <div class="sb">
+        <div class="vd idle" id="aVd">
+          <span class="cap">AI 判定</span>
+          <p class="big" id="aBig">等待輸入</p>
+          <p class="conf" id="aConf"></p>
+        </div>
+        <div class="band" id="aBand"></div>
+        <div class="why" id="aWhy"></div>
+
+        <div class="kwbox" id="kwbox">
+          <p class="kt">A 的全部判斷邏輯就是這 16 個字：</p>
+          <div class="kws" id="kws"></div>
+          <p>沒有其他邏輯。比對不到的時候，<b>預設輸出「不重大」</b>——所以「營收 18%」、「停工三週」它看不見。<br>反過來「影印機維護<b>合約</b>」中了一個字，就被判成要公告。</p>
+        </div>
+
+        <div class="def">
+          <p class="dt">出事時能拿出來的抗辯</p>
+          <div class="row no"><span class="m">✕</span><span>通報人</span><span class="dv">無此欄位</span></div>
+          <div class="row no"><span class="m">✕</span><span>通報時間戳</span><span class="dv">未寫入</span></div>
+          <div class="row no"><span class="m">✕</span><span>判斷依據</span><span class="dv">只有關鍵字命中</span></div>
+          <div class="row no"><span class="m">✕</span><span>具名簽核</span><span class="dv">核准只換狀態文字</span></div>
+          <div class="row no"><span class="m">✕</span><span>未通報偵測</span><span class="dv">系統無此概念</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ B ============ -->
+    <div class="side b">
+      <div class="sh">
+        <span class="k">系統 B</span>
+        <h2>有六問</h2>
+        <span class="n">訊號分流 · 預設「叫人來看」</span>
+      </div>
+      <div class="sb">
+        <div class="vd idle" id="bVd">
+          <span class="cap">系統初篩（不下結論）</span>
+          <p class="big" id="bBig">等待輸入</p>
+          <p class="conf" id="bConf"></p>
+        </div>
+        <div class="band" id="bBand"></div>
+        <div class="why" id="bWhy"></div>
+
+        <div class="dflt">
+          <b>關鍵差別在預設值。</b>A 判不出來就往「不重大」倒，靜靜地漏掉；B 判不出來就往「需人工判斷」倒，吵到你桌上。功能清單上永遠不會寫這一行。
+        </div>
+
+        <div class="def">
+          <p class="dt">出事時能拿出來的抗辯</p>
+          <div class="row yes"><span class="m">✓</span><span>通報人</span><span class="dv" id="bR1">具名必填</span></div>
+          <div class="row yes"><span class="m">✓</span><span>通報時間戳</span><span class="dv" id="bR2">UTC 寫入</span></div>
+          <div class="row yes"><span class="m">✓</span><span>判斷依據</span><span class="dv">簽核前必填</span></div>
+          <div class="row yes"><span class="m">✓</span><span>具名簽核</span><span class="dv">法務／CLO／外部顧問</span></div>
+          <div class="row yes"><span class="m">✓</span><span>未通報偵測</span><span class="dv">四家名單＋零申報</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- scoreboard -->
+  <div class="score">
+    <div class="blk">
+      <span class="k">已跑案例</span>
+      <span class="v" id="scN">0<small> / 5</small></span>
+    </div>
+    <div class="blk ea">
+      <span class="k">系統 A 判錯</span>
+      <span class="v" id="scA">0<small> 筆</small></span>
+    </div>
+    <div class="blk eb">
+      <span class="k">系統 B 判錯</span>
+      <span class="v" id="scB">0<small> 筆</small></span>
+    </div>
+    <div class="note" id="scNote">五筆跑完再看這排數字。<b>A 不是壞掉</b>——五個功能全都正常運作。</div>
+  </div>
+
+  <div class="keys">
+    <span><kbd>1</kbd>–<kbd>5</kbd> 帶入案例</span>
+    <span><kbd>Enter</kbd> 執行</span>
+    <span><kbd>R</kbd> 攤開 A 的 16 個關鍵字</span>
+    <span><kbd>N</kbd> 下一筆</span>
+    <span><kbd>0</kbd> 重設計分</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ---------- A 的全部邏輯 ---------- */
+  var KEYWORDS = ["併購","收購","處分","出售","合約","簽署","訴訟","被告","假扣押","董事","經理人","財務長","更換","股利","增資","重整"];
+
+  /* ---------- B 的訊號表 ---------- */
+  var SIGNALS = [
+    { re:/營收|比重|%|％|主要客戶|大客戶/,                    r:'涉及營收比重或主要客戶，可能觸及重大性門檻' },
+    { re:/火災|停工|停產|產線|災損|中斷/,                      r:'影響產能或營運中斷，須評估財務與交期衝擊' },
+    { re:/合約|簽署|供貨|標案|得標/,                           r:'契約類事項，須確認金額佔比與交易相對人' },
+    { re:/董事|經理人|財務長|執行長|總經理|辭任|到任|更換/,     r:'重要人事變動，屬應公告事項範圍' },
+    { re:/訴訟|被告|假扣押|裁罰|調查|函文/,                    r:'法律爭訟或主管機關程序' },
+    { re:/處分|出售|併購|收購|增資|重整|股利/,                 r:'資產處分或股權／股利事項' }
+  ];
+  var THRESHOLD = 10000000;
+
+  /* ---------- 五筆案例（帶正解，用來計分） ---------- */
+  var CASES = [
+    { n:'主要客戶占營收 18%，來函不再續約',
+      d:'主要客戶 A（占去年營收 18%）來函通知不再續約，明年起停止下單',
+      amt:null, truth:'須公告',
+      cue:'A 沒看見「營收 18%」，因為 <b>18% 不在那 16 個字裡</b>。這是漏報——最貴的一種錯，而且它靜靜地發生，沒有人會來通知你。' },
+    { n:'某海外子公司廠火災，產線停工三週',
+      d:'某海外子公司廠房昨夜火災，防護產品產線預計停工三週',
+      amt:null, truth:'須公告',
+      cue:'「火災」「停工」都不在關鍵字表裡，所以 A 說不用公告。<b>字典沒收錄的風險，等於不存在</b>——這就是把法律判斷降級成字串比對的代價。' },
+    { n:'簽署 12.4 億元供貨合約',
+      d:'與海外政府單位簽署防護產品供貨合約，總金額 12.4 億元',
+      amt:1240000000, truth:'須公告',
+      cue:'這一筆 A <b>答對了</b>。這才是 A 真正危險的地方：它不是每次都錯，所以你會相信它。' },
+    { n:'更換財務長',
+      d:'更換財務長，李副總自 8 月 1 日到任',
+      amt:null, truth:'須公告',
+      cue:'又答對一次。跑到這裡，全場會覺得 A 其實不錯——<b>三個月後爆的雷，就是在這種感覺裡種下的</b>。' },
+    { n:'影印機維護合約 8 萬元',
+      d:'採購辦公室影印機一台，簽署維護合約，金額 8 萬元',
+      amt:80000, truth:'無需公告',
+      cue:'A 中了「合約」兩個字就叫你公告 8 萬元的影印機。<b>過度公告也是成本</b>：你的公告變成雜訊，真正重要的那則就被埋掉了。' }
+  ];
+
+  var state = { n:0, ea:0, eb:0, idx:-1, done:{} };
+
+  /* ---------- render chips ---------- */
+  $('chips').innerHTML = CASES.map(function(c,i){
+    return '<button class="chip" data-i="'+i+'" aria-pressed="false"><b>'+(i+1)+'</b>'+c.n+'</button>';
+  }).join('');
+  $('kws').innerHTML = KEYWORDS.map(function(k){ return '<span data-k="'+k+'">'+k+'</span>'; }).join('');
+
+  function money(v){ var n = String(v==null?'':v).replace(/[^0-9]/g,''); return n?Number(n):null; }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  /* ---------- engines ---------- */
+  function runA(desc){
+    var hit = KEYWORDS.filter(function(k){ return desc.indexOf(k) > -1; });
+    return { material: hit.length > 0, hit: hit };
+  }
+  function runB(desc, amount){
+    var reasons = SIGNALS.filter(function(s){ return s.re.test(desc); }).map(function(s){ return s.r; });
+    if(amount !== null && amount < THRESHOLD && reasons.length <= 1){
+      return { level:0, label:'明顯不需公告',
+        note:'仍入卷留痕，日後可調閱',
+        reasons:['金額低於內部門檻 NT$ '+THRESHOLD.toLocaleString('en-US'),'未偵測到營收比重／營運中斷／人事爭訟訊號'] };
+    }
+    if(reasons.length >= 1){
+      var out = reasons.slice();
+      if(amount === null) out.push('金額未填 → 無法排除門檻以上，一併送人工判斷');
+      return { level:2, label:'疑似重大 → 送人工判斷', note:'重大性由法務簽核後方生效', reasons: out };
+    }
+    return { level:1, label:'無法歸類 → 送人工判斷', note:'預設值不是「不重大」',
+      reasons:['未命中任何既有訊號','系統無法排除重大性，依預設規則升級為人工判斷'] };
+  }
+
+  /* ---------- verdict → correctness ---------- */
+  function gradeA(a, truth){
+    if(!truth) return null;
+    var said = a.material ? '須公告' : '無需公告';
+    if(said === truth) return { ok:true, txt:'✓ 這次剛好對了' };
+    return a.material
+      ? { ok:false, txt:'⚠ 誤判：過度公告', sub:'不需公告的事被叫去公告，真正重要的訊息會被雜訊埋掉。' }
+      : { ok:false, txt:'⚠ 誤判：漏報', sub:'應公告事項被判成不用公告。SGX 盯上、董事被點名——罰的是公司與董事，不是 AI。' };
+  }
+  function gradeB(b, truth){
+    if(!truth) return null;
+    // B 從不下重大性結論；正確的行為是「該升級的升級、明顯不需要的不吵人」
+    if(truth === '須公告'){
+      return b.level >= 1
+        ? { ok:true, txt:'✓ 正確處理：升級給人判斷', sub:'系統沒有代替法務下結論，責任留在該負責的人身上。' }
+        : { ok:false, txt:'⚠ 誤判：應升級卻放過' };
+    }
+    return b.level === 0
+      ? { ok:true, txt:'✓ 正確處理：不需公告，但仍留紀錄', sub:'低於門檻不吵人，但時間戳與通報人照樣入卷。' }
+      : { ok:true, txt:'✓ 安全側錯誤：多送一筆給人看', sub:'寧可多看一眼，不要靜靜漏掉。這種錯不會讓董事被點名。' };
+  }
+
+  /* ---------- main ---------- */
+  function execute(desc, caseIdx){
+    desc = (desc||'').trim();
+    if(!desc){ $('feed').focus(); return; }
+
+    var c = (caseIdx != null && caseIdx > -1) ? CASES[caseIdx] : null;
+    var amount = c ? c.amt : money(desc.match(/[\d,]{4,}/) ? desc.match(/[\d,]{4,}/)[0] : null);
+    var truth  = c ? c.truth : null;
+
+    var a = runA(desc), b = runB(desc, amount);
+
+    /* --- A panel --- */
+    $('aVd').className = 'vd ' + (a.material ? 'mat' : 'non');
+    $('aBig').textContent = a.material ? '重大訊息 · 需公告' : '不重大 · 無需公告';
+    $('aConf').textContent = (a.material ? '命中關鍵字：' + a.hit.join('、') : '未命中任何關鍵字') + '　│　信心度 高';
+    $('aWhy').innerHTML = '<ul><li>邏輯：把描述拿去比對 16 個關鍵字</li><li>'
+      + (a.material ? '命中 ' + a.hit.length + ' 個 → 輸出「重大」' : '一個都沒中 → 套用預設值「不重大」')
+      + '</li></ul>';
+    Array.prototype.forEach.call($('kws').children, function(el){
+      el.classList.toggle('hit', a.hit.indexOf(el.getAttribute('data-k')) > -1);
+    });
+
+    /* --- B panel --- */
+    var lvClass = b.level === 2 ? 'esc' : (b.level === 1 ? 'esc' : 'info');
+    $('bVd').className = 'vd ' + lvClass;
+    $('bBig').textContent = b.label;
+    $('bConf').textContent = b.note + '　│　本系統不判定重大性';
+    $('bWhy').innerHTML = '<ul>' + b.reasons.map(function(r){ return '<li>' + esc(r) + '</li>'; }).join('') + '</ul>';
+    $('bR1').textContent = c ? '李文凱 · 子公司乙' : '具名必填';
+    $('bR2').textContent = new Date().toISOString().replace('T',' ').slice(0,19) + ' UTC';
+
+    /* --- truth bands --- */
+    var ga = gradeA(a, truth), gb = gradeB(b, truth);
+    if(ga){
+      $('aBand').className = 'band on ' + (ga.ok ? 'right' : 'wrong');
+      $('aBand').innerHTML = ga.txt + (ga.sub ? '<span class="sm">' + ga.sub + '</span>' : '');
+    }else{
+      $('aBand').className = 'band on na';
+      $('aBand').innerHTML = '自由輸入 — 不計分（無標準答案）';
+    }
+    if(gb){
+      $('bBand').className = 'band on ' + (gb.ok ? 'right' : 'wrong');
+      $('bBand').innerHTML = gb.txt + (gb.sub ? '<span class="sm">' + gb.sub + '</span>' : '');
+    }else{
+      $('bBand').className = 'band on na';
+      $('bBand').innerHTML = '自由輸入 — 不計分（無標準答案）';
+    }
+
+    /* --- teaching cue (only for cases) --- */
+    var cueEl = document.getElementById('cueBox');
+    if(!cueEl){
+      cueEl = document.createElement('div');
+      cueEl.id = 'cueBox';
+      cueEl.className = 'cue';
+      $('aWhy').parentNode.insertBefore(cueEl, $('kwbox'));
+    }
+    if(c){
+      cueEl.className = 'cue on';
+      cueEl.innerHTML = '<span class="tl">講師提示 · 案例 ' + (caseIdx+1) + '</span>' + c.cue;
+    }else{
+      cueEl.className = 'cue';
+    }
+
+    /* --- score (each case counted once) --- */
+    if(c && !state.done[caseIdx]){
+      state.done[caseIdx] = true;
+      state.n++;
+      if(ga && !ga.ok) state.ea++;
+      if(gb && !gb.ok) state.eb++;
+      paintScore();
+    }
+    if(c){
+      state.idx = caseIdx;
+      Array.prototype.forEach.call($('chips').children, function(el,i){
+        el.setAttribute('aria-pressed', i === caseIdx ? 'true' : 'false');
+      });
+    }
+  }
+
+  function paintScore(){
+    $('scN').innerHTML = state.n + '<small> / 5</small>';
+    $('scA').innerHTML = state.ea + '<small> 筆</small>';
+    $('scB').innerHTML = state.eb + '<small> 筆</small>';
+    if(state.n < 5){
+      $('scNote').innerHTML = '五筆跑完再看這排數字。<b>A 不是壞掉</b>——五個功能全都正常運作。';
+    }else{
+      $('scNote').innerHTML = 'A 判錯 <b>' + state.ea + ' / 5</b>，而它沒有任何一個功能故障。<br>差別不在功能，在<b>預設值往哪邊倒</b>，以及出事時你手上有沒有東西。';
+    }
+  }
+
+  /* ---------- events ---------- */
+  $('runBtn').addEventListener('click', function(){ execute($('feed').value, -1); });
+  $('feed').addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){ e.preventDefault(); execute($('feed').value, -1); }
+  });
+  $('chips').addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('.chip') : null;
+    if(!b) return;
+    var i = +b.getAttribute('data-i');
+    $('feed').value = CASES[i].d;
+    execute(CASES[i].d, i);
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(document.activeElement === $('feed')) return;   // 打字時不搶按鍵
+    if(e.key >= '1' && e.key <= '5'){
+      var i = +e.key - 1;
+      $('feed').value = CASES[i].d;
+      execute(CASES[i].d, i);
+      return;
+    }
+    if(e.key === '0'){ reset(); return; }
+    if(e.key.toLowerCase() === 'r'){ $('kwbox').classList.toggle('on'); return; }
+    if(e.key.toLowerCase() === 'n'){
+      var nx = (state.idx + 1) % CASES.length;
+      $('feed').value = CASES[nx].d;
+      execute(CASES[nx].d, nx);
+      return;
+    }
+  });
+
+  function reset(){
+    state = { n:0, ea:0, eb:0, idx:-1, done:{} };
+    paintScore();
+    $('feed').value = '';
+    $('aVd').className = 'vd idle'; $('aBig').textContent = '等待輸入'; $('aConf').textContent = '';
+    $('bVd').className = 'vd idle'; $('bBig').textContent = '等待輸入'; $('bConf').textContent = '';
+    $('aWhy').innerHTML = ''; $('bWhy').innerHTML = '';
+    $('aBand').className = 'band'; $('bBand').className = 'band';
+    $('kwbox').classList.remove('on');
+    var cb = document.getElementById('cueBox'); if(cb) cb.className = 'cue';
+    Array.prototype.forEach.call($('chips').children, function(el){ el.setAttribute('aria-pressed','false'); });
+  }
+  $('resetBtn').addEventListener('click', reset);
+
+  $('fsBtn').addEventListener('click', function(){
+    if(document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+  });
+
+  paintScore();
+})();
+</script>
+</body>
+</html>
