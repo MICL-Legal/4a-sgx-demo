@@ -1,6 +1,6 @@
 # ============================================================
 # 4A 工作坊 · 一次裝好所有 skill (Windows PowerShell)
-#   需求逼結構(分診 -> 六問) + 目標契約(放手前的六格)
+#   需求逼結構(分診 -> 六問) + 交辦清單(放手前的六格)
 #
 # 這支只做一件事:把兩個 SKILL.md 寫進 %USERPROFILE%\.claude\skills\
 # 不連任何外部網路、不安裝任何套件、不改動其他檔案。內容全部明碼可讀。
@@ -9,7 +9,7 @@ $ErrorActionPreference = "Stop"
 
 $skills = Join-Path $env:USERPROFILE ".claude\skills"
 New-Item -ItemType Directory -Force -Path (Join-Path $skills "需求逼結構") | Out-Null
-New-Item -ItemType Directory -Force -Path (Join-Path $skills "目標契約")   | Out-Null
+New-Item -ItemType Directory -Force -Path (Join-Path $skills "交辦清單")   | Out-Null
 
 $s1 = @'
 ---
@@ -56,11 +56,11 @@ description: 當使用者說「我最近有一個需求」「我想要一個系�
 
 $s2 = @'
 ---
-name: 目標契約
+name: 交辦清單
 description: 當使用者想把一段工作「放手」交出去自己跑——說「我想放手讓 AI 自己跑…」「我要把這件事交給它一整晚」「幫我寫一個 goal／目標／交辦／委任」「設一個自動跑的目標」——時，先攔截判斷這件事能不能交給迴圈，再用固定順序把這份委任填成六格：終止狀態、證據、邊界、上限、停止點、未達成。停止點永遠放在不可逆動作前。做不到要回報，禁止假裝成功。
 ---
 
-# 目標契約（放手前的六格）
+# 交辦清單（放手前的六格）
 
 使用者想把一段工作「放手」交出去自己跑（交給 AI 迴圈，或交辦給人）時，你的工作是：先攔截，再用固定順序把這份委任填成六格，最後輸出一段可以直接執行／交辦的契約。
 
@@ -89,11 +89,11 @@ description: 當使用者想把一段工作「放手」交出去自己跑——�
 # UTF-8 無 BOM 寫入（避免 SKILL.md 開頭多出 BOM 讓 frontmatter 解析失敗）
 $enc = New-Object System.Text.UTF8Encoding $false
 [System.IO.File]::WriteAllText((Join-Path $skills "需求逼結構\SKILL.md"), $s1, $enc)
-[System.IO.File]::WriteAllText((Join-Path $skills "目標契約\SKILL.md"),   $s2, $enc)
+[System.IO.File]::WriteAllText((Join-Path $skills "交辦清單\SKILL.md"),   $s2, $enc)
 
 Write-Host ""
 Write-Host "[完成] 已裝好 2 個 skill 到: $skills"
 Write-Host "   - 需求逼結構 : 之後說「我最近有一個需求...」它就自動一題一題幫你把需求逼出結構"
-Write-Host "   - 目標契約   : 之後說「我要放手讓 AI 跑...」它就自動幫你把放手契約填好"
+Write-Host "   - 交辦清單   : 之後說「我要放手讓 AI 跑...」它就自動幫你把交辦清單填好"
 Write-Host "重開 Claude Code 就生效。"
 Get-ChildItem $skills | Select-Object Name
