@@ -1,0 +1,112 @@
+<title>1-5 · 把 Google Sheets 接進 Claude Code</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--paper:#f5f0e6;--card:#efe7d6;--card2:#e4dccb;--ink:#2b2620;--soft:#6d6456;--faint:#93897a;--line:#ddd1bc;--accent:#9a6634;--accent2:#b98a52;--good:#5a7d4a;--good-bg:#e4ecdc;--warn:#b0552a;--warn-bg:#f0e2d2;--paste:#2b2620;--paste-ink:#f0e6d4;--sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif;--serif:Georgia,"Songti TC","Noto Serif CJK TC",serif;--mono:ui-monospace,"SF Mono",Menlo,monospace;}
+  @media (prefers-color-scheme:dark){:root{--paper:#201c17;--card:#2a2419;--card2:#332b1e;--ink:#ece3d3;--soft:#b3a892;--faint:#8c8271;--line:#3a3226;--accent:#d09a5f;--accent2:#b6844f;--good:#8fb079;--good-bg:#2b3324;--warn:#d98a54;--warn-bg:#3a2c20;--paste:#15120d;--paste-ink:#ece3d3;}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;padding:clamp(.9rem,3vw,2rem)}
+  .wrap{max-width:760px;margin:0 auto}
+  .eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-family:var(--serif);font-size:clamp(1.6rem,5vw,2.1rem);margin:.3rem 0 .4rem}
+  .lede{color:var(--soft);max-width:40rem}
+  .note{border-radius:12px;padding:.85rem 1.05rem;margin:1rem 0;font-size:.95rem}
+  .note.pre{background:var(--card2);border:1px solid var(--line)}
+  .note.warn{background:var(--warn-bg);border-left:4px solid var(--warn)}
+  .note b{color:var(--ink)}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.2rem;margin:1rem 0}
+  .step .h{display:flex;align-items:baseline;gap:.6rem;margin-bottom:.5rem}
+  .step .n{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+  .step h2{font-family:var(--serif);font-size:1.22rem;line-height:1.3}
+  .must{font-size:.66rem;letter-spacing:.1em;font-weight:800;color:#fff;background:var(--warn);padding:.12rem .4rem;border-radius:5px;vertical-align:middle;margin-left:.3rem}
+  .lk{display:flex;align-items:center;justify-content:space-between;gap:.6rem;background:var(--paste);border-radius:11px;padding:.7rem .95rem;text-decoration:none;margin:.55rem 0;flex-wrap:wrap}
+  .lk .t{color:var(--paste-ink);font-weight:700;font-size:.9rem}
+  .lk .u{color:#c9a56f;font-family:var(--mono);font-size:.76rem;word-break:break-all}
+  .lk .go{flex:0 0 auto;background:var(--accent);color:#fff;font-weight:800;font-size:.82rem;padding:.35rem .8rem;border-radius:8px}
+  .row{margin:.5rem 0;font-size:.95rem}
+  .row .k{font-weight:800;color:var(--accent)}
+  .row.ok .k{color:var(--good)}
+  .row.no .k{color:var(--warn)}
+  .step b{font-weight:800}
+  code{font-family:var(--mono);background:var(--card2);padding:.1rem .34rem;border-radius:4px;font-size:.85em;color:var(--accent);word-break:break-all}
+  .cmd{background:var(--paste);border-radius:12px;padding:.8rem .9rem;margin:.5rem 0;overflow:auto}
+  .cmd pre{margin:0;font-family:var(--mono);font-size:.8rem;line-height:1.6;color:var(--paste-ink);white-space:pre-wrap;word-break:break-all}
+  .cmd .os{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#b9a986;font-weight:700;margin-bottom:.3rem}
+  h3{font-family:var(--serif);font-size:1.3rem;margin:1.8rem 0 .5rem;border-top:3px solid var(--accent);padding-top:.7rem;display:inline-block}
+  table{width:100%;border-collapse:collapse;font-size:.86rem;margin:.6rem 0}
+  th{background:var(--ink);color:var(--paper);text-align:left;padding:.5rem .55rem;font-size:.78rem}
+  td{padding:.5rem .55rem;border-bottom:1px solid var(--line);vertical-align:top}
+  .foot{text-align:center;color:var(--faint);font-size:.78rem;margin-top:2rem}
+</style>
+<div class="wrap">
+  <p class="eyebrow">會前會 · 1-5</p>
+  <h1>把 Google Sheets 接進 Claude Code</h1>
+  <p class="lede">做完這頁,你打一句話 Claude Code 就能讀寫你的 Google 試算表(這就是 Devin 飲料店那個「說→做」的底層)。跟著做、每一步都有直接連結,不用自己找。</p>
+
+  <div class="note pre">
+    <b>開始前(必讀兩點):</b><br>
+    1. 用你的公司 Google 帳號登入 <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a>(看到「同意條款」先同意)。<br>
+    2. <b>認明專案名稱。</b>每個連結打開後,看畫面<b>最上方那條藍色列</b>——它會顯示你現在選到的專案。<b>下面 5 步一定要在「同一個專案」裡做完</b>,不然最後工具讀不到東西(這是最常見的失敗)。列上不是你的專案?點它 → 選你的專案。
+  </div>
+
+  <div class="step">
+    <div class="h"><span class="n">1</span><h2>建立專案<span class="must">必做</span></h2></div>
+    <a class="lk" href="https://console.cloud.google.com/projectcreate" target="_blank"><span class="t">打開「建立專案」頁</span><span class="u">console.cloud.google.com/projectcreate</span><span class="go">開 ↗</span></a>
+    <div class="row"><span class="k">做:</span> 在 <b>Project name</b> 欄輸入好記的名字(例 <code>gsheets-workshop</code>)→ 按左下角藍色 <b>CREATE</b>。</div>
+    <div class="row ok"><span class="k">成功長這樣:</span> 約 10–30 秒後,最上方藍色列變成你的專案名。<b>點藍色列 → 記下那串 Project ID</b>(像 <code>gsheets-workshop-471203</code>,全小寫含數字)——這串等下指令要用,<b>不是</b>中文顯示名。</div>
+    <div class="row no"><span class="k">別碰:</span> <b>Location/Organization</b> 保持預設(個人帳號多半顯示 No organization)。ID 不用按 Edit(建好不能改)。</div>
+  </div>
+
+  <div class="step">
+    <div class="h"><span class="n">2</span><h2>開啟 Google Sheets API<span class="must">必做</span></h2></div>
+    <a class="lk" href="https://console.cloud.google.com/apis/library/sheets.googleapis.com" target="_blank"><span class="t">打開「Google Sheets API」頁</span><span class="u">console.cloud.google.com/apis/library/sheets.googleapis.com</span><span class="go">開 ↗</span></a>
+    <div class="row"><span class="k">做:</span> 按藍色 <b>ENABLE</b>(啟用)。</div>
+    <div class="row ok"><span class="k">成功長這樣:</span> 頁面重整,原本的 <b>ENABLE</b> 消失、變成 <b>MANAGE</b>(管理)。看到 MANAGE = 開好了。</div>
+    <div class="row no"><span class="k">別碰:</span> 按之前<b>先確認藍色列是步驟 1 那個專案</b>(在錯的專案開 API 是常見錯)。頁面上的「建立憑證」按鈕這步先別按。</div>
+  </div>
+
+  <div class="step">
+    <div class="h"><span class="n">3</span><h2>建立服務帳戶(Service Account)<span class="must">必做</span></h2></div>
+    <a class="lk" href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank"><span class="t">打開「服務帳戶」頁</span><span class="u">console.cloud.google.com/iam-admin/serviceaccounts</span><span class="go">開 ↗</span></a>
+    <div class="row"><span class="k">做:</span> 頁面頂端按 <b>+ CREATE SERVICE ACCOUNT</b> → 在名稱欄輸入(例 <code>sheets-bot</code>)→ <b>直接按 DONE</b>。</div>
+    <div class="row ok"><span class="k">成功長這樣:</span> 回到列表,多一列,<b>Email 欄</b>是一長串、結尾 <code>@你的專案.iam.gserviceaccount.com</code>。看到這個 email 就成功(下一步、第 5 步都要用它)。</div>
+    <div class="row no"><span class="k">別碰(重要):</span> 按完名稱若跳出第二個面板「授予角色(選用)」——<b>不要選任何角色,直接 DONE 跳過</b>。權限靠第 5 步「分享那張表」給它就好,給專案角色反而多餘、還可能被公司政策擋。</div>
+  </div>
+
+  <div class="step">
+    <div class="h"><span class="n">4</span><h2>幫它產生 JSON 金鑰<span class="must">必做</span></h2></div>
+    <div class="row"><span class="k">做:</span> 點步驟 3 那個<b>服務帳戶的 email</b>(藍字)進去 → 上方 <b>KEYS</b> 分頁 → <b>ADD KEY</b> → <b>Create new key</b> → 選 <b>JSON</b> → <b>CREATE</b>。</div>
+    <div class="row ok"><span class="k">成功長這樣:</span> 瀏覽器<b>自動下載一個 <code>.json</code> 檔</b>(通常在「下載」資料夾),並跳「Private key saved」。<b>這個 .json 的完整路徑,就是等下指令裡的金鑰路徑。</b></div>
+    <div class="row no"><span class="k">別碰(重要):</span> Key type 保持 <b>JSON</b>。<b>這檔只會下載這一次、無法重載</b>——把它從「下載」移到一個路徑<b>不含空格</b>的固定資料夾(Mac 例 <code>~/gsheets-key/</code>、Win 例 <code>C:/gsheets-key/</code>)。<b>這是密碼等級機密:不要 email、不上傳、不放 git。</b></div>
+    <div class="note pre" style="margin:.6rem 0 0"><b>拿到完整路徑:</b> Mac — 把檔案拖進終端機會自動貼路徑;Windows — 對檔案按住 <b>Shift + 右鍵 → 複製為路徑</b>,再把 <code>\</code> 換成 <code>/</code>。</div>
+  </div>
+
+  <div class="step">
+    <div class="h"><span class="n">5</span><h2>把 Demo 試算表「分享」給服務帳戶<span class="must">必做</span></h2></div>
+    <div class="note warn" style="margin:.2rem 0 .7rem"><b>少了這一步,工具什麼都看不到——這是最常見的卡關。</b></div>
+    <div class="row"><span class="k">做:</span> 打開你的 Demo Google Sheet → 右上角 <b>共用/Share</b> → 貼上服務帳戶的 email(第 3/4 步那個 <code>…@專案.iam.gserviceaccount.com</code>)→ 角色選 <b>Editor(編輯者)</b> → <b>取消勾「通知使用者/Notify people」</b> → 按 <b>共用/Share</b>。</div>
+    <div class="row ok"><span class="k">成功長這樣:</span> 再按一次共用,「有存取權的人」清單裡看得到那個服務帳戶 email、標示 Editor。</div>
+    <div class="row no"><span class="k">別碰:</span> 角色<b>務必 Editor</b>(選 Viewer 就不能寫入)。<b>一定要取消「通知使用者」</b>(服務帳戶沒信箱,寄了沒人收)。「一般存取權」保持 Restricted 即可,不用開成「任何知道連結的人」。</div>
+    <div class="note pre" style="margin:.6rem 0 0">email 從哪來:服務帳戶列表的 Email 欄直接複製;或用記事本打開第 4 步的 JSON,裡面 <code>client_email</code> 那行就是。</div>
+  </div>
+
+  <h3>最後一步:跑一行,接好</h3>
+  <p class="lede" style="margin-bottom:.4rem">你不用碰任何設定檔——把上面 JSON 的路徑貼進下面那行的引號中間,跑一次就接好(它會自動讀出 project id)。</p>
+  <div class="cmd"><div class="os">Mac</div><pre>bash &lt;(curl -fsSL https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-sheets-mcp.sh) "把你的JSON完整路徑貼這裡"</pre></div>
+  <div class="cmd"><div class="os">Windows PowerShell</div><pre>iwr https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-sheets-mcp.ps1 -OutFile "$env:TEMP\s.ps1"; &amp; "$env:TEMP\s.ps1" "把你的JSON完整路徑貼這裡"</pre></div>
+  <div class="note pre"><b>✓ 成功長這樣:</b> 重開 Claude Code、打 <code>claude mcp list</code>,看到 <code>mcp-gsheets ✔ Connected</code> 就通了(第一次可能等 ~30 秒下載)。之後在 Claude 裡說「把這筆寫進我的 XX 試算表」就會動。</div>
+
+  <h3>卡關表</h3>
+  <div style="overflow-x:auto"><table>
+    <tr><th>症狀</th><th>原因</th><th>怎麼解</th></tr>
+    <tr><td>找不到按鈕(ENABLE / CREATE SERVICE ACCOUNT / ADD KEY)</td><td>沒選到專案,或頁面還在載/被同意條款蓋住</td><td>先看藍色列有沒有你的專案;用本頁直達連結重開;等頁面載完</td></tr>
+    <tr><td>按鈕灰色按不下去</td><td>名稱欄沒填、正在載入、或你在該專案沒權限</td><td>先填必填的名稱欄;等轉圈跑完;仍反灰多半是權限(見下列)</td></tr>
+    <tr><td>選錯專案(在別的專案建了)</td><td>藍色列停在舊專案</td><td>點藍色列切回正確專案,5 步在同一專案重做;建錯的可留著不管</td></tr>
+    <tr><td><b>Permission denied / 403</b></td><td>①你不是該專案 Owner/Editor;或 ②忘了第 5 步 / 分享成 Viewer</td><td>①用你<b>自己建的</b>專案(你就是 Owner);②回第 5 步,確認 Sheet 已用 <b>Editor</b> 分享給服務帳戶 email</td></tr>
+    <tr><td>JSON 檔找不到 / 想重載</td><td>金鑰只能下載一次</td><td>不能重載;回第 4 步<b>再建一把新 JSON</b>即可(舊的可在 KEYS 刪)</td></tr>
+    <tr><td>工具連上了但「看不到任何資料」</td><td>沒分享 Sheet 給服務帳戶(第 5 步)</td><td>幾乎一定是第 5 步——把 Sheet 以 Editor 分享給服務帳戶 email</td></tr>
+    <tr><td>(Windows)mcp list 有 mcp-gsheets 但連不上</td><td>少了 <code>cmd /c</code>,或 Node 不在 PATH / 用了 nvm-windows</td><td>用本頁的 Windows 指令(內含 <code>cmd /c</code>);Node 改用 nodejs.org 官方安裝檔;重開終端機</td></tr>
+    <tr><td>project id 放錯(填了顯示名)</td><td>名稱 vs ID 混淆</td><td>用全小寫含數字的 <b>Project ID</b>(如 <code>gsheets-workshop-471203</code>),不是中文顯示名——一鍵腳本會自動抓,免煩惱</td></tr>
+  </table></div>
+
+  <p class="foot">4A AI 工作坊 · 會前會 1-5 · 服務帳戶版(2026 官方文件核對)</p>
+</div>
