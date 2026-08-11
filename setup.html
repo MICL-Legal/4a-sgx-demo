@@ -91,19 +91,6 @@
 </div>
 
 <script>
-  // ↙↙↙ 工作坊當天：把「各部門」的 API key 填進下面每個 key:'' 的引號中間，存檔重新發布；課後清空、並到 console 停用/刪除。部門名可自行增減改名。
-  const DEPTS = [
-    {n:'法務', key:''},
-    {n:'業務', key:''},
-    {n:'採購', key:''},
-    {n:'人資 HR', key:''},
-    {n:'品保', key:''},
-    {n:'財務', key:''},
-    {n:'行政', key:''},
-    {n:'廠務', key:''},
-    {n:'資訊', key:''},
-    {n:'研發', key:''}
-  ];
   const steps=[
     {t:'裝你的 AI 主角',no:'1-1',desc:'主角 Claude Code；Codex／Antigravity 下課自選',
      why:'今天的主角——一個坐你旁邊、聽你打字指揮、<b>直接幫你動手</b>的 AI（Claude Code），住在「終端機」裡。<b>上課統一用這個。</b>另外兩個（Codex、Antigravity）是下課想自己玩再裝，完整步驟都收在下面。',
@@ -130,7 +117,7 @@
      links:[{n:'Make（自動化）',u:'make.com'},{n:'Google 帳號',u:'accounts.google.com'},{n:'GitHub',u:'github.com/signup'}],
      ok:'三個都能登入，就過關。'}
   ];
-  let cur=0, os='mac', dept=-1, done=Array(steps.length).fill(false);
+  let cur=0, os='mac', userkey='', done=Array(steps.length).fill(false);
   const $=id=>document.getElementById(id);
   function renderRail(){
     $('rail').innerHTML=steps.map((s,k)=>`<div class="rstep ${k===cur?'cur':''} ${done[k]?'done':''}" data-k="${k}"><span class="dot">${done[k]?'✓':k+1}</span><div class="rtx"><span class="rt">${s.no}　${s.t}</span><span class="rd">${s.desc}</span></div></div>`).join('');
@@ -144,13 +131,13 @@
     $('barlab').textContent=s.no+' · 第 '+(cur+1)+' 步 / 共 '+steps.length+' 步';
     let body=`<div class="stepno">${s.no}　·　第 ${cur+1} 步 / 共 ${steps.length} 步</div><h2>${s.t}</h2><div class="why">${s.why}</div>`;
     if(s.keyslot){
-      body+='<p class="do">第 1 步　先選你的部門：</p><select id="deptsel" class="deptsel"><option value="-1">— 選你的部門 —</option>'+DEPTS.map(function(d,di){return '<option value="'+di+'"'+(di===dept?' selected':'')+'>'+d.n+'</option>';}).join('')+'</select>';
-      var k=(dept>=0&&DEPTS[dept].key&&DEPTS[dept].key.trim())?DEPTS[dept].key:'';
-      var keyval=k?k:'貼上你部門的_KEY';
-      var cmdline=(os==='win')?('setx ANTHROPIC_API_KEY "'+keyval+'"'):('export ANTHROPIC_API_KEY="'+keyval+'"');
-      var lab=dept<0?'第 2 步　選了部門，這一整行指令會出現在這（已含你的鑰匙）':(k?('第 2 步　「'+DEPTS[dept].n+'」的鑰匙指令 —— 按右邊「複製整行」'):('第 2 步　'+DEPTS[dept].n+'（鑰匙當天由主辦填入）'));
-      var showText=(dept<0)?'（先在上面選你的部門）':cmdline;
-      body+='<div class="cmd keybox"><div class="top"><span class="t">'+lab+'</span>'+((dept>=0)?('<button class="copy" data-cmd="'+cmdline.replace(/"/g,'&quot;')+'">複製整行</button>'):'')+'</div><pre>'+showText.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre></div>';
+      body+='<p class="do">第 1 步　把主辦發給你的 API key 貼在這個欄位：</p>';
+      body+='<input id="keyin" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.86rem" placeholder="貼上 sk-ant-… 開頭那一整串" value="'+(userkey||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">';
+      var kv=(userkey&&userkey.trim())?userkey.trim():'貼上你的KEY';
+      var cmdline=(os==='win')?('setx ANTHROPIC_API_KEY "'+kv+'"'):('export ANTHROPIC_API_KEY="'+kv+'"');
+      body+='<p class="do">第 2 步　你的完整指令會自動長出來 —— 按「複製整行」：</p>';
+      body+='<div class="cmd keybox"><div class="top"><span class="t">'+(os==='win'?'Windows 版（setx）':'Mac 版（export）')+'</span><button class="copy" id="keycopy" data-cmd="'+cmdline.replace(/"/g,'&quot;')+'">複製整行</button></div><pre id="keyout">'+cmdline.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre></div>';
+      body+='<div class="ok" style="background:var(--card2);color:var(--soft);margin-top:.2rem"><span class="c" style="color:var(--accent);white-space:nowrap">🔒 放心</span><span>你貼的 key 只留在你自己這台的瀏覽器裡，不會上傳到任何地方——這頁沒有伺服器、不記錄；關掉分頁就沒了。</span></div>';
       if(os==='win'){
         body+='<p class="do">第 3 步　打開「Windows Terminal」（不是 CMD）。<br>第 4 步　貼上剛剛複製的那一整行、按 Enter。<br>第 5 步　<b>把 Windows Terminal 關掉、重新打開一次</b>（Windows 用 setx，要重開才生效）。</p>';
       }else{
@@ -166,7 +153,7 @@
     body+=`<div class="nav">${cur>0?'<button class="prev" id="prev">上一步</button>':''}<button class="next" id="next">✓ 我做好了，下一步</button></div>`;
     $('panel').innerHTML=body;
     $('panel').querySelectorAll('.copy').forEach(cp=>{cp.onclick=()=>{try{navigator.clipboard.writeText(cp.dataset.cmd.replace(/&quot;/g,'"'));}catch(e){}const t=cp.textContent;cp.textContent='已複製 ✓';setTimeout(()=>cp.textContent=t,1500);};});
-    var ds=$('deptsel');if(ds)ds.onchange=function(){dept=+ds.value;render();};
+    var ki=$('keyin');if(ki){ki.oninput=function(){userkey=ki.value;var kv=(userkey&&userkey.trim())?userkey.trim():'貼上你的KEY';var cmd=(os==='win')?('setx ANTHROPIC_API_KEY "'+kv+'"'):('export ANTHROPIC_API_KEY="'+kv+'"');if($('keyout'))$('keyout').textContent=cmd;if($('keycopy'))$('keycopy').setAttribute('data-cmd',cmd);};}
     $('next').onclick=()=>{done[cur]=true;cur++;render();};
     if($('prev'))$('prev').onclick=()=>{cur--;render();};
     renderRail();
