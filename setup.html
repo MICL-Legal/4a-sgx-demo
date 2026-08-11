@@ -92,16 +92,16 @@
 
 <script>
   const steps=[
-    {t:'裝你的 AI 主角',no:'1-1',desc:'主角 Claude Code；Codex／Antigravity 下課自選',
+    {t:'貼上 API key',no:'1-1',desc:'讓 AI 動起來的鑰匙，工作坊直接發給你',
+     why:'這是讓 AI 動起來的「鑰匙」。<b>工作坊直接發一把（公司的）key 給你</b>——你<b>不用有 Claude 帳號、不用訂閱、不用花錢</b>。<b>先把 key 放好（這一步），等下裝好打 claude 就直接能用，不會叫你登入任何帳號。</b>',
+     keyslot:true,
+     ok:'終端機沒跳出紅色錯誤訊息 = 這把 key 已經放好。先別急著打 claude——下一步（1-2）把它裝起來，才會用到這把 key。'},
+    {t:'裝你的 AI 主角',no:'1-2',desc:'主角 Claude Code；Codex／Antigravity 下課自選',
      why:'今天的主角——一個坐你旁邊、聽你打字指揮、<b>直接幫你動手</b>的 AI（Claude Code），住在「終端機」裡。<b>上課統一用這個。</b>另外兩個（Codex、Antigravity）是下課想自己玩再裝，完整步驟都收在下面。',
      mac:{do:'① 用放大鏡（Spotlight）搜 <b>Terminal</b> 打開。② 把這行貼進去、按 Enter：',cmd:'curl -fsSL https://claude.ai/install.sh | bash'},
      win:{do:'① 開「Windows Terminal」（<b>不是 CMD</b>）。② 把這行貼進去、按 Enter：',cmd:'irm https://claude.ai/install.ps1 | iex'},
-     ok:'重開終端機、打 claude 進得去（出現對話畫面）= 裝好了。',
+     ok:'裝好後重開終端機、打 claude → 它問「信任這把 key 嗎？」→ 按信任（y）→ 進到對話畫面 = 成功。因為 key 上一步已放好（重開也不會掉），不會叫你登入 Claude 帳號。',
      extra:'<details class="ex"><summary>加裝 Codex（OpenAI，用你自己的 ChatGPT）· 完整步驟</summary><div class="exb"><b>下課自選，上課用不到。</b>用你自己的 ChatGPT 訂閱（需 Plus 以上；免費版不一定能用）。<br><br><b>① 裝 · Mac：</b>終端機貼這行、按 Enter：<br><code>curl -fsSL https://chatgpt.com/codex/install.sh | sh</code><br><b>① 裝 · Windows：</b>Windows Terminal 貼這行、按 Enter：<br><code>irm https://chatgpt.com/codex/install.ps1 | iex</code><br><br><b>② 開 + 登入：</b>打 <code>codex</code> 按 Enter → 選「Sign in with ChatGPT」→ 會自動跳出瀏覽器、用你的 ChatGPT 帳號登入 → 登入成功回到終端機就能用。<br><b>成功長這樣：</b>打 codex 出現對話畫面。</div></details><details class="ex"><summary>加裝 Antigravity（Google，是一個 App）· 完整步驟</summary><div class="exb"><b>下課自選，上課用不到。</b>注意：它是<b>一個要下載的桌面 App（不是終端機指令）</b>，而且<b>只能用個人 @gmail 登入，公司的 Google 帳號會被擋掉</b>。<br><br><b>① 下載：</b>瀏覽器開 <a href="https://antigravity.google/download" target="_blank" rel="noopener">antigravity.google/download</a>。Mac 選「Apple Silicon」（較新 M 系列）或「Intel」（較舊）；Windows 選 Windows（x64）。<br><b>② 安裝：</b>打開下載好的安裝檔，照畫面按「下一步」裝完。<br><b>③ 開 + 登入：</b>從「應用程式」／開始選單打開 Antigravity → 用<b>個人 Google（@gmail）</b>帳號登入 → 跳瀏覽器登入後自動回到 App。<br><b>成功長這樣：</b>進到 Antigravity 的編輯器畫面。</div></details>'},
-    {t:'貼上 API key',no:'1-2',desc:'讓 AI 動起來的鑰匙，工作坊直接發給你',
-     why:'這是讓 AI 動起來的「鑰匙」。<b>工作坊直接發一把（公司的）key 給你</b>——你不用有 Claude 訂閱、不用自己申請、不用花錢（用量算公司的）。',
-     keyslot:true,
-     ok:'打 claude 能正常回你話 = 通了。'},
     {t:'裝地基工具',no:'1-3',desc:'git、Python 等，一行全裝，讓 AI 能做更多',
      why:'這些是地基（<b>git、Python</b> 等），讓 AI 能幫你抓別人的專案、跑程式、做更多事。一行一次裝好。',
      mac:{do:'貼這一整行、按 Enter，等它跑完：',cmd:'xcode-select --install 2>/dev/null; curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH="$HOME/.local/bin:$PATH" && uv python install 3.11 && echo "地基裝好了"'},
@@ -134,7 +134,7 @@
       body+='<p class="do">第 1 步　把主辦發給你的 API key 貼在這個欄位：</p>';
       body+='<input id="keyin" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.86rem" placeholder="貼上 sk-ant-… 開頭那一整串" value="'+(userkey||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">';
       var kv=(userkey&&userkey.trim())?userkey.trim():'貼上你的KEY';
-      var cmdline=(os==='win')?('setx ANTHROPIC_API_KEY "'+kv+'"'):('export ANTHROPIC_API_KEY="'+kv+'"');
+      var cmdline=(os==='win')?('setx ANTHROPIC_API_KEY "'+kv+'"'):('echo \'export ANTHROPIC_API_KEY="'+kv+'"\' >> ~/.zshrc && export ANTHROPIC_API_KEY="'+kv+'"');
       body+='<p class="do">第 2 步　你的完整指令會自動長出來 —— 按「複製整行」：</p>';
       body+='<div class="cmd keybox"><div class="top"><span class="t">'+(os==='win'?'Windows 版（setx）':'Mac 版（export）')+'</span><button class="copy" id="keycopy" data-cmd="'+cmdline.replace(/"/g,'&quot;')+'">複製整行</button></div><pre id="keyout">'+cmdline.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre></div>';
       body+='<div class="ok" style="background:var(--card2);color:var(--soft);margin-top:.2rem"><span class="c" style="color:var(--accent);white-space:nowrap">🔒 放心</span><span>你貼的 key 只留在你自己這台的瀏覽器裡，不會上傳到任何地方——這頁沒有伺服器、不記錄；關掉分頁就沒了。</span></div>';
@@ -153,7 +153,7 @@
     body+=`<div class="nav">${cur>0?'<button class="prev" id="prev">上一步</button>':''}<button class="next" id="next">✓ 我做好了，下一步</button></div>`;
     $('panel').innerHTML=body;
     $('panel').querySelectorAll('.copy').forEach(cp=>{cp.onclick=()=>{try{navigator.clipboard.writeText(cp.dataset.cmd.replace(/&quot;/g,'"'));}catch(e){}const t=cp.textContent;cp.textContent='已複製 ✓';setTimeout(()=>cp.textContent=t,1500);};});
-    var ki=$('keyin');if(ki){ki.oninput=function(){userkey=ki.value;var kv=(userkey&&userkey.trim())?userkey.trim():'貼上你的KEY';var cmd=(os==='win')?('setx ANTHROPIC_API_KEY "'+kv+'"'):('export ANTHROPIC_API_KEY="'+kv+'"');if($('keyout'))$('keyout').textContent=cmd;if($('keycopy'))$('keycopy').setAttribute('data-cmd',cmd);};}
+    var ki=$('keyin');if(ki){ki.oninput=function(){userkey=ki.value;var kv=(userkey&&userkey.trim())?userkey.trim():'貼上你的KEY';var cmd=(os==='win')?('setx ANTHROPIC_API_KEY "'+kv+'"'):('echo \'export ANTHROPIC_API_KEY="'+kv+'"\' >> ~/.zshrc && export ANTHROPIC_API_KEY="'+kv+'"');if($('keyout'))$('keyout').textContent=cmd;if($('keycopy'))$('keycopy').setAttribute('data-cmd',cmd);};}
     $('next').onclick=()=>{done[cur]=true;cur++;render();};
     if($('prev'))$('prev').onclick=()=>{cur--;render();};
     renderRail();
