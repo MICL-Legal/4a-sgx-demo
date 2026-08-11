@@ -1,0 +1,170 @@
+<title>4A 裝機精靈</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --paper:#f5f0e6;--card:#efe7d6;--card2:#e4dccb;--ink:#2b2620;--soft:#6d6456;--faint:#93897a;--line:#ddd1bc;
+    --accent:#9a6634;--accent2:#b98a52;--good:#5a7d4a;--good-bg:#e4ecdc;--paste:#2b2620;--paste-ink:#f0e6d4;
+    --sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif;
+    --serif:Georgia,"Songti TC","Noto Serif CJK TC",serif;--mono:ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root{--paper:#201c17;--card:#2a2419;--card2:#332b1e;--ink:#ece3d3;--soft:#b3a892;--faint:#8c8271;--line:#3a3226;--accent:#d09a5f;--accent2:#b6844f;--good:#8fb079;--good-bg:#2b3324;--paste:#15120d;--paste-ink:#ece3d3;}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;padding:clamp(.8rem,3vw,2rem)}
+  .wrap{max-width:1000px;margin:0 auto}
+  header{margin-bottom:1.2rem}
+  .eyebrow{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-family:var(--serif);font-size:clamp(1.6rem,5vw,2.2rem);margin:.3rem 0 .3rem}
+  .lede{color:var(--soft);font-size:1rem;max-width:36rem}
+  .bar{height:8px;background:var(--card2);border-radius:99px;overflow:hidden;margin:1rem 0 .4rem}
+  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:99px;transition:width .4s}
+  .barlab{font-size:.82rem;color:var(--faint);font-weight:700;text-align:right}
+  .osrow{display:flex;gap:.5rem;align-items:center;margin:1rem 0 1.2rem}
+  .osrow .k{font-size:.85rem;color:var(--soft);font-weight:600;margin-right:.2rem}
+  .seg{display:inline-flex;background:var(--card2);border-radius:10px;padding:3px}
+  .seg button{font-family:inherit;font-size:.9rem;font-weight:700;border:0;background:transparent;color:var(--soft);padding:.45rem 1.1rem;border-radius:8px;cursor:pointer}
+  .seg button.on{background:var(--accent);color:#fff}
+
+  .layout{display:grid;grid-template-columns:320px 1fr;gap:1.3rem;align-items:start}
+  @media(max-width:720px){.layout{grid-template-columns:1fr}}
+  .rail{display:flex;flex-direction:column;gap:.7rem}
+  .rstep{display:flex;align-items:flex-start;gap:.8rem;padding:.85rem .95rem;border-radius:13px;cursor:pointer;background:var(--card);border:1px solid var(--line);transition:border-color .15s}
+  .rstep:hover{border-color:var(--accent2)}
+  .rstep.cur{border-color:var(--accent);border-width:2px}
+  .rstep .dot{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--card2);color:var(--faint);font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center;border:2px solid var(--line);margin-top:1px}
+  .rstep.cur .dot{border-color:var(--accent);color:var(--accent);background:var(--paper)}
+  .rstep.done .dot{background:var(--accent);border-color:var(--accent);color:#fff}
+  .rtx{display:flex;flex-direction:column;gap:2px}
+  .rt{font-size:.98rem;font-weight:700;line-height:1.3}
+  .rd{font-size:.8rem;color:var(--soft);line-height:1.45}
+  .rstep.done .rt{color:var(--faint)}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(1.1rem,3vw,1.7rem)}
+  .stepno{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  .panel h2{font-family:var(--serif);font-size:1.5rem;margin:.25rem 0 .5rem}
+  .why{background:var(--card2);border-radius:10px;padding:.7rem .9rem;font-size:.95rem;color:var(--soft);margin-bottom:1.1rem}
+  .why b{color:var(--ink)}
+  .do{font-weight:700;margin:.2rem 0 .5rem}
+  .cmd{background:var(--paste);border-radius:12px;overflow:hidden;margin:.5rem 0 1rem}
+  .cmd.keybox{border:2px solid var(--accent)}
+  .cmd .top{display:flex;align-items:center;justify-content:space-between;padding:.5rem .8rem;border-bottom:1px solid rgba(255,255,255,.08)}
+  .cmd .top .t{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#b9a986;font-weight:700}
+  .cmd .copy{font-family:inherit;font-size:.8rem;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:7px;padding:.35rem .8rem;cursor:pointer}
+  .cmd pre{margin:0;padding:.85rem .9rem;font-family:var(--mono);font-size:.82rem;line-height:1.65;color:var(--paste-ink);white-space:pre-wrap;word-break:break-all;max-height:180px;overflow:auto}
+  details.ex{margin:.2rem 0 1rem;background:var(--card2);border:1px solid var(--line);border-radius:10px}
+  details.ex summary{cursor:pointer;padding:.7rem .9rem;font-weight:700;font-size:.9rem;color:var(--accent);list-style:none}
+  details.ex summary::-webkit-details-marker{display:none}
+  details.ex summary::before{content:"＋ ";font-weight:800}
+  details.ex[open] summary::before{content:"− "}
+  details.ex .exb{padding:0 .9rem .9rem;font-size:.88rem;line-height:1.7;color:var(--soft)}
+  .panel code{font-family:var(--mono);background:var(--card2);padding:.1rem .35rem;border-radius:4px;font-size:.85em;color:var(--accent)}
+  .deptsel{font-family:inherit;font-size:1rem;font-weight:700;padding:.6rem .9rem;border-radius:10px;border:2px solid var(--accent);background:var(--card2);color:var(--ink);margin-bottom:.9rem;cursor:pointer;width:100%;max-width:300px}
+  .links{display:flex;flex-direction:column;gap:.5rem;margin:.3rem 0 1rem}
+  .lk{display:flex;align-items:center;justify-content:space-between;background:var(--card2);border-radius:10px;padding:.7rem .9rem;text-decoration:none;color:var(--ink);font-weight:600}
+  .lk .u{font-size:.82rem;color:var(--accent);font-family:var(--mono)}
+  .ok{display:flex;gap:.5rem;align-items:flex-start;background:var(--good-bg);border-radius:10px;padding:.7rem .9rem;font-size:.92rem;margin:.2rem 0 1.2rem}
+  .ok .c{color:var(--good);font-weight:800}
+  .nav{display:flex;gap:.7rem;flex-wrap:wrap}
+  button.next{font-family:inherit;font-size:1rem;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:11px;padding:.75rem 1.4rem;cursor:pointer}
+  button.prev{font-family:inherit;font-size:.95rem;font-weight:600;background:transparent;color:var(--soft);border:1px solid var(--line);border-radius:11px;padding:.75rem 1.1rem;cursor:pointer}
+  .done-panel{text-align:center;padding:2rem 1rem}
+  .done-panel .big{font-family:var(--serif);font-size:1.8rem;color:var(--accent);margin:.4rem 0}
+  .done-panel p{color:var(--soft);max-width:26rem;margin:.4rem auto}
+  .foot{text-align:center;color:var(--faint);font-size:.78rem;margin-top:1.4rem}
+</style>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">上課前 · 10 分鐘</p>
+    <h1>4A 裝機精靈</h1>
+    <p class="lede">一步一步跟著做，把電腦準備好。每一步只做一件事，做完按「下一步」就跳到下一步——不會迷路。</p>
+    <div class="bar"><i id="fill"></i></div>
+    <div class="barlab" id="barlab">第 1 步 / 共 5 步</div>
+    <div class="osrow">
+      <span class="k">你的電腦是：</span>
+      <div class="seg"><button id="mac" class="on">Mac</button><button id="win">Windows</button></div>
+    </div>
+  </header>
+  <div class="layout">
+    <div class="rail" id="rail"></div>
+    <div class="panel" id="panel"></div>
+  </div>
+  <p class="foot">4A AI 工作坊 · 裝機精靈　|　上課統一用 Claude Code；下課可自行改用 Codex／Antigravity</p>
+</div>
+
+<script>
+  // ↙↙↙ 工作坊當天：把「各部門」的 API key 填進下面每個 key:'' 的引號中間，存檔重新發布；課後清空、並到 console 停用/刪除。部門名可自行增減改名。
+  const DEPTS = [
+    {n:'法務', key:''},
+    {n:'業務', key:''},
+    {n:'採購', key:''},
+    {n:'人資 HR', key:''},
+    {n:'品保', key:''},
+    {n:'財務', key:''},
+    {n:'行政', key:''},
+    {n:'廠務', key:''},
+    {n:'資訊', key:''},
+    {n:'研發', key:''}
+  ];
+  const steps=[
+    {t:'裝你的 AI 主角',desc:'今天的主角：一個聽你講、幫你動手的 AI',
+     why:'今天的主角——一個坐你旁邊、聽你打字指揮、<b>直接幫你動手</b>的 AI（Claude Code），住在「終端機」裡。<b>上課統一用這個。</b>',
+     mac:{do:'① 用放大鏡（Spotlight）搜 <b>Terminal</b> 打開。② 把這行貼進去、按 Enter：',cmd:'curl -fsSL https://claude.ai/install.sh | bash'},
+     win:{do:'① 開「Windows Terminal」（<b>不是 CMD</b>）。② 把這行貼進去、按 Enter：',cmd:'irm https://claude.ai/install.ps1 | iex'},
+     ok:'重開終端機、打 claude 進得去（出現對話畫面）= 裝好了。',
+     extra:'<details class="ex"><summary>下課後想用「你自己訂閱」的帳號？點開</summary><div class="exb"><b>上課統一用 Claude Code（工作坊發 key，見下一步）。</b>下課後你也能裝成自己的帳號：<br>・<b>Codex</b>——用你自己的 ChatGPT 訂閱（命令 <code>codex</code>）<br>・<b>Antigravity</b>——用公司訂閱的 Google 帳號（命令 <code>agy</code>，不是 antigravity）<br>逐步安裝見工作坊「AI 編碼工具安裝中心」那頁（Mac／Windows 各有）。</div></details>'},
+    {t:'貼上 API key',desc:'讓 AI 動起來的鑰匙，工作坊直接發給你',
+     why:'這是讓 AI 動起來的「鑰匙」。<b>工作坊直接發一把（公司的）key 給你</b>——你不用有 Claude 訂閱、不用自己申請、不用花錢（用量算公司的）。',
+     keyslot:true,
+     doonly:'複製上面那把 key。打開終端機，貼這行、把 <code>KEY</code> 換成你的 key：<br><code>export ANTHROPIC_API_KEY="KEY"</code>（Windows 改用 <code>setx ANTHROPIC_API_KEY "KEY"</code>）。Windows 設完要<b>重開終端機</b>。',
+     ok:'打 claude 能正常回你話 = 通了。'},
+    {t:'裝地基工具',desc:'git、Python 等，一行全裝，讓 AI 能做更多',
+     why:'這些是地基（<b>git、Python</b> 等），讓 AI 能幫你抓別人的專案、跑程式、做更多事。一行一次裝好。',
+     mac:{do:'貼這一整行、按 Enter，等它跑完：',cmd:'xcode-select --install 2>/dev/null; curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH="$HOME/.local/bin:$PATH" && uv python install 3.11 && echo "地基裝好了"'},
+     win:{do:'貼這一整行、按 Enter，等它跑完：',cmd:'winget install --id Git.Git -e --silent --accept-package-agreements --accept-source-agreements; irm https://astral.sh/uv/install.ps1 | iex; & "$env:USERPROFILE\\.local\\bin\\uv.exe" python install 3.11; Write-Host "地基裝好了"'},
+     ok:'沒跳紅字、印出「地基裝好了」= 成功。'},
+    {t:'裝 2 個工作坊 skill',desc:'兩張方法卡，讓 AI 照工作坊的方法幫你',
+     why:'這兩張「方法卡」（需求逼結構、交辦清單）讓 AI 自動照工作坊的方法幫你，你不用背任何口訣。',
+     mac:{do:'貼這一行：',cmd:'curl -fsSL https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-skills.sh | bash'},
+     win:{do:'貼這一行：',cmd:'irm https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-skills.ps1 | iex'},
+     ok:'螢幕出現「已裝好 2 個 skill」= 成功。'},
+    {t:'辦免費帳號',desc:'Make／Google／GitHub，上網註冊就好',
+     why:'上網註冊就好，全部免費。等一下工作坊的工具會連到它們。',
+     links:[{n:'Make（自動化）',u:'make.com'},{n:'Google 帳號',u:'accounts.google.com'},{n:'GitHub',u:'github.com/signup'}],
+     ok:'三個都能登入，就過關。'}
+  ];
+  let cur=0, os='mac', dept=-1, done=Array(steps.length).fill(false);
+  const $=id=>document.getElementById(id);
+  function renderRail(){
+    $('rail').innerHTML=steps.map((s,k)=>`<div class="rstep ${k===cur?'cur':''} ${done[k]?'done':''}" data-k="${k}"><span class="dot">${done[k]?'✓':k+1}</span><div class="rtx"><span class="rt">${s.t}</span><span class="rd">${s.desc}</span></div></div>`).join('');
+    document.querySelectorAll('.rstep').forEach(e=>e.onclick=()=>{cur=+e.dataset.k;render();});
+  }
+  function render(){
+    const doneCount=done.filter(Boolean).length;
+    $('fill').style.width=(doneCount/steps.length*100)+'%';
+    if(cur>=steps.length){renderDone();renderRail();return;}
+    const s=steps[cur], o=s[os]||{};
+    $('barlab').textContent='第 '+(cur+1)+' 步 / 共 '+steps.length+' 步';
+    let body=`<div class="stepno">STEP ${cur+1} / ${steps.length}</div><h2>${s.t}</h2><div class="why">${s.why}</div>`;
+    if(s.keyslot){body+='<p class="do">① 先選你的部門：</p><select id="deptsel" class="deptsel"><option value="-1">— 選你的部門 —</option>'+DEPTS.map(function(d,di){return '<option value="'+di+'"'+(di===dept?' selected':'')+'>'+d.n+'</option>';}).join('')+'</select>';var k=(dept>=0&&DEPTS[dept].key&&DEPTS[dept].key.trim())?DEPTS[dept].key:'';var lab=dept<0?'② 選了部門，你的 key 會出現在這':(k?('② '+DEPTS[dept].n+' 的 key'):('② '+DEPTS[dept].n+'（當天由主辦填入）'));var pt=k?k:(dept<0?'（先在上面選你的部門）':'（工作坊當天由主辦填入）');body+='<div class="cmd keybox"><div class="top"><span class="t">'+lab+'</span>'+(k?('<button class="copy" data-cmd="'+k.replace(/"/g,'&quot;')+'">複製</button>'):'')+'</div><pre>'+pt.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre></div>';}
+    if(s.doonly){body+=`<p class="do">${s.doonly}</p>`;}
+    if(o.do){body+=`<p class="do">${o.do}</p>`;}
+    if(o.cmd){body+=`<div class="cmd"><div class="top"><span class="t">複製整行貼進去</span><button class="copy" data-cmd="${o.cmd.replace(/"/g,'&quot;')}">複製</button></div><pre>${o.cmd.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</pre></div>`;}
+    if(s.links){body+=`<div class="links">`+s.links.map(l=>`<a class="lk" href="https://${l.u}" target="_blank" rel="noopener"><span>${l.n}</span><span class="u">${l.u} ↗</span></a>`).join('')+`</div>`;}
+    body+=`<div class="ok"><span class="c">✓ 成功長這樣</span><span>${s.ok}</span></div>`;
+    if(s.extra){body+=s.extra;}
+    body+=`<div class="nav">${cur>0?'<button class="prev" id="prev">上一步</button>':''}<button class="next" id="next">✓ 我做好了，下一步</button></div>`;
+    $('panel').innerHTML=body;
+    $('panel').querySelectorAll('.copy').forEach(cp=>{cp.onclick=()=>{try{navigator.clipboard.writeText(cp.dataset.cmd.replace(/&quot;/g,'"'));}catch(e){}const t=cp.textContent;cp.textContent='已複製 ✓';setTimeout(()=>cp.textContent=t,1500);};});
+    var ds=$('deptsel');if(ds)ds.onchange=function(){dept=+ds.value;render();};
+    $('next').onclick=()=>{done[cur]=true;cur++;render();};
+    if($('prev'))$('prev').onclick=()=>{cur--;render();};
+    renderRail();
+  }
+  function renderDone(){
+    $('barlab').textContent='全部完成 🎉';$('fill').style.width='100%';
+    $('panel').innerHTML=`<div class="done-panel"><div class="stepno">DONE</div><div class="big">全部準備好了！</div><p>五步都完成，你跟全班站在同一條起跑線了。上課當天直接開跑，不會卡在裝機。</p><p style="margin-top:1rem"><button class="prev" id="again">← 回去檢查某一步</button></p></div>`;
+    $('again').onclick=()=>{cur=steps.length-1;render();};
+  }
+  $('mac').onclick=()=>{os='mac';$('mac').classList.add('on');$('win').classList.remove('on');render();};
+  $('win').onclick=()=>{os='win';$('win').classList.add('on');$('mac').classList.remove('on');render();};
+  render();
+</script>
