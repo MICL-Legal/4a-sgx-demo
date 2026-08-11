@@ -73,11 +73,11 @@
 </style>
 <div class="wrap">
   <header>
-    <p class="eyebrow">上課前 · 10 分鐘</p>
+    <p class="eyebrow">1 · 會前會 · 上課前約 10 分鐘</p>
     <h1>4A 裝機精靈</h1>
-    <p class="lede">一步一步跟著做，把電腦準備好。每一步只做一件事，做完按「下一步」就跳到下一步——不會迷路。</p>
+    <p class="lede">一步一步跟著做，把電腦準備好。整個「會前會」就是這 5 步（1-1 ～ 1-5），每一步只做一件事，做完按「下一步」——不會迷路。</p>
     <div class="bar"><i id="fill"></i></div>
-    <div class="barlab" id="barlab">第 1 步 / 共 5 步</div>
+    <div class="barlab" id="barlab">1-1 · 第 1 步 / 共 5 步</div>
     <div class="osrow">
       <span class="k">你的電腦是：</span>
       <div class="seg"><button id="mac" class="on">Mac</button><button id="win">Windows</button></div>
@@ -87,7 +87,7 @@
     <div class="rail" id="rail"></div>
     <div class="panel" id="panel"></div>
   </div>
-  <p class="foot">4A AI 工作坊 · 裝機精靈　|　上課統一用 Claude Code；下課可自行改用 Codex／Antigravity</p>
+  <p class="foot">4A AI 工作坊 · 會前會裝機精靈　|　上課統一用 Claude Code；Codex／Antigravity 為下課自選</p>
 </div>
 
 <script>
@@ -105,28 +105,28 @@
     {n:'研發', key:''}
   ];
   const steps=[
-    {t:'裝你的 AI 主角',desc:'今天的主角：一個聽你講、幫你動手的 AI',
-     why:'今天的主角——一個坐你旁邊、聽你打字指揮、<b>直接幫你動手</b>的 AI（Claude Code），住在「終端機」裡。<b>上課統一用這個。</b>',
+    {t:'裝你的 AI 主角',no:'1-1',desc:'主角 Claude Code；Codex／Antigravity 下課自選',
+     why:'今天的主角——一個坐你旁邊、聽你打字指揮、<b>直接幫你動手</b>的 AI（Claude Code），住在「終端機」裡。<b>上課統一用這個。</b>另外兩個（Codex、Antigravity）是下課想自己玩再裝，完整步驟都收在下面。',
      mac:{do:'① 用放大鏡（Spotlight）搜 <b>Terminal</b> 打開。② 把這行貼進去、按 Enter：',cmd:'curl -fsSL https://claude.ai/install.sh | bash'},
      win:{do:'① 開「Windows Terminal」（<b>不是 CMD</b>）。② 把這行貼進去、按 Enter：',cmd:'irm https://claude.ai/install.ps1 | iex'},
      ok:'重開終端機、打 claude 進得去（出現對話畫面）= 裝好了。',
-     extra:'<details class="ex"><summary>下課後想用「你自己訂閱」的帳號？點開</summary><div class="exb"><b>上課統一用 Claude Code（工作坊發 key，見下一步）。</b>下課後你也能裝成自己的帳號：<br>・<b>Codex</b>——用你自己的 ChatGPT 訂閱（命令 <code>codex</code>）<br>・<b>Antigravity</b>——用公司訂閱的 Google 帳號（命令 <code>agy</code>，不是 antigravity）<br>逐步安裝見工作坊「AI 編碼工具安裝中心」那頁（Mac／Windows 各有）。</div></details>'},
-    {t:'貼上 API key',desc:'讓 AI 動起來的鑰匙，工作坊直接發給你',
+     extra:'<details class="ex"><summary>加裝 Codex（OpenAI，用你自己的 ChatGPT）· 完整步驟</summary><div class="exb"><b>下課自選，上課用不到。</b>用你自己的 ChatGPT 訂閱（需 Plus 以上；免費版不一定能用）。<br><br><b>① 裝 · Mac：</b>終端機貼這行、按 Enter：<br><code>curl -fsSL https://chatgpt.com/codex/install.sh | sh</code><br><b>① 裝 · Windows：</b>Windows Terminal 貼這行、按 Enter：<br><code>irm https://chatgpt.com/codex/install.ps1 | iex</code><br><br><b>② 開 + 登入：</b>打 <code>codex</code> 按 Enter → 選「Sign in with ChatGPT」→ 會自動跳出瀏覽器、用你的 ChatGPT 帳號登入 → 登入成功回到終端機就能用。<br><b>成功長這樣：</b>打 codex 出現對話畫面。</div></details><details class="ex"><summary>加裝 Antigravity（Google，是一個 App）· 完整步驟</summary><div class="exb"><b>下課自選，上課用不到。</b>注意：它是<b>一個要下載的桌面 App（不是終端機指令）</b>，而且<b>只能用個人 @gmail 登入，公司的 Google 帳號會被擋掉</b>。<br><br><b>① 下載：</b>瀏覽器開 <a href="https://antigravity.google/download" target="_blank" rel="noopener">antigravity.google/download</a>。Mac 選「Apple Silicon」（較新 M 系列）或「Intel」（較舊）；Windows 選 Windows（x64）。<br><b>② 安裝：</b>打開下載好的安裝檔，照畫面按「下一步」裝完。<br><b>③ 開 + 登入：</b>從「應用程式」／開始選單打開 Antigravity → 用<b>個人 Google（@gmail）</b>帳號登入 → 跳瀏覽器登入後自動回到 App。<br><b>成功長這樣：</b>進到 Antigravity 的編輯器畫面。</div></details>'},
+    {t:'貼上 API key',no:'1-2',desc:'讓 AI 動起來的鑰匙，工作坊直接發給你',
      why:'這是讓 AI 動起來的「鑰匙」。<b>工作坊直接發一把（公司的）key 給你</b>——你不用有 Claude 訂閱、不用自己申請、不用花錢（用量算公司的）。',
      keyslot:true,
      doonly:'複製上面那把 key。打開終端機，貼這行、把 <code>KEY</code> 換成你的 key：<br><code>export ANTHROPIC_API_KEY="KEY"</code>（Windows 改用 <code>setx ANTHROPIC_API_KEY "KEY"</code>）。Windows 設完要<b>重開終端機</b>。',
      ok:'打 claude 能正常回你話 = 通了。'},
-    {t:'裝地基工具',desc:'git、Python 等，一行全裝，讓 AI 能做更多',
+    {t:'裝地基工具',no:'1-3',desc:'git、Python 等，一行全裝，讓 AI 能做更多',
      why:'這些是地基（<b>git、Python</b> 等），讓 AI 能幫你抓別人的專案、跑程式、做更多事。一行一次裝好。',
      mac:{do:'貼這一整行、按 Enter，等它跑完：',cmd:'xcode-select --install 2>/dev/null; curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH="$HOME/.local/bin:$PATH" && uv python install 3.11 && echo "地基裝好了"'},
      win:{do:'貼這一整行、按 Enter，等它跑完：',cmd:'winget install --id Git.Git -e --silent --accept-package-agreements --accept-source-agreements; irm https://astral.sh/uv/install.ps1 | iex; & "$env:USERPROFILE\\.local\\bin\\uv.exe" python install 3.11; Write-Host "地基裝好了"'},
      ok:'沒跳紅字、印出「地基裝好了」= 成功。'},
-    {t:'裝 2 個工作坊 skill',desc:'兩張方法卡，讓 AI 照工作坊的方法幫你',
+    {t:'裝 2 個工作坊 skill',no:'1-4',desc:'兩張方法卡，讓 AI 照工作坊的方法幫你',
      why:'這兩張「方法卡」（需求逼結構、交辦清單）讓 AI 自動照工作坊的方法幫你，你不用背任何口訣。',
      mac:{do:'貼這一行：',cmd:'curl -fsSL https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-skills.sh | bash'},
      win:{do:'貼這一行：',cmd:'irm https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-skills.ps1 | iex'},
      ok:'螢幕出現「已裝好 2 個 skill」= 成功。'},
-    {t:'辦免費帳號',desc:'Make／Google／GitHub，上網註冊就好',
+    {t:'辦免費帳號',no:'1-5',desc:'Make／Google／GitHub，上網註冊就好',
      why:'上網註冊就好，全部免費。等一下工作坊的工具會連到它們。',
      links:[{n:'Make（自動化）',u:'make.com'},{n:'Google 帳號',u:'accounts.google.com'},{n:'GitHub',u:'github.com/signup'}],
      ok:'三個都能登入，就過關。'}
@@ -134,7 +134,7 @@
   let cur=0, os='mac', dept=-1, done=Array(steps.length).fill(false);
   const $=id=>document.getElementById(id);
   function renderRail(){
-    $('rail').innerHTML=steps.map((s,k)=>`<div class="rstep ${k===cur?'cur':''} ${done[k]?'done':''}" data-k="${k}"><span class="dot">${done[k]?'✓':k+1}</span><div class="rtx"><span class="rt">${s.t}</span><span class="rd">${s.desc}</span></div></div>`).join('');
+    $('rail').innerHTML=steps.map((s,k)=>`<div class="rstep ${k===cur?'cur':''} ${done[k]?'done':''}" data-k="${k}"><span class="dot">${done[k]?'✓':k+1}</span><div class="rtx"><span class="rt">${s.no}　${s.t}</span><span class="rd">${s.desc}</span></div></div>`).join('');
     document.querySelectorAll('.rstep').forEach(e=>e.onclick=()=>{cur=+e.dataset.k;render();});
   }
   function render(){
@@ -142,8 +142,8 @@
     $('fill').style.width=(doneCount/steps.length*100)+'%';
     if(cur>=steps.length){renderDone();renderRail();return;}
     const s=steps[cur], o=s[os]||{};
-    $('barlab').textContent='第 '+(cur+1)+' 步 / 共 '+steps.length+' 步';
-    let body=`<div class="stepno">STEP ${cur+1} / ${steps.length}</div><h2>${s.t}</h2><div class="why">${s.why}</div>`;
+    $('barlab').textContent=s.no+' · 第 '+(cur+1)+' 步 / 共 '+steps.length+' 步';
+    let body=`<div class="stepno">${s.no}　·　第 ${cur+1} 步 / 共 ${steps.length} 步</div><h2>${s.t}</h2><div class="why">${s.why}</div>`;
     if(s.keyslot){body+='<p class="do">① 先選你的部門：</p><select id="deptsel" class="deptsel"><option value="-1">— 選你的部門 —</option>'+DEPTS.map(function(d,di){return '<option value="'+di+'"'+(di===dept?' selected':'')+'>'+d.n+'</option>';}).join('')+'</select>';var k=(dept>=0&&DEPTS[dept].key&&DEPTS[dept].key.trim())?DEPTS[dept].key:'';var lab=dept<0?'② 選了部門，你的 key 會出現在這':(k?('② '+DEPTS[dept].n+' 的 key'):('② '+DEPTS[dept].n+'（當天由主辦填入）'));var pt=k?k:(dept<0?'（先在上面選你的部門）':'（工作坊當天由主辦填入）');body+='<div class="cmd keybox"><div class="top"><span class="t">'+lab+'</span>'+(k?('<button class="copy" data-cmd="'+k.replace(/"/g,'&quot;')+'">複製</button>'):'')+'</div><pre>'+pt.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre></div>';}
     if(s.doonly){body+=`<p class="do">${s.doonly}</p>`;}
     if(o.do){body+=`<p class="do">${o.do}</p>`;}
@@ -161,7 +161,7 @@
   }
   function renderDone(){
     $('barlab').textContent='全部完成 🎉';$('fill').style.width='100%';
-    $('panel').innerHTML=`<div class="done-panel"><div class="stepno">DONE</div><div class="big">全部準備好了！</div><p>五步都完成，你跟全班站在同一條起跑線了。上課當天直接開跑，不會卡在裝機。</p><p style="margin-top:1rem"><button class="prev" id="again">← 回去檢查某一步</button></p></div>`;
+    $('panel').innerHTML=`<div class="done-panel"><div class="stepno">DONE</div><div class="big">全部準備好了！</div><p>1-1 到 1-5 都完成，你跟全班站在同一條起跑線了。上課當天直接開跑，不會卡在裝機。</p><p style="margin-top:1rem"><button class="prev" id="again">← 回去檢查某一步</button></p></div>`;
     $('again').onclick=()=>{cur=steps.length-1;render();};
   }
   $('mac').onclick=()=>{os='mac';$('mac').classList.add('on');$('win').classList.remove('on');render();};
