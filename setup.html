@@ -114,7 +114,6 @@
     {t:'貼上 API key',no:'1-2',desc:'讓 AI 動起來的鑰匙，工作坊直接發給你',
      why:'這是讓 AI 動起來的「鑰匙」。<b>工作坊直接發一把（公司的）key 給你</b>——你不用有 Claude 訂閱、不用自己申請、不用花錢（用量算公司的）。',
      keyslot:true,
-     doonly:'複製上面那把 key。打開終端機，貼這行、把 <code>KEY</code> 換成你的 key：<br><code>export ANTHROPIC_API_KEY="KEY"</code>（Windows 改用 <code>setx ANTHROPIC_API_KEY "KEY"</code>）。Windows 設完要<b>重開終端機</b>。',
      ok:'打 claude 能正常回你話 = 通了。'},
     {t:'裝地基工具',no:'1-3',desc:'git、Python 等，一行全裝，讓 AI 能做更多',
      why:'這些是地基（<b>git、Python</b> 等），讓 AI 能幫你抓別人的專案、跑程式、做更多事。一行一次裝好。',
@@ -144,7 +143,20 @@
     const s=steps[cur], o=s[os]||{};
     $('barlab').textContent=s.no+' · 第 '+(cur+1)+' 步 / 共 '+steps.length+' 步';
     let body=`<div class="stepno">${s.no}　·　第 ${cur+1} 步 / 共 ${steps.length} 步</div><h2>${s.t}</h2><div class="why">${s.why}</div>`;
-    if(s.keyslot){body+='<p class="do">① 先選你的部門：</p><select id="deptsel" class="deptsel"><option value="-1">— 選你的部門 —</option>'+DEPTS.map(function(d,di){return '<option value="'+di+'"'+(di===dept?' selected':'')+'>'+d.n+'</option>';}).join('')+'</select>';var k=(dept>=0&&DEPTS[dept].key&&DEPTS[dept].key.trim())?DEPTS[dept].key:'';var lab=dept<0?'② 選了部門，你的 key 會出現在這':(k?('② '+DEPTS[dept].n+' 的 key'):('② '+DEPTS[dept].n+'（當天由主辦填入）'));var pt=k?k:(dept<0?'（先在上面選你的部門）':'（工作坊當天由主辦填入）');body+='<div class="cmd keybox"><div class="top"><span class="t">'+lab+'</span>'+(k?('<button class="copy" data-cmd="'+k.replace(/"/g,'&quot;')+'">複製</button>'):'')+'</div><pre>'+pt.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre></div>';}
+    if(s.keyslot){
+      body+='<p class="do">第 1 步　先選你的部門：</p><select id="deptsel" class="deptsel"><option value="-1">— 選你的部門 —</option>'+DEPTS.map(function(d,di){return '<option value="'+di+'"'+(di===dept?' selected':'')+'>'+d.n+'</option>';}).join('')+'</select>';
+      var k=(dept>=0&&DEPTS[dept].key&&DEPTS[dept].key.trim())?DEPTS[dept].key:'';
+      var keyval=k?k:'貼上你部門的_KEY';
+      var cmdline=(os==='win')?('setx ANTHROPIC_API_KEY "'+keyval+'"'):('export ANTHROPIC_API_KEY="'+keyval+'"');
+      var lab=dept<0?'第 2 步　選了部門，這一整行指令會出現在這（已含你的鑰匙）':(k?('第 2 步　「'+DEPTS[dept].n+'」的鑰匙指令 —— 按右邊「複製整行」'):('第 2 步　'+DEPTS[dept].n+'（鑰匙當天由主辦填入）'));
+      var showText=(dept<0)?'（先在上面選你的部門）':cmdline;
+      body+='<div class="cmd keybox"><div class="top"><span class="t">'+lab+'</span>'+((dept>=0)?('<button class="copy" data-cmd="'+cmdline.replace(/"/g,'&quot;')+'">複製整行</button>'):'')+'</div><pre>'+showText.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre></div>';
+      if(os==='win'){
+        body+='<p class="do">第 3 步　打開「Windows Terminal」（不是 CMD）。<br>第 4 步　貼上剛剛複製的那一整行、按 Enter。<br>第 5 步　<b>把 Windows Terminal 關掉、重新打開一次</b>（Windows 用 setx，要重開才生效）。</p>';
+      }else{
+        body+='<p class="do">第 3 步　用放大鏡（Spotlight）搜「Terminal」打開。<br>第 4 步　貼上剛剛複製的那一整行、按 Enter —— 就設定好了。</p>';
+      }
+    }
     if(s.doonly){body+=`<p class="do">${s.doonly}</p>`;}
     if(o.do){body+=`<p class="do">${o.do}</p>`;}
     if(o.cmd){body+=`<div class="cmd"><div class="top"><span class="t">複製整行貼進去</span><button class="copy" data-cmd="${o.cmd.replace(/"/g,'&quot;')}">複製</button></div><pre>${o.cmd.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</pre></div>`;}
