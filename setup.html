@@ -80,7 +80,7 @@
     <div class="barlab" id="barlab">1-1 · 第 1 步 / 共 6 步</div>
     <div class="osrow">
       <span class="k">你的電腦是：</span>
-      <div class="seg"><button id="mac" class="on">Mac</button><button id="win">Windows</button></div>
+      <div class="seg"><button id="mac">Mac</button><button id="win" class="on">Windows</button></div>
     </div>
   </header>
   <div class="layout">
@@ -124,7 +124,7 @@
      links:[{n:'Make 登入',u:'make.com'},{n:'Zapier 登入',u:'zapier.com'}],
      ok:'兩個都能用主辦給的帳號登入，就準備好了。'}
   ];
-  let cur=0, os='mac', userkey='', done=Array(steps.length).fill(false);
+  let cur=0, os='win', userkey='', done=Array(steps.length).fill(false);
   const $=id=>document.getElementById(id);
   function renderRail(){
     $('rail').innerHTML=steps.map((s,k)=>`<div class="rstep ${k===cur?'cur':''} ${done[k]?'done':''}" data-k="${k}"><span class="dot">${done[k]?'✓':k+1}</span><div class="rtx"><span class="rt">${s.no}　${s.t}</span><span class="rd">${s.desc}</span></div></div>`).join('');
