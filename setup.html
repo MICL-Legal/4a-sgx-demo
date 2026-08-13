@@ -123,7 +123,7 @@
      why:'工作坊會用到的 <b>Zapier</b> 和 <b>Make</b>（自動化工具），公司已經幫各部門開通好了——<b>你不用自己註冊</b>。登入用的帳號當天由主辦提供。',
      links:[{n:'Make 登入',u:'make.com'},{n:'Zapier 登入',u:'zapier.com'}],
      ok:'兩個都能用主辦給的帳號登入，就準備好了。'},
-    {t:'裝資料庫存取檔',no:'1-7',desc:'Billy 場要用；每人一支自己的鑰匙（僅 Windows）',why:'下週 <b>Billy 場</b>要把你的 Google Sheet 搬進<b>公司內部的真資料庫</b>。那個庫在公司內網，所以每人先裝一把<b>自己的鑰匙</b>（每人一支、不共用，拿別人的連不上）。',doonly:'① 到 <b>4A 給的公司內部資料夾</b>。② 在<b>搜尋框打你的工號</b>。③ 下載屬於你的那一支壓縮檔 → 解壓縮。④ 按兩下 <code>install-db-access.bat</code>。<br>若跳「Windows 已保護您的電腦」→「其他資訊」→「仍要執行」（公司自製小工具，不是病毒）。<br>⚠️ 目前<b>只有 Windows 版</b>；Mac 同仁當天找 Billy。（詳細說明見 Notion 會前會頁的 1-7）',ok:'跑完看到綠色 <code>[OK]</code> = 你的資料庫鑰匙裝好了（上課當天才會發密碼）。'}
+    {t:'裝資料庫存取檔',no:'1-7',dbslot:true,desc:'Billy 場要用；輸入工號拿你自己的那一包（僅 Windows）',why:'下週 <b>Billy 場</b>要把你的 Google Sheet 搬進<b>公司內部的真資料庫</b>。那個庫在公司內網，所以每人先裝一把<b>自己的鑰匙</b>（每人一支、不共用）。',ok:'下載→解壓→按兩下 <code>install-db-access.bat</code>，看到綠色 <code>[OK]</code> = 裝好了（上課當天才會發密碼）。}
   ];
   let cur=0, os='win', userkey='', done=Array(steps.length).fill(false);
   const $=id=>document.getElementById(id);
@@ -152,7 +152,8 @@
         body+='<p class="do">第 3 步　用放大鏡（Spotlight）搜「Terminal」打開。<br>第 4 步　貼上剛剛複製的那一整行、按 Enter —— 就設定好了。</p>';
       }
     }
-    if(s.doonly){body+=`<p class="do">${s.doonly}</p>`;}
+    if(s.dbslot){body+='<p class="do">第 1 步　輸入你的工號，拿你自己的那一包：</p>';body+='<input id="dbin" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.86rem" placeholder="例：MT2456" oninput="dbfind()">';body+='<div style="margin:.4rem 0"><button onclick="dbfind()" style="font-family:inherit;font-size:.85rem;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:7px;padding:.4rem .9rem;cursor:pointer">查我的下載連結</button></div>';body+='<div id="dbout"></div>';body+='<div class="ok" style="background:var(--card2);color:var(--soft);margin-top:.2rem"><span class="c" style="color:var(--accent);white-space:nowrap">🔒 為什麼安全</span><span>每一包只分享給「你本人的公司 Google 帳號」——就算別人拿到你的連結，沒登入你的帳號也打不開，所以不會裝到別人的。</span></div>';body+='<p class="do">第 2 步　下載後<b>解壓縮</b> → 按兩下 <code>install-db-access.bat</code>。<br>若跳「Windows 已保護您的電腦」→「其他資訊」→「仍要執行」（公司自製小工具，不是病毒）。<br>⚠️ 目前<b>只有 Windows 版</b>；Mac 同仁當天找 Billy。</p>';}
+        if(s.doonly){body+=`<p class="do">${s.doonly}</p>`;}
     if(o.do){body+=`<p class="do">${o.do}</p>`;}
     if(o.cmd){body+=`<div class="cmd"><div class="top"><span class="t">複製整行貼進去</span><button class="copy" data-cmd="${o.cmd.replace(/"/g,'&quot;')}">複製</button></div><pre>${o.cmd.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</pre></div>`;}
     if(s.links){body+=`<div class="links">`+s.links.map(l=>`<a class="lk" href="https://${l.u}" target="_blank" rel="noopener"><span>${l.n}</span><span class="u">${l.u} ↗</span></a>`).join('')+`</div>`;}
@@ -171,7 +172,12 @@
     $('panel').innerHTML=`<div class="done-panel"><div class="stepno">DONE</div><div class="big">全部準備好了！</div><p>1-1 到 1-7 都完成，你跟全班站在同一條起跑線了。上課當天直接開跑，不會卡在裝機。</p><p style="margin-top:1rem"><button class="prev" id="again">← 回去檢查某一步</button></p></div>`;
     $('again').onclick=()=>{cur=steps.length-1;render();};
   }
-  function gmw(){var p=(document.getElementById('gmp').value||'你的JSON路徑');var e=(document.getElementById('gme').value||'你的@medtecs.com');var o=document.getElementById('gmout');if(o)o.textContent='claude mcp add google-workspace --env GOOGLE_CLIENT_SECRET_PATH="'+p+'" --env USER_GOOGLE_EMAIL="'+e+'" -- uvx workspace-mcp --tools gmail --tool-tier core --single-user';}
+  const DBLINKS = {
+    // ⚠️ 上課前：把 Apps Script exportLinksForWizard 印出的整段貼進來（工號:子資料夾連結）
+    "MI0023":"","MT0117":"","MT0633":"","MT0776":"","MT0874":"","MT0919":"","MT1652":"","MT1655":"","MT1798":"","MT1979":"","MT1998":"","MT2067":"","MT2121":"","MT2126":"","MT2178":"","MT2183":"","MT2203":"","MT2259":"","MT2265":"","MT2386":"","MT2392":"","MT2400":"","MT2407":"","MT2410":"","MT2456":"","MT2477":"","MT2478":"","MT2492":"","MT2496":"","MT2505":"","MT2578":"","MT2582":"","MT2595":"","MT2604":"","MT2605":"","MT2611":"","MT2614":"","MT2623":"","MT2627":"","MT2635":"","MT2646":"","MT2660":"","MT2691":"","MT2703":"","MT2720":"","MT2721":"","MT2722":"","MT2747":"","MT2763":"","MT2774":"","MT2777":"","MT2778":"","MT2779":"","MT2794":"","MT2796":"","MT2798":"","MT2799":"","MT2802":"","MT2806":"","MT2809":"","MT2819":"","MT2821":"","MT2825":"","MT2829":"","MT2834":"","MT2852":"","MT2854":"","MT2856":"","SC0192":"","SC0222":"","SC0231":"","SC0244":"","SH0015":"","SH0021":"","SH0036":""
+  };
+  function dbfind(){var el=document.getElementById('dbin');if(!el)return;var v=(el.value||'').trim().toUpperCase();var o=document.getElementById('dbout');if(!o)return;if(!v){o.innerHTML='';return;}if(Object.prototype.hasOwnProperty.call(DBLINKS,v)){var link=DBLINKS[v];if(link){o.innerHTML='<a class="lk" href="'+link+'" target="_blank" rel="noopener"><span>⬇️ 下載我的資料庫存取包（'+v+'）</span><span class="u">只有你本人的公司帳號打得開 ↗</span></a>';}else{o.innerHTML='<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">⏳ 尚未上架</span><span>你的工號 '+v+' 有登記，但連結還沒放上（上課前會放）。</span></div>';}}else{o.innerHTML='<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">找不到</span><span>查不到工號 '+v+'。確認大小寫、或找 4A／Billy。</span></div>';}}
+    function gmw(){var p=(document.getElementById('gmp').value||'你的JSON路徑');var e=(document.getElementById('gme').value||'你的@medtecs.com');var o=document.getElementById('gmout');if(o)o.textContent='claude mcp add google-workspace --env GOOGLE_CLIENT_SECRET_PATH="'+p+'" --env USER_GOOGLE_EMAIL="'+e+'" -- uvx workspace-mcp --tools gmail --tool-tier core --single-user';}
   function gmcopy(){var o=document.getElementById('gmout');if(!o)return;try{navigator.clipboard.writeText(o.textContent);}catch(e){}var b=document.getElementById('gmbtn');if(b){var t=b.textContent;b.textContent='已複製 ✓';setTimeout(function(){b.textContent=t;},1500);}}
   $('mac').onclick=()=>{os='mac';$('mac').classList.add('on');$('win').classList.remove('on');render();};
   $('win').onclick=()=>{os='win';$('win').classList.add('on');$('mac').classList.remove('on');render();};
