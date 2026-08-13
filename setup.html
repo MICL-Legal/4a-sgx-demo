@@ -106,7 +106,181 @@
 
 <div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">⚠️ 三個雷</span><span><b>1.</b> Claude Code 與 Codex <b>都不吃免費帳號</b>，一定要付費方案（Antigravity 走公司 Google，不用另外付）。<br><b>2.</b> Windows 要用 <b>PowerShell</b>、不是 CMD——看視窗開頭是不是 <code>PS C:\\</code>。<br><b>3.</b> Antigravity 的指令是 <code>agy</code>（a-g-y 三個字母），<b>不是</b> <code>antigravity</code>。</span></div>`;
   const steps=[
-    {t:'選你要用的 AI',no:'1-1',desc:'三個挑一個你（或公司）已經付費的，確認登入得了',
+    {no:'1',hide_one:true,
+     t_mac:'裝 Claude Code',desc_mac:'終端機一行裝好，確認版本，再用 Claude 付費帳號登入',
+     why_mac:'<b>Claude Code</b> 是 <b>Anthropic</b> 的終端機 AI 編碼助手，住在 Mac 的「終端機」裡聽你打字指揮。要有 <b>Claude 付費方案</b>(Pro / Max / Team / Enterprise)才能用，免費 claude.ai 帳號不能用。跟著做約 5–10 分鐘。',
+     machtml:`<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">📋 系統需求</span><span>macOS 13.0 以上(點蟋果 →「關於這台 Mac」可查版本)・Intel 與 Apple Silicon 都支援・記憶體 4GB 以上・需 Claude 付費方案(Pro / Max / Team / Enterprise;免費 claude.ai 不能用)。</span></div>
+
+<p class="do">① 打開「終端機」</p>
+<p class="do" style="font-weight:400">最簡單、每台 Mac 都通用:<br>1. 按 <b>⌘ Command + 空白鍵</b><br>2. 打字輸入 <code>terminal</code><br>3. 按 <b>Enter</b></p>
+<p class="do" style="font-weight:400">✅ 跳出黑底白字、游標在閃的視窗,就是終端機。</p>
+
+<p class="do">② 安裝(複製這一行)</p>
+<p class="do" style="font-weight:400">點程式碼框右上角 <b>複製</b>,貼到終端機,按 <b>Enter</b>:</p>
+<div class="cmd"><div class="top"><span class="t">複製整行貼進終端機</span><button class="copy" data-cmd="curl -fsSL https://claude.ai/install.sh | bash">複製</button></div><pre>curl -fsSL https://claude.ai/install.sh | bash</pre></div>
+<p class="do" style="font-weight:400">會跑很多文字、約 1–2 分鐘,<b>別關視窗</b>。若要你輸入電腦密碼,打開機密碼(看不到字是正常的)再按 Enter。</p>
+<p class="do" style="font-weight:400">✅ 看到 <code>successfully installed</code> 之類訊息 = 安裝完成。</p>
+
+<p class="do">③ 確認裝好了</p>
+<div class="cmd"><div class="top"><span class="t">確認版本</span><button class="copy" data-cmd="claude --version">複製</button></div><pre>claude --version</pre></div>
+<p class="do" style="font-weight:400">✅ 出現版本號(例如 <code>Claude Code 2.1.xxx</code>)= 成功。</p>
+
+<p class="do">④ 第一次啟動 + 登入</p>
+<div class="cmd"><div class="top"><span class="t">啟動</span><button class="copy" data-cmd="claude">複製</button></div><pre>claude</pre></div>
+<p class="do" style="font-weight:400">瀏覽器會自動開啟登入頁 → 用 Claude 付費帳號登入 → 回到終端機就能用了。🎉</p>
+
+<details class="ex"><summary>卡關自救 · 常見問題排除</summary><div class="exb"><table><tr><th>畫面出現</th><th>怎麼辦</th></tr><tr><td><b>A.</b> <code>command not found: claude</code></td><td>複製下面 <b>A</b> 那整段貼上、按 Enter</td></tr><tr><td><b>B.</b> 403 或 <code>syntax error near unexpected token</code></td><td>改用 Homebrew,貼下面 <b>B</b> 那行</td></tr><tr><td><b>C.</b> <code>dyld: cannot load</code></td><td>macOS 太舊,需 13.0 以上,請先更新系統。</td></tr><tr><td><b>D.</b> <code>permission denied</code></td><td>複製下面 <b>D</b> 那整段貼上</td></tr></table>
+<div class="cmd"><div class="top"><span class="t">A. 修 PATH(整段複製)</span><button class="copy" data-cmd="echo 'export PATH=&quot;$HOME/.local/bin:$PATH&quot;' &gt;&gt; ~/.zshrc&#10;source ~/.zshrc">複製整段</button></div><pre>echo 'export PATH=&quot;$HOME/.local/bin:$PATH&quot;' &gt;&gt; ~/.zshrc&#10;source ~/.zshrc</pre></div>
+<div class="cmd"><div class="top"><span class="t">B. 改用 Homebrew</span><button class="copy" data-cmd="brew install --cask claude-code">複製</button></div><pre>brew install --cask claude-code</pre></div>
+<div class="cmd"><div class="top"><span class="t">D. 修資料夾權限(整段複製)</span><button class="copy" data-cmd="sudo mkdir -p ~/.local/bin&#10;sudo chown -R $(whoami) ~/.local">複製整段</button></div><pre>sudo mkdir -p ~/.local/bin&#10;sudo chown -R $(whoami) ~/.local</pre></div></div></details>
+
+<div class="links"><a class="lk" href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener"><span>官方來源 · Claude Code 安裝文件</span><span class="u">code.claude.com ↗</span></a></div>
+<p class="do" style="font-weight:400">查證日期 2026-06-25</p>`,
+     ok_mac:'打 <code>claude --version</code> 出現版本號(例如 <code>Claude Code 2.1.xxx</code>)，再打 <code>claude</code> → 瀏覽器用<b>付費帳號</b>登入成功 → 回到終端機 ＝ 完成。',
+     t_win:'裝 Claude Code',desc_win:'PowerShell 一行裝好，重開視窗驗證，再用 Claude 付費帳號登入',
+     why_win:'<b>Claude Code</b> 是 <b>Anthropic</b> 的終端機 AI 編碼助手，住在 PowerShell 裡聽你打字指揮。要有 <b>Claude 付費方案</b>才能用（免費 claude.ai 帳號不能用）。安裝本體<b>不需要 Node.js</b>，建議（非必要）裝 Git for Windows。',
+     winhtml:`<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">📋 系統需求</span><span>Windows 10 (版本 1809 以上) 或 Windows 11・記憶體 4GB 以上・64 位元・需 Claude 付費方案(免費 claude.ai 不能用)。不需 Node.js;建議(非必要)裝 Git for Windows。</span></div>
+<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">⚠️ 不是 CMD</span><span><b>要用 PowerShell,不是 CMD。</b>分辨方法:看視窗開頭是 <code>PS C:\\</code>(✅ PowerShell) 還是 <code>C:\\</code>(❌ CMD)。</span></div>
+
+<p class="do">① 打開 PowerShell</p>
+<p class="do" style="font-weight:400">1. 按 <b>Win + X</b><br>2. 點選 <b>Windows PowerShell</b> 或 <b>Terminal</b></p>
+<p class="do" style="font-weight:400">✅ 出現視窗、開頭是 <code>PS C:\\Users\\你的帳號&gt;</code> 就對了。如果開頭沒有 <code>PS</code>,你開到 CMD 了,請關掉重開。</p>
+
+<p class="do">② 安裝(複製這一行)</p>
+<p class="do" style="font-weight:400">點右上角 <b>複製</b>,貼到 PowerShell(<code>Ctrl + V</code>),按 <b>Enter</b>:</p>
+<div class="cmd"><div class="top"><span class="t">複製整行貼進 PowerShell</span><button class="copy" data-cmd="irm https://claude.ai/install.ps1 | iex">複製</button></div><pre>irm https://claude.ai/install.ps1 | iex</pre></div>
+<p class="do" style="font-weight:400">約 1–2 分鐘,看到 <code>Claude Code successfully installed!</code> = 完成。</p>
+
+<p class="do">③ 重開 PowerShell 再驗證</p>
+<p class="do" style="font-weight:400">先<b>關掉 PowerShell、重開一個新視窗</b>,然後:</p>
+<div class="cmd"><div class="top"><span class="t">確認裝好了</span><button class="copy" data-cmd="claude --version">複製</button></div><pre>claude --version</pre></div>
+<p class="do" style="font-weight:400">✅ 出現版本號(例如 <code>Claude Code 2.1.xxx</code>)= 成功。</p>
+
+<p class="do">④ 第一次啟動 + 登入</p>
+<div class="cmd"><div class="top"><span class="t">啟動</span><button class="copy" data-cmd="claude">複製</button></div><pre>claude</pre></div>
+<p class="do" style="font-weight:400">瀏覽器會自動開啟 claude.ai 登入頁 → 用付費帳號登入 → 回到終端機。🎉(若瀏覽器沒自開,按 <code>c</code> 複製連結手動貼上)</p>
+
+<details class="ex"><summary>卡關自救 · 常見問題排除</summary><div class="exb"><table><tr><th>畫面出現</th><th>怎麼辦</th></tr><tr><td><b>A.</b> <code>'claude' is not recognized</code></td><td>複製下面 <b>A</b> 那整段貼上、按 Enter,然後關掉 PowerShell 重開</td></tr><tr><td><b>B.</b> <code>'irm' is not recognized</code> 或 <code>&amp;&amp;</code> 錯誤</td><td>你在 CMD 不是 PowerShell。關掉,用 <b>Win + X → Windows PowerShell</b> 重開再試。</td></tr><tr><td><b>C.</b> SSL/TLS 錯誤(舊 Windows 10)</td><td>先貼下面 <b>C</b> 那行再重試安裝</td></tr><tr><td><b>D.</b> 說「requires Git for Windows or PowerShell」</td><td>到 git-scm.com/downloads/win 下載安裝(每個畫面按 Next 即可),重開 PowerShell 再試。</td></tr></table>
+<div class="cmd"><div class="top"><span class="t">A. 修 PATH(整段複製)</span><button class="copy" data-cmd="$currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User')&#10;[Environment]::SetEnvironmentVariable('PATH', &quot;$currentPath;$env:USERPROFILE\\.local\\bin&quot;, 'User')">複製整段</button></div><pre>$currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User')
+[Environment]::SetEnvironmentVariable('PATH', "$currentPath;$env:USERPROFILE\\.local\\bin", 'User')</pre></div>
+<div class="cmd"><div class="top"><span class="t">C. 修 SSL/TLS</span><button class="copy" data-cmd="[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12">複製</button></div><pre>[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12</pre></div>
+<div class="links"><a class="lk" href="https://git-scm.com/downloads/win" target="_blank" rel="noopener"><span>D. 下載 Git for Windows</span><span class="u">git-scm.com ↗</span></a></div></div></details>
+
+<div class="links"><a class="lk" href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener"><span>官方來源 · Claude Code 安裝文件(另有 /quickstart ・ /troubleshoot-install)</span><span class="u">code.claude.com ↗</span></a></div>
+<p class="do" style="font-weight:400">查證日期 2026-06-25</p>`,
+     ok_win:'重開 PowerShell 後打 <code>claude --version</code> 出現版本號(例如 <code>Claude Code 2.1.xxx</code>)，再打 <code>claude</code> → 瀏覽器用<b>付費帳號</b>登入成功 → 回到終端機 ＝ 完成。'},
+    {no:'2',hide_one:true,
+     t_mac:'裝 Codex',desc_mac:'終端機一行裝好 Codex，確認版本後用 ChatGPT 帳號登入',
+     why_mac:'<b>Codex CLI</b> 是 <b>OpenAI</b> 的終端機 AI 編碼助手。要有 <b>ChatGPT 付費方案</b>(Plus / Pro / Business / Edu / Enterprise)或 OpenAI API key。用下面的官方 installer <b>免裝 Node.js</b>。跟著做約 5 分鐘。',
+     machtml:`<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">📋 系統需求</span><span>macOS(Apple Silicon 或 Intel 都支援)・用下面官方 installer 免裝 Node.js・需 ChatGPT 付費方案(Plus / Pro / Business / Edu / Enterprise)或 OpenAI API key。</span></div>
+
+<p class="do">① 打開「終端機」</p>
+<p class="do" style="font-weight:400">1. 按 <b>⌘ Command + 空白鍵</b><br>2. 打字輸入 <code>terminal</code><br>3. 按 <b>Enter</b></p>
+<p class="do" style="font-weight:400">✅ 跳出黑底白字的視窗就是終端機。</p>
+
+<p class="do">② 安裝(複製這一行)</p>
+<p class="do" style="font-weight:400">點右上角 <b>複製</b>,貼到終端機,按 <b>Enter</b>:</p>
+<div class="cmd"><div class="top"><span class="t">複製整行貼進終端機</span><button class="copy" data-cmd="curl -fsSL https://chatgpt.com/codex/install.sh | sh">複製</button></div><pre>curl -fsSL https://chatgpt.com/codex/install.sh | sh</pre></div>
+<p class="do" style="font-weight:400">✅ 訊息停止、出現安裝完成 = 完成。</p>
+
+<p class="do">③ 確認裝好了</p>
+<div class="cmd"><div class="top"><span class="t">確認版本</span><button class="copy" data-cmd="codex --version">複製</button></div><pre>codex --version</pre></div>
+<p class="do" style="font-weight:400">✅ 出現版本號 = 成功。</p>
+
+<p class="do">④ 第一次啟動 + 登入</p>
+<div class="cmd"><div class="top"><span class="t">啟動</span><button class="copy" data-cmd="codex">複製</button></div><pre>codex</pre></div>
+<p class="do" style="font-weight:400">首次會跳驗證提示,選 <b>Sign in with ChatGPT</b>(瀏覽器登入最簡單)或改用 API key。🎉</p>
+
+<details class="ex"><summary>卡關自救 · 常見問題排除</summary><div class="exb"><table><tr><th>狀況</th><th>怎麼辦</th></tr><tr><td><b>A.</b> 不小心裝錯套件</td><td>如果你是用 npm 裝,記住套件名是下面 <b>A</b> 那行(別漏打 <code>@openai/</code>)。</td></tr><tr><td><b>B.</b> <code>brew install codex</code> 找不到</td><td>它是 cask,請用下面 <b>B</b> 那行。</td></tr><tr><td><b>C.</b> 走 npm 裝失敗</td><td>Node.js 太舊,需 22 以上;或直接用上面官方 installer 免裝 Node。</td></tr></table>
+<div class="cmd"><div class="top"><span class="t">A. npm 安裝的正確套件名</span><button class="copy" data-cmd="npm install -g @openai/codex">複製</button></div><pre>npm install -g @openai/codex</pre></div>
+<div class="cmd"><div class="top"><span class="t">B. 用 Homebrew cask 安裝</span><button class="copy" data-cmd="brew install --cask codex">複製</button></div><pre>brew install --cask codex</pre></div></div></details>
+
+<div class="links"><a class="lk" href="https://github.com/openai/codex" target="_blank" rel="noopener"><span>官方來源 · Codex 專案頁</span><span class="u">github.com ↗</span></a><a class="lk" href="https://developers.openai.com/codex/cli" target="_blank" rel="noopener"><span>官方來源 · Codex CLI 文件</span><span class="u">developers.openai.com ↗</span></a></div>
+<p class="do" style="font-weight:400">查證日期 2026-06-25</p>`,
+     ok_mac:'打 <code>codex --version</code> 出現版本號，再打 <code>codex</code> → 選 <b>Sign in with ChatGPT</b>(或改用 API key)登入成功 ＝ 完成。',
+     t_win:'裝 Codex',desc_win:'PowerShell 一行裝好 Codex，確認版本後用 ChatGPT 帳號登入',
+     why_win:'<b>Codex</b> 是 <b>OpenAI</b> 的終端機 AI 編碼助手。要有 <b>ChatGPT 付費方案</b>(Plus / Pro / Business…)或 OpenAI API key。<b>不需要裝 WSL</b>——網路上很多舊教學叫你先裝 WSL,那是過時資訊,直接用 PowerShell 就能裝。用原生 installer 免裝 Node.js。',
+     winhtml:`<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">📋 系統需求</span><span>Windows(原生 PowerShell 即可,不強制 WSL)・需 ChatGPT 付費方案(Plus / Pro / Business…)或 OpenAI API key。用原生 installer 免裝 Node.js。</span></div>
+<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">✅ 不用 WSL</span><span><b>不需要裝 WSL!</b>網路上很多舊教學叫你先裝 WSL,那是過時資訊。直接用 PowerShell 就能裝。</span></div>
+
+<p class="do">① 打開 PowerShell</p>
+<p class="do" style="font-weight:400">1. 按 <b>Win + X</b><br>2. 點選 <b>Windows PowerShell</b> 或 <b>Terminal</b></p>
+<p class="do" style="font-weight:400">✅ 開頭是 <code>PS C:\\</code> 就對了。</p>
+
+<p class="do">② 安裝(複製這一行)</p>
+<p class="do" style="font-weight:400">點右上角 <b>複製</b>,貼到 PowerShell,按 <b>Enter</b>:</p>
+<div class="cmd"><div class="top"><span class="t">複製整行貼進 PowerShell</span><button class="copy" data-cmd="powershell -ExecutionPolicy ByPass -c &quot;irm https://chatgpt.com/codex/install.ps1 | iex&quot;">複製</button></div><pre>powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"</pre></div>
+<p class="do" style="font-weight:400">✅ 訊息停止、出現安裝完成 = 完成。</p>
+
+<p class="do">③ 確認裝好了</p>
+<div class="cmd"><div class="top"><span class="t">確認版本</span><button class="copy" data-cmd="codex --version">複製</button></div><pre>codex --version</pre></div>
+<p class="do" style="font-weight:400">✅ 出現版本號 = 成功。</p>
+
+<p class="do">④ 第一次啟動 + 登入</p>
+<div class="cmd"><div class="top"><span class="t">啟動</span><button class="copy" data-cmd="codex">複製</button></div><pre>codex</pre></div>
+<p class="do" style="font-weight:400">首次會跳驗證提示,選 <b>Sign in with ChatGPT</b> 或改用 API key。🎉</p>
+
+<details class="ex"><summary>卡關自救 · 常見問題排除</summary><div class="exb"><table><tr><th>狀況</th><th>怎麼辦</th></tr><tr><td><b>A.</b> 以為一定要裝 WSL</td><td>不用。官方支援原生 PowerShell 安裝;WSL 只是進階選項。</td></tr><tr><td><b>B.</b> 公司電腦裝錯 / sandbox 被擋</td><td>受管的公司機器可能需管理員核准;可改用 <code>unelevated</code> sandbox 模式或退而用 WSL2。</td></tr><tr><td><b>C.</b> 走 npm 裝</td><td>需 Node.js 22 以上,套件名是下面那行。</td></tr></table>
+<div class="cmd"><div class="top"><span class="t">C. 改走 npm 安裝(需 Node.js 22 以上)</span><button class="copy" data-cmd="npm install -g @openai/codex">複製</button></div><pre>npm install -g @openai/codex</pre></div></div></details>
+
+<div class="links"><a class="lk" href="https://github.com/openai/codex" target="_blank" rel="noopener"><span>官方來源 · Codex 專案頁</span><span class="u">github.com ↗</span></a><a class="lk" href="https://developers.openai.com/codex/windows" target="_blank" rel="noopener"><span>官方來源 · Codex on Windows</span><span class="u">developers.openai.com ↗</span></a></div>
+<p class="do" style="font-weight:400">查證日期 2026-06-25</p>`,
+     ok_win:'打 <code>codex --version</code> 出現版本號，再打 <code>codex</code> → 選 <b>Sign in with ChatGPT</b>(或改用 API key)登入成功 ＝ 完成。'},
+    {no:'3',hide_one:true,
+     t_mac:'裝 Antigravity',desc_mac:'終端機一行裝好 agy，重開視窗啟動並用 Google 帳號登入',
+     why_mac:'<b>Antigravity CLI</b> 是 <b>Google</b> 的終端機 AI 編碼助手(Gemini CLI 的繼任者)，背後是 <b>Gemini</b>。<b>命令是 agy</b>(a-g-y)，打 antigravity 會找不到。需要一個 <b>Google 帳號</b>(個人 Gmail 即可,免費)，建議裝 <b>Chrome</b>;安裝本體不需 Node.js。',
+     machtml:`<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">📋 系統需求</span><span>macOS 12 (Monterey) 以上・Apple Silicon 與 Intel 都支援・需一個 <b>Google 帳號</b>(個人 Gmail 即可,免費)・建議裝 <b>Chrome</b> 瀏覽器(agent 功能用得到)。安裝本體不需 Node.js。</span></div>
+<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">⚠️ 最重要</span><span><b>這個工具的命令叫 <code>agy</code>(a-g-y 三個字母)。</b>打 <code>antigravity</code> 會找不到。</span></div>
+
+<p class="do">① 打開「終端機」</p>
+<p class="do" style="font-weight:400">1. 按 <b>⌘ Command + 空白鍵</b><br>2. 打字輸入 <code>terminal</code><br>3. 按 <b>Enter</b></p>
+<p class="do" style="font-weight:400">✅ 跳出黑底白字的視窗就是終端機。</p>
+
+<p class="do">② 安裝(複製這一行)</p>
+<p class="do" style="font-weight:400">點右上角 <b>複製</b>,貼到終端機,按 <b>Enter</b>:</p>
+<div class="cmd"><div class="top"><span class="t">複製整行貼進終端機</span><button class="copy" data-cmd="curl -fsSL https://antigravity.google/cli/install.sh | bash">複製</button></div><pre>curl -fsSL https://antigravity.google/cli/install.sh | bash</pre></div>
+<p class="do" style="font-weight:400">會跑出一些文字,稍等。裝完檔案會放在 <code>~/.local/bin/</code>。</p>
+<p class="do" style="font-weight:400">✅ 訊息停止、出現安裝完成提示 = 完成。</p>
+
+<p class="do">③ 重開終端機再啟動</p>
+<p class="do" style="font-weight:400">安裝後請<b>先關掉終端機視窗、重新開一個</b>(讓電腦認得新指令),然後輸入:</p>
+<div class="cmd"><div class="top"><span class="t">啟動(注意是 agy 三個字母)</span><button class="copy" data-cmd="agy">複製</button></div><pre>agy</pre></div>
+<p class="do" style="font-weight:400">首次執行會自動開瀏覽器要你用 <b>Google 帳號登入</b> → 登入完回到終端機。</p>
+<p class="do" style="font-weight:400">✅ 輸入 <code>agy</code> 後出現登入流程或互動畫面 = 安裝成功。</p>
+
+<details class="ex"><summary>卡關自救 · 常見問題排除</summary><div class="exb"><table><tr><th>狀況</th><th>怎麼辦</th></tr><tr><td><b>A.</b> 輸入 <code>agy</code> 出現 <code>command not found</code></td><td>重開終端機;若還是不行,複製下面 <b>A</b> 那整段貼上、按 Enter</td></tr><tr><td><b>B.</b> 跳「無法開啟、來自未識別開發者」</td><td>點蟋果 →「系統設定」→「隱私權與安全性」,拉到下面點「<b>仍要開啟 (Open Anyway)</b>」。</td></tr><tr><td><b>C.</b> 想登出</td><td>在 <code>agy</code> 互動畫面輸入 <code>/logout</code>。</td></tr></table>
+<div class="cmd"><div class="top"><span class="t">A. 修 PATH(整段複製)</span><button class="copy" data-cmd="echo 'export PATH=&quot;$HOME/.local/bin:$PATH&quot;' &gt;&gt; ~/.zshrc&#10;source ~/.zshrc">複製整段</button></div><pre>echo 'export PATH=&quot;$HOME/.local/bin:$PATH&quot;' &gt;&gt; ~/.zshrc&#10;source ~/.zshrc</pre></div></div></details>
+
+<div class="links"><a class="lk" href="https://antigravity.google/download" target="_blank" rel="noopener"><span>官方來源 · Antigravity 下載頁</span><span class="u">antigravity.google ↗</span></a><a class="lk" href="https://github.com/google-antigravity/antigravity-cli" target="_blank" rel="noopener"><span>官方來源 · Antigravity CLI 專案頁</span><span class="u">github.com ↗</span></a></div>
+<p class="do" style="font-weight:400">查證日期 2026-06-25</p>`,
+     ok_mac:'重開終端機後輸入 <code>agy</code>，出現登入流程或互動畫面 ＝ 成功(第一次會跳瀏覽器要你用 <b>Google 帳號</b>登入)。',
+     t_win:'裝 Antigravity',desc_win:'PowerShell 一行裝好 agy，重開視窗啟動並用 Google 帳號登入',
+     why_win:'<b>Antigravity</b> 是 <b>Google</b> 的終端機 AI 編碼助手(Gemini CLI 繼任者)。<b>命令是 agy</b>(a-g-y)，打 antigravity 會找不到。需要一個 <b>Google 帳號</b>(免費)，建議裝 <b>Chrome</b>；安裝本體不需 Node.js。',
+     winhtml:`<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">📋 系統需求</span><span>Windows 10 以上、64 位元(支援 x64 與 ARM64)・需一個 <b>Google 帳號</b>(免費)・建議裝 <b>Chrome</b>。安裝本體不需 Node.js。</span></div>
+<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">⚠️ 最重要</span><span><b>命令叫 <code>agy</code>(a-g-y)。</b>打 <code>antigravity</code> 會找不到。同時請用 <b>PowerShell</b> 不是 CMD。</span></div>
+
+<p class="do">① 打開 PowerShell</p>
+<p class="do" style="font-weight:400">1. 按 <b>Win + X</b><br>2. 點選 <b>Windows PowerShell</b> 或 <b>Terminal</b></p>
+<p class="do" style="font-weight:400">✅ 開頭是 <code>PS C:\\</code> 就對了。</p>
+
+<p class="do">② 安裝(複製這一行)</p>
+<p class="do" style="font-weight:400">點右上角 <b>複製</b>,貼到 PowerShell,按 <b>Enter</b>:</p>
+<div class="cmd"><div class="top"><span class="t">複製整行貼進 PowerShell</span><button class="copy" data-cmd="irm https://antigravity.google/cli/install.ps1 | iex">複製</button></div><pre>irm https://antigravity.google/cli/install.ps1 | iex</pre></div>
+<p class="do" style="font-weight:400">裝完檔案會放在 <code>%LOCALAPPDATA%</code> 下的 Antigravity 資料夾。</p>
+<p class="do" style="font-weight:400">✅ 訊息停止、出現安裝完成 = 完成。</p>
+
+<p class="do">③ 重開 PowerShell 再啟動(第一次會要你登入)</p>
+<p class="do" style="font-weight:400">先<b>關掉 PowerShell、重開一個新視窗</b>,然後輸入:</p>
+<div class="cmd"><div class="top"><span class="t">啟動(注意是 agy 三個字母)</span><button class="copy" data-cmd="agy">複製</button></div><pre>agy</pre></div>
+<p class="do" style="font-weight:400">首次會自動開瀏覽器要你用 <b>Google 帳號登入</b> → 登入完回到終端機。</p>
+<p class="do" style="font-weight:400">✅ 輸入 <code>agy</code> 出現登入流程或互動畫面 = 成功。</p>
+
+<details class="ex"><summary>卡關自救 · 常見問題排除</summary><div class="exb"><table><tr><th>狀況</th><th>怎麼辦</th></tr><tr><td><b>A.</b> 安裝時 SmartScreen 跳警告</td><td>點「<b>More Info → Run Anyway</b>」;放行前確認發行者顯示為 <b>Google LLC</b>。</td></tr><tr><td><b>B.</b> 輸入 <code>agy</code> 出現 <code>not recognized</code></td><td>重開 PowerShell;若還是不行,檢查 PATH 是否含安裝目錄(<code>%LOCALAPPDATA%</code> 下的 agy 資料夾)。</td></tr><tr><td><b>C.</b> 裝不上去</td><td>以系統管理員身份執行 PowerShell;防毒軟體擋住時暫時關閉再裝。</td></tr></table></div></details>
+
+<div class="links"><a class="lk" href="https://antigravity.google/download" target="_blank" rel="noopener"><span>官方來源 · Antigravity 下載頁</span><span class="u">antigravity.google ↗</span></a><a class="lk" href="https://github.com/google-antigravity/antigravity-cli" target="_blank" rel="noopener"><span>官方來源 · Antigravity CLI 專案頁</span><span class="u">github.com ↗</span></a></div>
+<p class="do" style="font-weight:400">查證日期 2026-06-25</p>`,
+     ok_win:'重開 PowerShell 後輸入 <code>agy</code>，出現登入流程或互動畫面 ＝ 成功(第一次會跳瀏覽器要你用 Google 帳號登入)。'},
+    {t:'選你要用的 AI',no:'1-1',hide_mac:true,hide_win:true,desc:'三個挑一個你（或公司）已經付費的，確認登入得了',
      why:'今年<b>不發公司 API key 了</b>——改成<b>用你自己已經付費的帳號直接登入</b>，跟你平常用網頁版一樣。<b>ChatGPT、Claude、Google Gemini 你有哪個就用哪個</b>（Gemini 是公司已經付費的，人人都有）。這一步只做一件事：<b>挑一個、確認登入得了</b>。確認完再進 1-2 安裝，才不會裝到一半卡在登入畫面。',
      machtml:SUBHTML,
      winhtml:SUBHTML,
@@ -133,7 +307,7 @@
 <div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">⚠️ 不能跳過</span><span><b>一定要先解壓縮</b>。直接在壓縮檔裡面按兩下 <code>Setup-Claude.bat</code>，會裝不起來。</span></div>`,
      ok_one:'解壓縮後出現一個資料夾，打開看得到 <code>Setup-Claude.bat</code> ＝ 這一步完成。',
      ok:'你<b>心裡已經選定一個</b>（Codex／Claude Code／Antigravity 其中一個），而且<b>瀏覽器登入得進去</b> ＝ 這一步完成。<b>先別急著打指令</b>——下一步（1-2）才會把它裝起來。'},
-    {t:'裝你選的 AI',no:'1-2',desc:'安裝 → 重開視窗 → 驗證 → 用你 1-1 選的帳號登入',
+    {t:'裝你選的 AI',no:'1-2',hide_mac:true,hide_win:true,desc:'安裝 → 重開視窗 → 驗證 → 用你 1-1 選的帳號登入',
      why:'把 1-1 選好的那個裝起來——一個坐你旁邊、聽你打字指揮、<b>直接幫你動手</b>的 AI，住在「終端機」裡。<b>下面主流程寫的是 Claude Code</b>；<b>選 Codex 或 Antigravity 的人，直接跳到本頁最下面那兩個摺疊區</b>（完整步驟都在裡面，一樣做完就好）。三個都一樣：裝完第一次打指令會跳出瀏覽器要你登入，<b>登入過一次就記住</b>。',
      machtml:`<p class="do">① 打開「<b>終端機</b>」</p>
 <p class="do" style="font-weight:400">按 <b>⌘ Command + 空白鍵</b> → 打字輸入 <code>terminal</code> → 按 <b>Enter</b>。跳出黑底白字、游標在閃的視窗，就是它。</p>
@@ -212,48 +386,51 @@
      ok_mac:'<b>選 Claude Code：</b>③ <code>claude --version</code> 出現版本號，④ 打 <code>claude</code> → 瀏覽器登入成功 → 進到對話畫面 ＝ 成功。<br><b>選 Codex／Antigravity：</b>打 <code>codex</code> 或 <code>agy</code> → 瀏覽器登入成功 → 進到對話畫面 ＝ 成功。<br>登入用的是<b>你 1-1 選的那個帳號</b>；登過一次就記住，之後開新視窗不會再問你。',
      ok:'<b>選 Claude Code：</b>⑥ <code>claude --version</code> 出現版本號，⑦ 打 <code>claude</code> → 瀏覽器登入成功 → 回到 PowerShell 進到對話畫面 ＝ 成功。<br><b>選 Codex／Antigravity：</b>打 <code>codex</code> 或 <code>agy</code> → 瀏覽器登入成功 → 進到對話畫面 ＝ 成功。<br>登入用的是<b>你 1-1 選的那個帳號</b>；登過一次就記住，之後開新視窗不會再問你。',
      extra:'<details class="ex"><summary>選 Codex 的人看這裡（OpenAI，用你自己的 ChatGPT）· 完整步驟</summary><div class="exb"><b>1-1 選 ChatGPT 的人做這一段就好，上面的 Claude Code 流程可以跳過。</b>用<b>你自己的 ChatGPT 付費方案</b>（Plus／Pro／Business／Edu／Enterprise）或 OpenAI API key；免費版不能用。<b>Windows 不需要裝 WSL</b>——網路上很多舊教學說要，那是過時資訊，PowerShell 就夠。<br><br><b>① 裝 · Mac：</b>終端機貼這行、按 Enter：<div class="cmd"><div class="top"><span class="t">Mac</span><button class="copy" data-cmd="curl -fsSL https://chatgpt.com/codex/install.sh | sh">複製</button></div><pre>curl -fsSL https://chatgpt.com/codex/install.sh | sh</pre></div><b>① 裝 · Windows：</b>PowerShell 貼這行、按 Enter：<div class="cmd"><div class="top"><span class="t">Windows（PowerShell）</span><button class="copy" data-cmd="powershell -ExecutionPolicy ByPass -c &quot;irm https://chatgpt.com/codex/install.ps1 | iex&quot;">複製</button></div><pre>powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"</pre></div><b>② 確認裝好：</b>打 <code>codex --version</code> 出現版本號＝成功。<br><b>③ 開 + 登入：</b>打 <code>codex</code> 按 Enter → 選「Sign in with ChatGPT」→ 會自動跳出瀏覽器、用你的 ChatGPT 帳號登入 → 回到終端機就能用。<br><b>成功長這樣：</b>打 codex 出現對話畫面。</div></details><details class="ex"><summary>選 Antigravity 的人看這裡（Google Gemini，公司已付費）· 完整步驟</summary><div class="exb"><b>1-1 選 Google 的人做這一段就好，上面的 Claude Code 流程可以跳過。</b><b>Gemini 是公司已經付費的，用你的公司 Google 帳號登入即可，不用自己花錢。</b>Antigravity 是它的<b>終端機版</b>——指令叫 <code>agy</code>（a-g-y 三個字母，<b>打 antigravity 會找不到</b>），跟 Claude／Codex 一樣在終端機裡跑（它是 Gemini CLI 的後繼者）。用<b>公司的 Google 帳號</b>登入即可（個人 Gmail 也行），建議裝 Chrome。<br><br><b>① 裝 · Mac：</b>終端機貼這行、按 Enter：<div class="cmd"><div class="top"><span class="t">Mac</span><button class="copy" data-cmd="curl -fsSL https://antigravity.google/cli/install.sh | bash">複製</button></div><pre>curl -fsSL https://antigravity.google/cli/install.sh | bash</pre></div><b>① 裝 · Windows：</b>PowerShell 貼這行、按 Enter：<div class="cmd"><div class="top"><span class="t">Windows（PowerShell）</span><button class="copy" data-cmd="irm https://antigravity.google/cli/install.ps1 | iex">複製</button></div><pre>irm https://antigravity.google/cli/install.ps1 | iex</pre></div><b>② 關掉終端機／PowerShell、重開一個</b>（讓電腦認得新指令）。<br><b>③ 開 + 登入：</b>打 <code>agy</code> 按 Enter → 第一次用你的 <b>Google 帳號</b>登入（<b>公司 Workspace 帳號可用</b>，不像舊桌面版只能個人 gmail）→ 跳出瀏覽器授權一次就好。<br><b>成功長這樣：</b>打 agy 出現 Antigravity CLI 的對話畫面。<br><br><b>卡關：</b>Mac 跳「無法開啟、來自未識別開發者」→ 系統設定 → 隱私權與安全性 → 拉到下面點「仍要開啟」。Windows 跳 SmartScreen → 點「More Info → Run Anyway」（放行前確認發行者是 <b>Google LLC</b>）。</div></details>'},
-    {t:'裝地基工具',no:'1-3',desc:'git、Python、Node，讓 AI 能做更多、能接工具',
+    {t:'裝地基工具',no:'1-3',hide_mac:true,hide_win:true,desc:'git、Python、Node，讓 AI 能做更多、能接工具',
      why:'這些是地基（<b>git、Python、Node</b>），讓 AI 能幫你抓別人的專案、跑程式，還能接工具（1-5 要接的 Google Sheets 就靠 Node）。',
      mac:{do:'貼這一整行、按 Enter，等它跑完：',cmd:'xcode-select --install 2>/dev/null; curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH="$HOME/.local/bin:$PATH" && uv python install 3.11 && echo "地基裝好了"'},
      win:{do:'貼這一整行、按 Enter，等它跑完：',cmd:'winget install --id Git.Git -e --silent --accept-package-agreements --accept-source-agreements; winget install --id OpenJS.NodeJS.LTS -e --silent --accept-package-agreements --accept-source-agreements; irm https://astral.sh/uv/install.ps1 | iex; & "$env:USERPROFILE\\.local\\bin\\uv.exe" python install 3.11; Write-Host "地基裝好了"'},
      one:{do:'貼這一整行、按 Enter，等它跑完：',cmd:'winget install --id Git.Git -e --silent --accept-package-agreements --accept-source-agreements; winget install --id OpenJS.NodeJS.LTS -e --silent --accept-package-agreements --accept-source-agreements; irm https://astral.sh/uv/install.ps1 | iex; & "$env:USERPROFILE\\.local\\bin\\uv.exe" python install 3.11; Write-Host "地基裝好了"'},
      ok:'沒跳紅字、印出「地基裝好了」= 成功。',
      extra:'<div class="ok" style="background:var(--card2);color:var(--soft);margin-top:.2rem"><span class="c" style="color:var(--accent);white-space:nowrap">＋ Node</span><span>1-5 接 Google Sheets 需要 Node。<b>Windows</b> 已含在上面那行。<b>Mac</b> 請另外到 <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> 下載 <b>LTS</b> 版、雙擊安裝（裝完打 <code>node -v</code> 看到 v20 以上就好）。</span></div>'},
-    {t:'裝 2 個工作坊 skill',no:'1-4',desc:'兩張方法卡，讓 AI 照工作坊的方法幫你',
+    {t:'裝 2 個工作坊 skill',no:'1-4',hide_mac:true,hide_win:true,desc:'兩張方法卡，讓 AI 照工作坊的方法幫你',
      why:'這兩張「方法卡」（需求逼結構、交辦清單）讓 AI 自動照工作坊的方法幫你，你不用背任何口訣。',
      mac:{do:'貼這一行：',cmd:'curl -fsSL https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-skills.sh | bash'},
      win:{do:'貼這一行：',cmd:'irm https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-skills.ps1 | iex'},
      one:{do:'貼這一行：',cmd:'irm https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-skills.ps1 | iex'},
      ok:'螢幕出現「已裝好 2 個 skill」= 成功。'},
-    {t:'接 Google Sheets',no:'1-5',desc:'讓 Claude Code 能讀寫你的 Google 試算表（飲料店 demo 用）',
+    {t:'接 Google Sheets',no:'1-5',hide_mac:true,hide_win:true,desc:'讓 Claude Code 能讀寫你的 Google 試算表（飲料店 demo 用）',
      why:'這一步讓你打一句話、Claude Code 就寫進你的 Google 試算表——就是 Devin 飲料店那個「說→做」。要先去 Google Cloud 拿一把「服務帳戶金鑰（JSON）」，再一行接好。',
      doonly:'跟著這頁做——每一步都有直接連結、結尾有卡關表，不會迷路：',
      links:[{n:'📄 打開 GCP → Sheets 完整教學（點我）',u:'micl-legal.github.io/4a-sgx-demo/gcp-sheets.html'}],
      ok:'照教學頁做完、跑最後那一行，打 claude mcp list 看到 mcp-gsheets ✔ Connected = 通了。',
      extra:'<details class="ex"><summary>想也接 Gmail？（選讀 · 比 Sheets 費工 · 回家自己玩）</summary><div class="exb"><b>先老實說：Gmail 比 Sheets 麻煩。</b>Sheets 用「服務帳戶」（分享表就好）；Gmail 讀不了服務帳戶，一定要走 <b>OAuth</b>（你在瀏覽器授權一次），步驟約 2 倍。好消息：你們是公司 Google，選 <b>Internal</b> 就免驗證、不會 7 天到期。<br><br><b>① 開 Gmail API：</b><a href="https://console.cloud.google.com/apis/library/gmail.googleapis.com" target="_blank" rel="noopener">console.cloud.google.com/apis/library/gmail.googleapis.com</a> → 按 Enable。<br><b>② 建 OAuth 用戶端：</b><a href="https://console.cloud.google.com/auth/clients" target="_blank" rel="noopener">console.cloud.google.com/auth/clients</a> → Create client → 類型選 <b>Desktop app</b> → 建立 → 下載 JSON（放到路徑不含空格的資料夾）。<br><b>③ 填這兩格，下面指令會自動長出來 → 按「複製整行」</b>（uvx 不用 Node、Windows 也不用 cmd /c）：<br><input id="gmp" oninput="gmw()" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.8rem;margin:.35rem 0" placeholder="貼上你的 JSON 完整路徑"><input id="gme" oninput="gmw()" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.8rem;margin:0 0 .4rem" placeholder="你的公司 email，例：you@medtecs.com"><div class="cmd keybox"><div class="top"><span class="t">你的接 Gmail 指令（Mac／Win 同一行）</span><button id="gmbtn" onclick="gmcopy()" style="font-family:inherit;font-size:.8rem;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:7px;padding:.35rem .8rem;cursor:pointer">複製整行</button></div><pre id="gmout">claude mcp add google-workspace --env GOOGLE_CLIENT_SECRET_PATH="你的JSON路徑" --env USER_GOOGLE_EMAIL="你的@medtecs.com" -- uvx workspace-mcp --tools gmail --tool-tier core --single-user</pre></div><b>④ 第一次用：</b>重開 Claude Code，叫它「查我的 Gmail」→ 跳出瀏覽器 → 選你的公司帳號 → 按<b>允許</b> → 好了。<br><b>成功長這樣：</b>打 <code>claude mcp list</code> 看到 <code>google-workspace ✔ Connected</code>。</div></details>'},
-    {t:'公司帳號（已幫你開好）',no:'1-6',desc:'Zapier、Make 公司已開通，不用自己辦',
+    {t:'公司帳號（已幫你開好）',no:'1-6',hide_mac:true,hide_win:true,desc:'Zapier、Make 公司已開通，不用自己辦',
      why:'工作坊會用到的 <b>Zapier</b> 和 <b>Make</b>（自動化工具），公司已經幫各部門開通好了——<b>你不用自己註冊</b>。登入用的帳號當天由主辦提供。',
      links:[{n:'Make 登入',u:'make.com'},{n:'Zapier 登入',u:'zapier.com'}],
      ok:'兩個都能用主辦給的帳號登入，就準備好了。'},
-    {t:'裝資料庫存取檔',no:'1-7',dbslot:true,desc:'Billy 場要用；輸入工號拿你自己的那一包（僅 Windows）',why:'下週 <b>Billy 場</b>要把你的 Google Sheet 搬進<b>公司內部的真資料庫</b>。那個庫在公司內網，所以每人先裝一把<b>自己的鑰匙</b>（每人一支、不共用）。',ok:'下載→解壓→按兩下 <code>install-db-access.bat</code>，看到綠色 <code>[OK]</code> = 裝好了（上課當天才會發密碼）。'}
+    {t:'裝資料庫存取檔',no:'1-7',hide_mac:true,hide_win:true,dbslot:true,desc:'Billy 場要用；輸入工號拿你自己的那一包（僅 Windows）',why:'下週 <b>Billy 場</b>要把你的 Google Sheet 搬進<b>公司內部的真資料庫</b>。那個庫在公司內網，所以每人先裝一把<b>自己的鑰匙</b>（每人一支、不共用）。',ok:'下載→解壓→按兩下 <code>install-db-access.bat</code>，看到綠色 <code>[OK]</code> = 裝好了（上課當天才會發密碼）。'}
   ];
-  let cur=0, os='win', userkey='', done=Array(steps.length).fill(false);
+  let cur=0, os='win', userkey='', done=[];
+  // 每個模式有自己的步驟清單：帶 hide_<os> 的步驟在該模式不出現
+  const SEQ=()=>steps.filter(s=>s['hide_'+os]!==true);
   const $=id=>document.getElementById(id);
   function renderRail(){
-    $('rail').innerHTML=steps.map((s,k)=>{const t=(s['t_'+os]!==undefined)?s['t_'+os]:s.t, d=(s['desc_'+os]!==undefined)?s['desc_'+os]:s.desc;return `<div class="rstep ${k===cur?'cur':''} ${done[k]?'done':''}" data-k="${k}"><span class="dot">${done[k]?'✓':k+1}</span><div class="rtx"><span class="rt">${s.no}　${t}</span><span class="rd">${d}</span></div></div>`;}).join('');
+    $('rail').innerHTML=SEQ().map((s,k)=>{const t=(s['t_'+os]!==undefined)?s['t_'+os]:s.t, d=(s['desc_'+os]!==undefined)?s['desc_'+os]:s.desc;return `<div class="rstep ${k===cur?'cur':''} ${done[k]?'done':''}" data-k="${k}"><span class="dot">${done[k]?'✓':k+1}</span><div class="rtx"><span class="rt">${s.no}　${t}</span><span class="rd">${d}</span></div></div>`;}).join('');
     document.querySelectorAll('.rstep').forEach(e=>e.onclick=()=>{cur=+e.dataset.k;render();});
   }
   function render(){
+    const seq=SEQ();
     const doneCount=done.filter(Boolean).length;
-    $('fill').style.width=(doneCount/steps.length*100)+'%';
-    if(cur>=steps.length){renderDone();renderRail();return;}
-    const s=steps[cur], o=s[os]||{};
+    $('fill').style.width=(doneCount/seq.length*100)+'%';
+    if(cur>=seq.length){renderDone();renderRail();return;}
+    const s=seq[cur], o=s[os]||{};
     const blank=(s['blank_'+os]===true);
     const why=(s['why_'+os]!==undefined)?s['why_'+os]:s.why;
     const oktx=(s['ok_'+os]!==undefined)?s['ok_'+os]:s.ok;
     const tt=(s['t_'+os]!==undefined)?s['t_'+os]:s.t;
-    $('barlab').textContent=s.no+' · 第 '+(cur+1)+' 步 / 共 '+steps.length+' 步';
-    let body=`<div class="stepno">${s.no}　·　第 ${cur+1} 步 / 共 ${steps.length} 步</div><h2>${tt}</h2>`+(why?`<div class="why">${why}</div>`:'');
+    $('barlab').textContent=s.no+' · 第 '+(cur+1)+' 步 / 共 '+seq.length+' 步';
+    let body=`<div class="stepno">${s.no}　·　第 ${cur+1} 步 / 共 ${seq.length} 步</div><h2>${tt}</h2>`+(why?`<div class="why">${why}</div>`:'');
     if(s.keyslot&&!blank&&os!=='one'){
       body+='<p class="do">第 1 步　把你的部門 API key 貼在這個欄位：</p>';
       body+='<input id="keyin" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.86rem" placeholder="貼上 sk-ant-… 開頭那一整串" value="'+(userkey||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">';
@@ -287,8 +464,11 @@
   }
   function renderDone(){
     $('barlab').textContent='全部完成 🎉';$('fill').style.width='100%';
-    $('panel').innerHTML=`<div class="done-panel"><div class="stepno">DONE</div><div class="big">全部準備好了！</div><p>1-1 到 1-7 都完成，你跟全班站在同一條起跑線了。上課當天直接開跑，不會卡在裝機。</p><p style="margin-top:1rem"><button class="prev" id="again">← 回去檢查某一步</button></p></div>`;
-    $('again').onclick=()=>{cur=steps.length-1;render();};
+    const msg=(os==='one')
+      ? '1-1 到 1-7 都完成，你跟全班站在同一條起跑線了。上課當天直接開跑，不會卡在裝機。'
+      : '你選的 AI 已經裝好、也登入好了。想再裝另一個，左邊點過去照做就行。';
+    $('panel').innerHTML=`<div class="done-panel"><div class="stepno">DONE</div><div class="big">全部準備好了！</div><p>${msg}</p><p style="margin-top:1rem"><button class="prev" id="again">← 回去檢查某一步</button></p></div>`;
+    $('again').onclick=()=>{cur=SEQ().length-1;render();};
   }
   const DBLINKS = {
     // ⚠️ 上課前：把 Apps Script exportLinksForWizard 印出的整段貼進來（工號:子資料夾連結）
@@ -298,7 +478,7 @@
     function gmw(){var p=(document.getElementById('gmp').value||'你的JSON路徑');var e=(document.getElementById('gme').value||'你的@medtecs.com');var o=document.getElementById('gmout');if(o)o.textContent='claude mcp add google-workspace --env GOOGLE_CLIENT_SECRET_PATH="'+p+'" --env USER_GOOGLE_EMAIL="'+e+'" -- uvx workspace-mcp --tools gmail --tool-tier core --single-user';}
   function gmcopy(){var o=document.getElementById('gmout');if(!o)return;try{navigator.clipboard.writeText(o.textContent);}catch(e){}var b=document.getElementById('gmbtn');if(b){var t=b.textContent;b.textContent='已複製 ✓';setTimeout(function(){b.textContent=t;},1500);}}
   const OSKEYS=['mac','win','one'];
-  function setOS(v){os=v;OSKEYS.forEach(k=>$(k).classList.toggle('on',k===v));render();}
+  function setOS(v){os=v;cur=0;done=[];OSKEYS.forEach(k=>$(k).classList.toggle('on',k===v));render();}
   OSKEYS.forEach(k=>{$(k).onclick=()=>setOS(k);});
   render();
 </script>
