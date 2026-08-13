@@ -50,12 +50,16 @@
   .cmd .top .t{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#b9a986;font-weight:700}
   .cmd .copy{font-family:inherit;font-size:.8rem;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:7px;padding:.35rem .8rem;cursor:pointer}
   .cmd pre{margin:0;padding:.85rem .9rem;font-family:var(--mono);font-size:.82rem;line-height:1.65;color:var(--paste-ink);white-space:pre-wrap;word-break:break-all;max-height:180px;overflow:auto}
+  .cmd.tall pre{max-height:none}
   details.ex{margin:.2rem 0 1rem;background:var(--card2);border:1px solid var(--line);border-radius:10px}
   details.ex summary{cursor:pointer;padding:.7rem .9rem;font-weight:700;font-size:.9rem;color:var(--accent);list-style:none}
   details.ex summary::-webkit-details-marker{display:none}
   details.ex summary::before{content:"＋ ";font-weight:800}
   details.ex[open] summary::before{content:"− "}
   details.ex .exb{padding:0 .9rem .9rem;font-size:.88rem;line-height:1.7;color:var(--soft)}
+  .exb table{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.84rem}
+  .exb th,.exb td{border:1px solid var(--line);padding:.4rem .5rem;text-align:left;vertical-align:top}
+  .exb th{background:var(--card2);color:var(--ink);font-weight:700;white-space:nowrap}
   .panel code{font-family:var(--mono);background:var(--card2);padding:.1rem .35rem;border-radius:4px;font-size:.85em;color:var(--accent)}
   .deptsel{font-family:inherit;font-size:1rem;font-weight:700;padding:.6rem .9rem;border-radius:10px;border:2px solid var(--accent);background:var(--card2);color:var(--ink);margin-bottom:.9rem;cursor:pointer;width:100%;max-width:300px}
   .links{display:flex;flex-direction:column;gap:.5rem;margin:.3rem 0 1rem}
@@ -95,12 +99,48 @@
     {t:'貼上 API key',no:'1-1',desc:'讓 AI 動起來的鑰匙，工作坊直接發給你',
      why:'這是讓 AI 動起來的「鑰匙」。<b>工作坊直接發一把（公司的）key 給你</b>——你<b>不用有 Claude 帳號、不用訂閱、不用花錢</b>。<b>先把 key 放好（這一步），等下裝好打 claude 就直接能用，不會叫你登入任何帳號。</b>',
      keyslot:true,
-     ok:'終端機沒跳出紅色錯誤訊息 = 這把 key 已經放好。先別急著打 claude——下一步（1-2）把它裝起來，才會用到這把 key。'},
-    {t:'裝你的 AI 主角',no:'1-2',desc:'主角 Claude Code；Codex／Antigravity 下課自選',
+     ok:'貼上按 Enter 後<b>畫面完全沒有反應、也沒有紅字</b>＝這把 key 已經存成「永久設定」。<b>安靜就是成功。</b>先別急著打 claude——下一步（1-2）才會把 Claude Code 裝起來。'},
+    {t:'裝你的 AI 主角',no:'1-2',desc:'Git → PowerShell → 裝 Claude Code → 設好 PATH → 驗證',
      why:'今天的主角——一個坐你旁邊、聽你打字指揮、<b>直接幫你動手</b>的 AI（Claude Code），住在「終端機」裡。<b>上課統一用這個。</b>另外兩個（Codex、Antigravity）是下課想自己玩再裝，完整步驟都收在下面。',
      mac:{do:'① 用放大鏡（Spotlight）搜 <b>Terminal</b> 打開。② 把這行貼進去、按 Enter：',cmd:'curl -fsSL https://claude.ai/install.sh | bash'},
-     win:{do:'① 開「Windows Terminal」（<b>不是 CMD</b>）。② 把這行貼進去、按 Enter：',cmd:'irm https://claude.ai/install.ps1 | iex'},
-     ok:'裝好後重開終端機、打 claude → 它問「信任這把 key 嗎？」→ 按信任（y）→ 進到對話畫面 = 成功。因為 key 上一步已放好（重開也不會掉），不會叫你登入 Claude 帳號。',
+     winhtml:`<p class="do">① 先裝 <b>Git for Windows</b></p>
+<p class="do" style="font-weight:400">Claude Code 的搭檔工具。沒有它 Claude Code 也能跑，但很多功能會受限。</p>
+<div class="links"><a class="lk" href="https://git-scm.com/downloads/win" target="_blank" rel="noopener"><span>⬇️ 下載 Git for Windows（點我）</span><span class="u">git-scm.com/downloads/win ↗</span></a></div>
+<p class="do" style="font-weight:400">下載後開啟安裝檔（檔名類似 <code>Git-2.55.0.4-64-bit.exe</code>）→ 中間十幾個設定畫面 <b>全部維持預設值，一路按 Next 到底</b>。</p>
+<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">⚠️ 最容易踩的坑</span><span>裝完可能自動跳出一個<b>黑色視窗</b>，上面寫 <code>MINGW64 ~</code> 和 <code>$</code>——<b>這是正常的，代表安裝成功</b>。它叫 Git Bash，<b>不是</b>接下來要用的視窗。<b>直接把它關掉，千萬不要在裡面貼任何指令。</b></span></div>
+
+<p class="do">② 打開 <b>PowerShell</b>（不是 CMD、不是剛剛那個 Git Bash）</p>
+<p class="do" style="font-weight:400">按 <b>Win 鍵</b> → 輸入 <b>powershell</b> → 按 <b>Enter</b>。視窗左邊要長這樣，<b>開頭有 PS 才是對的</b>：</p>
+<div class="cmd"><div class="top"><span class="t">確認開頭有 PS 兩個字母</span></div><pre>PS C:\\Users\\你的名字&gt;</pre></div>
+
+<p class="do">③ 裝 Claude Code —— 貼這一行、按 Enter（等約 1 分鐘）</p>
+<div class="cmd"><div class="top"><span class="t">複製整行貼進 PowerShell</span><button class="copy" data-cmd="irm https://claude.ai/install.ps1 | iex">複製</button></div><pre>irm https://claude.ai/install.ps1 | iex</pre></div>
+<p class="do" style="font-weight:400">看到 <code>√ Claude Code successfully installed!</code> 就是成功。畫面上若還出現一段<b>黃色</b>提醒文字（<code>Setup notes</code>）——<b>那不是錯誤</b>，下一步就會處理掉。</p>
+
+<p class="do">④ 讓電腦找得到 claude</p>
+<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">🔑 這步最關鍵</span><span>Claude 已經裝好了，但 Windows 還不知道它放在哪。<b>跳過這步，等一下打 claude 就會出現 <code>claude is not recognized</code>。</b></span></div>
+<div class="cmd tall"><div class="top"><span class="t">整段複製貼進 PowerShell</span><button class="copy" data-cmd="$p = [System.Environment]::GetEnvironmentVariable('Path','User')&#10;if ($null -eq $p) { $p = '' }&#10;$new = &quot;$env:USERPROFILE\\.local\\bin&quot;&#10;if ($p -notlike &quot;*$new*&quot;) {&#10;  [System.Environment]::SetEnvironmentVariable('Path', ($p.TrimEnd(';') + &quot;;$new&quot;).TrimStart(';'), 'User')&#10;  Write-Host &quot;已加入 PATH：$new&quot; -ForegroundColor Green&#10;} else {&#10;  Write-Host &quot;PATH 裡已經有了，不用重複加&quot; -ForegroundColor Yellow&#10;}">複製整段</button></div><pre>$p = [System.Environment]::GetEnvironmentVariable('Path','User')\nif ($null -eq $p) { $p = '' }\n$new = "$env:USERPROFILE\\.local\\bin"\nif ($p -notlike "*$new*") {\n  [System.Environment]::SetEnvironmentVariable('Path', ($p.TrimEnd(';') + ";$new").TrimStart(';'), 'User')\n  Write-Host "已加入 PATH：$new" -ForegroundColor Green\n} else {\n  Write-Host "PATH 裡已經有了，不用重複加" -ForegroundColor Yellow\n}</pre></div>
+<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">貼上後卡住？</span><span>如果左邊變成 <code>&gt;&gt;</code>、游標一直閃沒反應——<b>這是正常的，再按一次 Enter 就好</b>（不要輸入任何東西，直接按 Enter）。成功會出現<b>綠色</b>字 <code>已加入 PATH：…</code>；出現<b>黃色</b>的「PATH 裡已經有了」也是成功。</span></div>
+
+<p class="do">⑤ <b>把 PowerShell 關掉、重新打開一次</b></p>
+<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">不能跳過</span><span>點右上角 <b>✕</b> 關掉 → 按 <b>Win 鍵</b> → 輸入 <b>powershell</b> → <b>Enter</b>。<br>原因：④ 設的 PATH 和 <b>1-1 設的 API key</b>，都只有<b>新開的視窗</b>才讀得到。</span></div>
+
+<p class="do">⑥ 驗證 —— 在<b>新開的</b> PowerShell 各貼一行</p>
+<div class="cmd"><div class="top"><span class="t">驗證 ①：Claude Code 裝好了嗎</span><button class="copy" data-cmd="claude --version">複製</button></div><pre>claude --version</pre></div>
+<p class="do" style="font-weight:400">出現版本號（例如 <code>2.1.229 (Claude Code)</code>）＝ Claude Code 好了。</p>
+<div class="cmd"><div class="top"><span class="t">驗證 ②：1-1 的金鑰吃到了嗎</span><button class="copy" data-cmd="echo $env:ANTHROPIC_API_KEY">複製</button></div><pre>echo $env:ANTHROPIC_API_KEY</pre></div>
+<p class="do" style="font-weight:400">出現 <code>sk-ant-…</code> 開頭的一串文字＝金鑰也設定好了。<b>兩個都對，才進最後一步。</b></p>
+
+<p class="do">⑦ 第一次啟動</p>
+<div class="cmd"><div class="top"><span class="t">先告訴它去哪個資料夾工作</span><button class="copy" data-cmd="cd $env:USERPROFILE\\Documents">複製</button></div><pre>cd $env:USERPROFILE\\Documents</pre></div>
+<p class="do" style="font-weight:400">左邊會從 <code>C:\\Windows\\System32</code> 變成 <code>C:\\Users\\你的名字\\Documents</code>。</p>
+<div class="cmd"><div class="top"><span class="t">啟動</span><button class="copy" data-cmd="claude">複製</button></div><pre>claude</pre></div>
+<p class="do" style="font-weight:400">畫面會問你<b>要不要使用這組 API Key</b> → 選 <b>Yes</b>。<b>這個問題只會出現這一次，之後不會再問。</b></p>
+
+<details class="ex"><summary>以後每次要使用 · 只要三個動作</summary><div class="exb">1. 按 <b>Win 鍵</b> → 輸入 <b>powershell</b> → 按 <b>Enter</b><br>2. 貼上 <code>cd $env:USERPROFILE\\Documents</code> 按 Enter<br>3. 輸入 <code>claude</code> 按 Enter<br><br><b>不需要再登入、不需要再輸入金鑰。</b><br><br><b>第 2 步在做什麼？</b>告訴 Claude「請到『文件』這個資料夾裡幫我做事」。Claude Code 會讀取、修改你電腦上的檔案，所以要先告訴它去哪個資料夾。有專屬工作資料夾就把路徑換掉，例如 <code>cd C:\\Users\\你的名字\\Documents\\合約審查</code>。<br><br><b>偷懶技巧：</b>在檔案總管打開你要用的資料夾 → 在上方網址列輸入 <code>powershell</code> 按 Enter → 視窗會直接開在那個位置，連第 2 步都省了。</div></details>
+<details class="ex"><summary>卡關自救 · 常見問題排除（Windows）</summary><div class="exb"><table><tr><th>畫面出現</th><th>意思</th><th>怎麼辦</th></tr><tr><td><code>'irm' is not recognized</code></td><td>開錯視窗了（開到 CMD 或 Git Bash）</td><td>關掉，重開 PowerShell，確認左邊開頭有 <code>PS</code></td></tr><tr><td><code>claude is not recognized</code></td><td>④ 沒做，或視窗沒重開</td><td>把<b>所有</b> PowerShell 視窗關掉重開；還是不行就重做 ④</td></tr><tr><td>貼上後卡在 <code>&gt;&gt;</code></td><td>正在等你確認</td><td>再按一次 Enter</td></tr><tr><td>開新視窗又要求登入</td><td>1-1 的金鑰沒存成永久設定</td><td>回 1-1 重做，確認指令結尾是 <code>,'User')</code></td></tr><tr><td><code>401 authentication_error</code></td><td>金鑰過期、被撤銷或打錯</td><td>找 4A／IT 重新取得金鑰</td></tr><tr><td>安裝時出現 <code>403</code> 或連線錯誤</td><td>公司網路阻擋</td><td>換手機熱點試；仍不行找 IT</td></tr></table></div></details>
+<details class="ex"><summary>三個視窗長相對照（最容易搞混的地方）</summary><div class="exb"><table><tr><th>視窗名稱</th><th>左邊長這樣</th><th>這步要用嗎</th></tr><tr><td><b>PowerShell</b></td><td><code>PS C:\\Users\\你的名字&gt;</code></td><td>✅ 全程用這個</td></tr><tr><td>CMD（命令提示字元）</td><td><code>C:\\Users\\你的名字&gt;</code>（沒有 PS）</td><td>❌ 不要用</td></tr><tr><td>Git Bash</td><td><code>你的名字@電腦名 MINGW64 ~</code> 然後 <code>$</code></td><td>❌ 裝完就關掉</td></tr></table></div></details>`,
+     ok:'<b>Windows：</b>⑥ 兩行驗證都過（版本號＋sk-ant-…），⑦ 打 claude 選 Yes 進到對話畫面 ＝ 成功。<br><b>Mac：</b>裝好後重開終端機、打 claude → 它問「信任這把 key 嗎？」→ 按信任（y）→ 進到對話畫面 ＝ 成功。（key 在 1-1 已放好，重開也不會掉，不會叫你登入 Claude 帳號。）',
      extra:'<details class="ex"><summary>加裝 Codex（OpenAI，用你自己的 ChatGPT）· 完整步驟</summary><div class="exb"><b>下課自選，上課用不到。</b>用你自己的 ChatGPT 訂閱（需 Plus 以上；免費版不一定能用）。<br><br><b>① 裝 · Mac：</b>終端機貼這行、按 Enter：<div class="cmd"><div class="top"><span class="t">Mac</span><button class="copy" data-cmd="curl -fsSL https://chatgpt.com/codex/install.sh | sh">複製</button></div><pre>curl -fsSL https://chatgpt.com/codex/install.sh | sh</pre></div><b>① 裝 · Windows：</b>Windows Terminal 貼這行、按 Enter：<div class="cmd"><div class="top"><span class="t">Windows</span><button class="copy" data-cmd="irm https://chatgpt.com/codex/install.ps1 | iex">複製</button></div><pre>irm https://chatgpt.com/codex/install.ps1 | iex</pre></div><b>② 開 + 登入：</b>打 <code>codex</code> 按 Enter → 選「Sign in with ChatGPT」→ 會自動跳出瀏覽器、用你的 ChatGPT 帳號登入 → 登入成功回到終端機就能用。<br><b>成功長這樣：</b>打 codex 出現對話畫面。</div></details><details class="ex"><summary>加裝 Antigravity（Google，終端機版 <code>agy</code>）· 完整步驟</summary><div class="exb"><b>下課自選，上課用不到。</b>Antigravity 也有<b>終端機版</b>——指令叫 <code>agy</code>，跟 Claude／Codex 一樣在終端機裡跑（它是 Gemini CLI 的後繼者）。<br><br><b>① 裝 · Mac：</b>終端機貼這行、按 Enter：<div class="cmd"><div class="top"><span class="t">Mac</span><button class="copy" data-cmd="curl -fsSL https://antigravity.google/cli/install.sh | bash">複製</button></div><pre>curl -fsSL https://antigravity.google/cli/install.sh | bash</pre></div><b>① 裝 · Windows：</b>Windows Terminal 貼這行、按 Enter：<div class="cmd"><div class="top"><span class="t">Windows</span><button class="copy" data-cmd="irm https://antigravity.google/cli/install.ps1 | iex">複製</button></div><pre>irm https://antigravity.google/cli/install.ps1 | iex</pre></div><b>② 開 + 登入：</b>打 <code>agy</code> 按 Enter → 第一次用你的 <b>Google 帳號</b>登入（<b>公司 Workspace 帳號可用</b>，不像舊桌面版只能個人 gmail）→ 跳出瀏覽器授權一次就好。<br><b>成功長這樣：</b>打 agy 出現 Antigravity CLI 的對話畫面。</div></details>'},
     {t:'裝地基工具',no:'1-3',desc:'git、Python、Node，讓 AI 能做更多、能接工具',
      why:'這些是地基（<b>git、Python、Node</b>），讓 AI 能幫你抓別人的專案、跑程式，還能接工具（1-5 要接的 Google Sheets 就靠 Node）。',
@@ -142,18 +182,20 @@
       body+='<p class="do">第 1 步　把你的部門 API key 貼在這個欄位：</p>';
       body+='<input id="keyin" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.86rem" placeholder="貼上 sk-ant-… 開頭那一整串" value="'+(userkey||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">';
       var kv=(userkey&&userkey.trim())?userkey.trim():'貼上你的KEY';
-      var cmdline=(os==='win')?('setx ANTHROPIC_API_KEY "'+kv+'"'):('echo \'export ANTHROPIC_API_KEY="'+kv+'"\' >> ~/.zshrc && export ANTHROPIC_API_KEY="'+kv+'"');
+      var cmdline=(os==='win')?("[System.Environment]::SetEnvironmentVariable('ANTHROPIC_API_KEY','"+kv+"','User')"):('echo \'export ANTHROPIC_API_KEY="'+kv+'"\' >> ~/.zshrc && export ANTHROPIC_API_KEY="'+kv+'"');
       body+='<p class="do">第 2 步　你的完整指令會自動長出來 —— 按「複製整行」：</p>';
-      body+='<div class="cmd keybox"><div class="top"><span class="t">'+(os==='win'?'Windows 版（setx）':'Mac 版（export）')+'</span><button class="copy" id="keycopy" data-cmd="'+cmdline.replace(/"/g,'&quot;')+'">複製整行</button></div><pre id="keyout">'+cmdline.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre></div>';
+      body+='<div class="cmd keybox"><div class="top"><span class="t">'+(os==='win'?'Windows 版（存成永久設定）':'Mac 版（export）')+'</span><button class="copy" id="keycopy" data-cmd="'+cmdline.replace(/"/g,'&quot;')+'">複製整行</button></div><pre id="keyout">'+cmdline.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre></div>';
       body+='<div class="ok" style="background:var(--card2);color:var(--soft);margin-top:.2rem"><span class="c" style="color:var(--accent);white-space:nowrap">🔒 放心</span><span>你貼的 key 只留在你自己這台的瀏覽器裡，不會上傳到任何地方——這頁沒有伺服器、不記錄；關掉分頁就沒了。</span></div>';
       if(os==='win'){
-        body+='<p class="do">第 3 步　打開「Windows Terminal」（不是 CMD）。<br>第 4 步　貼上剛剛複製的那一整行、按 Enter。<br>第 5 步　<b>把 Windows Terminal 關掉、重新打開一次</b>（Windows 用 setx，要重開才生效）。</p>';
+        body+='<p class="do">第 3 步　按 <b>Win 鍵</b> → 輸入 <b>powershell</b> → 按 <b>Enter</b>。<br>視窗左邊開頭<b>要有 PS 兩個字母</b>（<code>PS C:\\Users\\你的名字&gt;</code>）——沒有 PS 就是開錯視窗了。<br>第 4 步　貼上剛剛複製的那一整行、按 Enter。<b>畫面不會有任何反應，這是正常的。</b></p>';
+        body+='<div class="ok" style="background:var(--card2);color:var(--soft);margin-top:.2rem"><span class="c" style="color:var(--accent);white-space:nowrap">⚠️ 貼之前確認</span><span>金鑰<b>前後沒有多餘空白</b>，指令<b>兩邊的單引號 <code>\'</code> 都要保留</b>。設定要等 1-2 的「關掉視窗重開」才會生效——這是正常的，1-2 會帶你做。</span></div>';
       }else{
         body+='<p class="do">第 3 步　用放大鏡（Spotlight）搜「Terminal」打開。<br>第 4 步　貼上剛剛複製的那一整行、按 Enter —— 就設定好了。</p>';
       }
     }
     if(s.dbslot){body+='<p class="do">第 1 步　輸入你的工號，拿你自己的那一包：</p>';body+='<input id="dbin" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.86rem" placeholder="例：MT2456" oninput="dbfind()">';body+='<div style="margin:.4rem 0"><button onclick="dbfind()" style="font-family:inherit;font-size:.85rem;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:7px;padding:.4rem .9rem;cursor:pointer">查我的下載連結</button></div>';body+='<div id="dbout"></div>';body+='<div class="ok" style="background:var(--card2);color:var(--soft);margin-top:.2rem"><span class="c" style="color:var(--accent);white-space:nowrap">🔒 為什麼安全</span><span>每一包只分享給「你本人的公司 Google 帳號」——就算別人拿到你的連結，沒登入你的帳號也打不開，所以不會裝到別人的。</span></div>';body+='<p class="do">第 2 步　下載後<b>解壓縮</b> → 按兩下 <code>install-db-access.bat</code>。<br>若跳「Windows 已保護您的電腦」→「其他資訊」→「仍要執行」（公司自製小工具，不是病毒）。<br>⚠️ 目前<b>只有 Windows 版</b>；Mac 同仁當天找 Billy。</p>';}
         if(s.doonly){body+=`<p class="do">${s.doonly}</p>`;}
+    var oshtml=s[os+'html']; if(oshtml){body+=oshtml;}
     if(o.do){body+=`<p class="do">${o.do}</p>`;}
     if(o.cmd){body+=`<div class="cmd"><div class="top"><span class="t">複製整行貼進去</span><button class="copy" data-cmd="${o.cmd.replace(/"/g,'&quot;')}">複製</button></div><pre>${o.cmd.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</pre></div>`;}
     if(s.links){body+=`<div class="links">`+s.links.map(l=>`<a class="lk" href="https://${l.u}" target="_blank" rel="noopener"><span>${l.n}</span><span class="u">${l.u} ↗</span></a>`).join('')+`</div>`;}
@@ -162,7 +204,7 @@
     body+=`<div class="nav">${cur>0?'<button class="prev" id="prev">上一步</button>':''}<button class="next" id="next">✓ 我做好了，下一步</button></div>`;
     $('panel').innerHTML=body;
     $('panel').querySelectorAll('.copy').forEach(cp=>{cp.onclick=()=>{try{navigator.clipboard.writeText(cp.dataset.cmd.replace(/&quot;/g,'"'));}catch(e){}const t=cp.textContent;cp.textContent='已複製 ✓';setTimeout(()=>cp.textContent=t,1500);};});
-    var ki=$('keyin');if(ki){ki.oninput=function(){userkey=ki.value;var kv=(userkey&&userkey.trim())?userkey.trim():'貼上你的KEY';var cmd=(os==='win')?('setx ANTHROPIC_API_KEY "'+kv+'"'):('echo \'export ANTHROPIC_API_KEY="'+kv+'"\' >> ~/.zshrc && export ANTHROPIC_API_KEY="'+kv+'"');if($('keyout'))$('keyout').textContent=cmd;if($('keycopy'))$('keycopy').setAttribute('data-cmd',cmd);};}
+    var ki=$('keyin');if(ki){ki.oninput=function(){userkey=ki.value;var kv=(userkey&&userkey.trim())?userkey.trim():'貼上你的KEY';var cmd=(os==='win')?("[System.Environment]::SetEnvironmentVariable('ANTHROPIC_API_KEY','"+kv+"','User')"):('echo \'export ANTHROPIC_API_KEY="'+kv+'"\' >> ~/.zshrc && export ANTHROPIC_API_KEY="'+kv+'"');if($('keyout'))$('keyout').textContent=cmd;if($('keycopy'))$('keycopy').setAttribute('data-cmd',cmd);};}
     $('next').onclick=()=>{done[cur]=true;cur++;render();};
     if($('prev'))$('prev').onclick=()=>{cur--;render();};
     renderRail();
