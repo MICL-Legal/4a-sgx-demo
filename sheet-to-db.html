@@ -1,0 +1,119 @@
+<meta charset="utf-8">
+<title>3-4 · 把你的 Google Sheet 搬進真正的資料庫</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --paper:#f5f0e6;--card:#efe7d6;--card2:#e4dccb;--ink:#2b2620;--soft:#6d6456;--faint:#93897a;--line:#ddd1bc;
+    --accent:#9a6634;--accent2:#b98a52;--good:#5a7d4a;--good-bg:#e4ecdc;--paste:#2b2620;--paste-ink:#f0e6d4;
+    --warn:#8a6d1f;--warn-bg:#f3ead0;--gray-bg:#e8e4dc;
+    --sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif;
+    --serif:Georgia,"Songti TC","Noto Serif CJK TC",serif;--mono:ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root{--paper:#201c17;--card:#2a2419;--card2:#332b1e;--ink:#ece3d3;--soft:#b3a892;--faint:#8c8271;--line:#3a3226;--accent:#d09a5f;--accent2:#b6844f;--good:#8fb079;--good-bg:#2b3324;--paste:#15120d;--paste-ink:#ece3d3;--warn:#d8b45c;--warn-bg:#38301c;--gray-bg:#2f2a22;}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;padding:clamp(.8rem,3vw,2rem)}
+  .wrap{max-width:860px;margin:0 auto}
+  header{margin-bottom:1.4rem}
+  .eyebrow{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-family:var(--serif);font-size:clamp(1.5rem,4.6vw,2.1rem);margin:.35rem 0 .5rem;line-height:1.35}
+  .lede{color:var(--soft);font-size:1rem;max-width:38rem}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(1.1rem,3vw,1.7rem)}
+
+  .co{display:flex;gap:.85rem;align-items:flex-start;border-radius:12px;padding:.95rem 1.05rem;margin:0 0 1.1rem;font-size:.97rem}
+  .co .ic{flex:0 0 auto;font-size:1.15rem;line-height:1.5}
+  .co.brown{background:var(--card2)}
+  .co.gray{background:var(--gray-bg)}
+  .co.warn{background:var(--warn-bg);border:1px solid var(--warn)}
+  .co b{color:var(--ink)}
+  .co a{color:var(--accent);font-family:var(--mono);font-size:.9em;word-break:break-all}
+
+  .cmd{background:var(--paste);border-radius:12px;overflow:hidden;margin:.2rem 0 1.4rem}
+  .cmd .top{display:flex;align-items:center;justify-content:space-between;padding:.5rem .8rem;border-bottom:1px solid rgba(255,255,255,.08)}
+  .cmd .top .t{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#b9a986;font-weight:700}
+  .cmd .copy{font-family:inherit;font-size:.8rem;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:7px;padding:.35rem .8rem;cursor:pointer}
+  .cmd pre{margin:0;padding:.9rem 1rem;font-family:var(--mono);font-size:.82rem;line-height:1.75;color:var(--paste-ink);white-space:pre-wrap;word-break:break-word}
+  .foot{text-align:center;color:var(--faint);font-size:.78rem;margin-top:1.4rem}
+</style>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">3 · Billy 場 · 借力／GitHub／雲端</p>
+    <h1>3-4 · 實作：把你的 Google Sheet 搬進真正的資料庫</h1>
+    <p class="lede">兩個階段、兩段提示詞，照順序複製貼上就好。每段都內建安全停止點——先分析、先別改。</p>
+  </header>
+
+  <div class="panel">
+
+    <div class="co brown">
+      <span class="ic">🛠️</span>
+      <div><b>動手題:</b> 把你上週用 Google Sheet 做的東西，搬進真正的資料庫——全程有安全步驟（先分析別亂改 → 先搬少量回報筆數 → 動大改前先問）。這正好用到 Hailey 的「交辦清單」：放手前先講清楚、停止點放在不可逆動作前。</div>
+    </div>
+
+    <div class="co gray">
+      <span class="ic">🔗</span>
+      <div><b>Billy 的專案（站在巨人肩膀上）:</b> 下載這個 repo，先讀完 README ＋ 任務說明，再照著做 → <a href="https://github.com/billychu-mectecs/workshop6-sheet-to-db" target="_blank" rel="noopener">github.com/billychu-mectecs/workshop6-sheet-to-db</a></div>
+    </div>
+
+    <div class="co brown">
+      <span class="ic">1️⃣</span>
+      <div><b>第一階段 · 先分析、先別改</b> —— 把下面整段複製，貼給 Claude Code：</div>
+    </div>
+
+    <div class="cmd">
+      <div class="top"><span class="t">第一階段提示詞</span><button class="copy" onclick="cp(this,'p1')">複製</button></div>
+      <pre id="p1">請閱讀 Workshop 6 GitHub 專案：
+https://github.com/billychu-mectecs/workshop6-sheet-to-db
+
+我目前開啟的是上週完成的作品，這才是修改目標。請先確認目前位置與主要檔案；若不像現有專案，請停止並提醒我選對資料夾。
+
+請把課堂 Repo 下載到另一個暫存位置，讀完 README.md、CLAUDE.md、prompts/sheet-to-db.md。不要執行課堂範例、不要覆蓋我的作品，也不要修改暫存 Repo。
+
+請找出我的作品讀寫 Google 試算表的位置，並用繁體中文告訴我：
+1. 我的作品與暫存 Repo 分別在哪裡
+2. 課堂 Repo 要我完成哪些步驟
+3. 目前資料如何讀寫 Google 試算表
+4. 搬到資料庫前，需要確認哪些欄位與工作規則
+
+先不要修改，等我確認後再開始。</pre>
+    </div>
+
+    <div class="co brown">
+      <span class="ic">2️⃣</span>
+      <div><b>第二階段 · 我確認後才搬</b> —— 我確認後，把下面整段複製，貼給 Claude Code：</div>
+    </div>
+
+    <div class="cmd">
+      <div class="top"><span class="t">第二階段提示詞</span><button class="copy" onclick="cp(this,'p2')">複製</button></div>
+      <pre id="p2">開始前先確認 DB helper 已安裝且設定完整；只回報「完整／不完整」，不要顯示任何值。不要詢問部門、工號、主機、帳號、密碼或連線字串。
+
+資料庫只能使用 helper 提供的 SQL Login、MEDTECS_DB_DATABASE 與 MEDTECS_DB_SCHEMA；若設定或權限不符，請停止並請講師協助。
+
+我確認後，請依序執行：
+1. 保留原始 Google 試算表，不直接刪除或修改
+2. 用白話列出欄位、必填、重複與其他工作規則
+3. 透過 DB helper 連線，不顯示帳密
+4. 先搬少量資料，回報成功、重複與失敗筆數
+5. 我確認後才搬完整資料並修改作品
+6. 重開作品，測試新增、修改、查詢與原有功能
+7. 整理修改內容、資料核對與測試結果
+
+大量修改、刪除資料或公開內容前，一定先問我。</pre>
+    </div>
+
+    <div class="co warn">
+      <span class="ic">🔒</span>
+      <div><b>資料庫存取檔（install-db-access.bat）請在會前會就裝好 → 見 1-7</b>。每人一支、連公司內部資料庫，由 4A 在公司內部資料夾發放。<b>不放這頁、不放裝機精靈、不放公開網路</b>（內網基建，資安）。上課當天才發密碼。</div>
+    </div>
+
+  </div>
+  <p class="foot">4A AI 工作坊 · 第三堂 Billy 場　|　3-4 實作</p>
+</div>
+<script>
+  function cp(btn,id){
+    var t=document.getElementById(id).textContent;
+    try{navigator.clipboard.writeText(t);}catch(e){
+      var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy');}catch(e2){}document.body.removeChild(ta);
+    }
+    var o=btn.textContent;btn.textContent='已複製 ✓';setTimeout(function(){btn.textContent=o;},1500);
+  }
+</script>
