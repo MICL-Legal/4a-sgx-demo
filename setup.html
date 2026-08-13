@@ -18,7 +18,7 @@
   .bar{height:8px;background:var(--card2);border-radius:99px;overflow:hidden;margin:1rem 0 .4rem}
   .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:99px;transition:width .4s}
   .barlab{font-size:.82rem;color:var(--faint);font-weight:700;text-align:right}
-  .osrow{display:flex;gap:.5rem;align-items:center;margin:1rem 0 1.2rem}
+  .osrow{display:flex;gap:.5rem;align-items:center;margin:1rem 0 1.2rem;flex-wrap:wrap}
   .osrow .k{font-size:.85rem;color:var(--soft);font-weight:600;margin-right:.2rem}
   .seg{display:inline-flex;background:var(--card2);border-radius:10px;padding:3px}
   .seg button{font-family:inherit;font-size:.9rem;font-weight:700;border:0;background:transparent;color:var(--soft);padding:.45rem 1.1rem;border-radius:8px;cursor:pointer}
@@ -84,7 +84,7 @@
     <div class="barlab" id="barlab">1-1 · 第 1 步 / 共 7 步</div>
     <div class="osrow">
       <span class="k">你的電腦是：</span>
-      <div class="seg"><button id="mac">Mac</button><button id="win" class="on">Windows</button></div>
+      <div class="seg"><button id="mac">Mac</button><button id="win" class="on">Windows</button><button id="one">一鍵安裝</button></div>
     </div>
   </header>
   <div class="layout">
@@ -99,10 +99,12 @@
     {t:'貼上 API key',no:'1-1',desc:'讓 AI 動起來的鑰匙，工作坊直接發給你',
      why:'這是讓 AI 動起來的「鑰匙」。<b>工作坊直接發一把（公司的）key 給你</b>——你<b>不用有 Claude 帳號、不用訂閱、不用花錢</b>。<b>先把 key 放好（這一步），等下裝好打 claude 就直接能用，不會叫你登入任何帳號。</b>',
      keyslot:true,
+     blank_one:true, why_one:'', ok_one:'',
      ok:'貼上按 Enter 後<b>畫面完全沒有反應、也沒有紅字</b>＝這把 key 已經存成「永久設定」。<b>安靜就是成功。</b>先別急著打 claude——下一步（1-2）才會把 Claude Code 裝起來。'},
     {t:'裝你的 AI 主角',no:'1-2',desc:'Git → PowerShell → 裝 Claude Code → 設好 PATH → 驗證',
      why:'今天的主角——一個坐你旁邊、聽你打字指揮、<b>直接幫你動手</b>的 AI（Claude Code），住在「終端機」裡。<b>上課統一用這個。</b>另外兩個（Codex、Antigravity）是下課想自己玩再裝，完整步驟都收在下面。',
      mac:{do:'① 用放大鏡（Spotlight）搜 <b>Terminal</b> 打開。② 把這行貼進去、按 Enter：',cmd:'curl -fsSL https://claude.ai/install.sh | bash'},
+     blank_one:true, why_one:'', ok_one:'',
      winhtml:`<p class="do">① 先裝 <b>Git for Windows</b></p>
 <p class="do" style="font-weight:400">Claude Code 的搭檔工具。沒有它 Claude Code 也能跑，但很多功能會受限。</p>
 <div class="links"><a class="lk" href="https://git-scm.com/downloads/win" target="_blank" rel="noopener"><span>⬇️ 下載 Git for Windows（點我）</span><span class="u">git-scm.com/downloads/win ↗</span></a></div>
@@ -146,12 +148,14 @@
      why:'這些是地基（<b>git、Python、Node</b>），讓 AI 能幫你抓別人的專案、跑程式，還能接工具（1-5 要接的 Google Sheets 就靠 Node）。',
      mac:{do:'貼這一整行、按 Enter，等它跑完：',cmd:'xcode-select --install 2>/dev/null; curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH="$HOME/.local/bin:$PATH" && uv python install 3.11 && echo "地基裝好了"'},
      win:{do:'貼這一整行、按 Enter，等它跑完：',cmd:'winget install --id Git.Git -e --silent --accept-package-agreements --accept-source-agreements; winget install --id OpenJS.NodeJS.LTS -e --silent --accept-package-agreements --accept-source-agreements; irm https://astral.sh/uv/install.ps1 | iex; & "$env:USERPROFILE\\.local\\bin\\uv.exe" python install 3.11; Write-Host "地基裝好了"'},
+     one:{do:'貼這一整行、按 Enter，等它跑完：',cmd:'winget install --id Git.Git -e --silent --accept-package-agreements --accept-source-agreements; winget install --id OpenJS.NodeJS.LTS -e --silent --accept-package-agreements --accept-source-agreements; irm https://astral.sh/uv/install.ps1 | iex; & "$env:USERPROFILE\\.local\\bin\\uv.exe" python install 3.11; Write-Host "地基裝好了"'},
      ok:'沒跳紅字、印出「地基裝好了」= 成功。',
      extra:'<div class="ok" style="background:var(--card2);color:var(--soft);margin-top:.2rem"><span class="c" style="color:var(--accent);white-space:nowrap">＋ Node</span><span>1-5 接 Google Sheets 需要 Node。<b>Windows</b> 已含在上面那行。<b>Mac</b> 請另外到 <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> 下載 <b>LTS</b> 版、雙擊安裝（裝完打 <code>node -v</code> 看到 v20 以上就好）。</span></div>'},
     {t:'裝 2 個工作坊 skill',no:'1-4',desc:'兩張方法卡，讓 AI 照工作坊的方法幫你',
      why:'這兩張「方法卡」（需求逼結構、交辦清單）讓 AI 自動照工作坊的方法幫你，你不用背任何口訣。',
      mac:{do:'貼這一行：',cmd:'curl -fsSL https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-skills.sh | bash'},
      win:{do:'貼這一行：',cmd:'irm https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-skills.ps1 | iex'},
+     one:{do:'貼這一行：',cmd:'irm https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-skills.ps1 | iex'},
      ok:'螢幕出現「已裝好 2 個 skill」= 成功。'},
     {t:'接 Google Sheets',no:'1-5',desc:'讓 Claude Code 能讀寫你的 Google 試算表（飲料店 demo 用）',
      why:'這一步讓你打一句話、Claude Code 就寫進你的 Google 試算表——就是 Devin 飲料店那個「說→做」。要先去 Google Cloud 拿一把「服務帳戶金鑰（JSON）」，再一行接好。',
@@ -176,9 +180,13 @@
     $('fill').style.width=(doneCount/steps.length*100)+'%';
     if(cur>=steps.length){renderDone();renderRail();return;}
     const s=steps[cur], o=s[os]||{};
+    const blank=(s['blank_'+os]===true);
+    const why=(s['why_'+os]!==undefined)?s['why_'+os]:s.why;
+    const oktx=(s['ok_'+os]!==undefined)?s['ok_'+os]:s.ok;
     $('barlab').textContent=s.no+' · 第 '+(cur+1)+' 步 / 共 '+steps.length+' 步';
-    let body=`<div class="stepno">${s.no}　·　第 ${cur+1} 步 / 共 ${steps.length} 步</div><h2>${s.t}</h2><div class="why">${s.why}</div>`;
-    if(s.keyslot){
+    let body=`<div class="stepno">${s.no}　·　第 ${cur+1} 步 / 共 ${steps.length} 步</div><h2>${s.t}</h2>`+(why?`<div class="why">${why}</div>`:'');
+    if(blank){body+='<div class="why" style="text-align:center;color:var(--faint)">（一鍵安裝版的這一步待補）</div>';}
+    if(s.keyslot&&!blank){
       body+='<p class="do">第 1 步　把你的部門 API key 貼在這個欄位：</p>';
       body+='<input id="keyin" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.86rem" placeholder="貼上 sk-ant-… 開頭那一整串" value="'+(userkey||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">';
       var kv=(userkey&&userkey.trim())?userkey.trim():'貼上你的KEY';
@@ -193,14 +201,14 @@
         body+='<p class="do">第 3 步　用放大鏡（Spotlight）搜「Terminal」打開。<br>第 4 步　貼上剛剛複製的那一整行、按 Enter —— 就設定好了。</p>';
       }
     }
-    if(s.dbslot){body+='<p class="do">第 1 步　輸入你的工號，拿你自己的那一包：</p>';body+='<input id="dbin" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.86rem" placeholder="例：MT2456" oninput="dbfind()">';body+='<div style="margin:.4rem 0"><button onclick="dbfind()" style="font-family:inherit;font-size:.85rem;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:7px;padding:.4rem .9rem;cursor:pointer">查我的下載連結</button></div>';body+='<div id="dbout"></div>';body+='<div class="ok" style="background:var(--card2);color:var(--soft);margin-top:.2rem"><span class="c" style="color:var(--accent);white-space:nowrap">🔒 為什麼安全</span><span>每一包只分享給「你本人的公司 Google 帳號」——就算別人拿到你的連結，沒登入你的帳號也打不開，所以不會裝到別人的。</span></div>';body+='<p class="do">第 2 步　下載後<b>解壓縮</b> → 按兩下 <code>install-db-access.bat</code>。<br>若跳「Windows 已保護您的電腦」→「其他資訊」→「仍要執行」（公司自製小工具，不是病毒）。<br>⚠️ 目前<b>只有 Windows 版</b>；Mac 同仁當天找 Billy。</p>';}
-        if(s.doonly){body+=`<p class="do">${s.doonly}</p>`;}
-    var oshtml=s[os+'html']; if(oshtml){body+=oshtml;}
-    if(o.do){body+=`<p class="do">${o.do}</p>`;}
-    if(o.cmd){body+=`<div class="cmd"><div class="top"><span class="t">複製整行貼進去</span><button class="copy" data-cmd="${o.cmd.replace(/"/g,'&quot;')}">複製</button></div><pre>${o.cmd.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</pre></div>`;}
-    if(s.links){body+=`<div class="links">`+s.links.map(l=>`<a class="lk" href="https://${l.u}" target="_blank" rel="noopener"><span>${l.n}</span><span class="u">${l.u} ↗</span></a>`).join('')+`</div>`;}
-    body+=`<div class="ok"><span class="c">✓ 成功長這樣</span><span>${s.ok}</span></div>`;
-    if(s.extra){body+=s.extra;}
+    if(s.dbslot&&!blank){body+='<p class="do">第 1 步　輸入你的工號，拿你自己的那一包：</p>';body+='<input id="dbin" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.86rem" placeholder="例：MT2456" oninput="dbfind()">';body+='<div style="margin:.4rem 0"><button onclick="dbfind()" style="font-family:inherit;font-size:.85rem;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:7px;padding:.4rem .9rem;cursor:pointer">查我的下載連結</button></div>';body+='<div id="dbout"></div>';body+='<div class="ok" style="background:var(--card2);color:var(--soft);margin-top:.2rem"><span class="c" style="color:var(--accent);white-space:nowrap">🔒 為什麼安全</span><span>每一包只分享給「你本人的公司 Google 帳號」——就算別人拿到你的連結，沒登入你的帳號也打不開，所以不會裝到別人的。</span></div>';body+='<p class="do">第 2 步　下載後<b>解壓縮</b> → 按兩下 <code>install-db-access.bat</code>。<br>若跳「Windows 已保護您的電腦」→「其他資訊」→「仍要執行」（公司自製小工具，不是病毒）。<br>⚠️ 目前<b>只有 Windows 版</b>；Mac 同仁當天找 Billy。</p>';}
+        if(s.doonly&&!blank){body+=`<p class="do">${s.doonly}</p>`;}
+    var oshtml=blank?'':s[os+'html']; if(oshtml){body+=oshtml;}
+    if(o.do&&!blank){body+=`<p class="do">${o.do}</p>`;}
+    if(o.cmd&&!blank){body+=`<div class="cmd"><div class="top"><span class="t">複製整行貼進去</span><button class="copy" data-cmd="${o.cmd.replace(/"/g,'&quot;')}">複製</button></div><pre>${o.cmd.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</pre></div>`;}
+    if(s.links&&!blank){body+=`<div class="links">`+s.links.map(l=>`<a class="lk" href="https://${l.u}" target="_blank" rel="noopener"><span>${l.n}</span><span class="u">${l.u} ↗</span></a>`).join('')+`</div>`;}
+    if(oktx&&!blank){body+=`<div class="ok"><span class="c">✓ 成功長這樣</span><span>${oktx}</span></div>`;}
+    if(s.extra&&!blank){body+=s.extra;}
     body+=`<div class="nav">${cur>0?'<button class="prev" id="prev">上一步</button>':''}<button class="next" id="next">✓ 我做好了，下一步</button></div>`;
     $('panel').innerHTML=body;
     $('panel').querySelectorAll('.copy').forEach(cp=>{cp.onclick=()=>{try{navigator.clipboard.writeText(cp.dataset.cmd.replace(/&quot;/g,'"'));}catch(e){}const t=cp.textContent;cp.textContent='已複製 ✓';setTimeout(()=>cp.textContent=t,1500);};});
@@ -221,7 +229,8 @@
   function dbfind(){var el=document.getElementById('dbin');if(!el)return;var v=(el.value||'').trim().toUpperCase();var o=document.getElementById('dbout');if(!o)return;if(!v){o.innerHTML='';return;}if(Object.prototype.hasOwnProperty.call(DBLINKS,v)){var link=DBLINKS[v];if(link){o.innerHTML='<a class="lk" href="'+link+'" target="_blank" rel="noopener"><span>⬇️ 下載我的資料庫存取包（'+v+'）</span><span class="u">只有你本人的公司帳號打得開 ↗</span></a>';}else{o.innerHTML='<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">⏳ 尚未上架</span><span>你的工號 '+v+' 有登記，但連結還沒放上（上課前會放）。</span></div>';}}else{o.innerHTML='<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">找不到</span><span>查不到工號 '+v+'。確認大小寫、或找 4A／Billy。</span></div>';}}
     function gmw(){var p=(document.getElementById('gmp').value||'你的JSON路徑');var e=(document.getElementById('gme').value||'你的@medtecs.com');var o=document.getElementById('gmout');if(o)o.textContent='claude mcp add google-workspace --env GOOGLE_CLIENT_SECRET_PATH="'+p+'" --env USER_GOOGLE_EMAIL="'+e+'" -- uvx workspace-mcp --tools gmail --tool-tier core --single-user';}
   function gmcopy(){var o=document.getElementById('gmout');if(!o)return;try{navigator.clipboard.writeText(o.textContent);}catch(e){}var b=document.getElementById('gmbtn');if(b){var t=b.textContent;b.textContent='已複製 ✓';setTimeout(function(){b.textContent=t;},1500);}}
-  $('mac').onclick=()=>{os='mac';$('mac').classList.add('on');$('win').classList.remove('on');render();};
-  $('win').onclick=()=>{os='win';$('win').classList.add('on');$('mac').classList.remove('on');render();};
+  const OSKEYS=['mac','win','one'];
+  function setOS(v){os=v;OSKEYS.forEach(k=>$(k).classList.toggle('on',k===v));render();}
+  OSKEYS.forEach(k=>{$(k).onclick=()=>setOS(k);});
   render();
 </script>
