@@ -185,7 +185,6 @@
     const oktx=(s['ok_'+os]!==undefined)?s['ok_'+os]:s.ok;
     $('barlab').textContent=s.no+' · 第 '+(cur+1)+' 步 / 共 '+steps.length+' 步';
     let body=`<div class="stepno">${s.no}　·　第 ${cur+1} 步 / 共 ${steps.length} 步</div><h2>${s.t}</h2>`+(why?`<div class="why">${why}</div>`:'');
-    if(blank){body+='<div class="why" style="text-align:center;color:var(--faint)">（一鍵安裝版的這一步待補）</div>';}
     if(s.keyslot&&!blank){
       body+='<p class="do">第 1 步　把你的部門 API key 貼在這個欄位：</p>';
       body+='<input id="keyin" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.86rem" placeholder="貼上 sk-ant-… 開頭那一整串" value="'+(userkey||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">';
