@@ -173,6 +173,7 @@
 <p class="do" style="font-weight:400">會<b>自動跳出瀏覽器</b>的 Claude 登入頁 → 用你自己的 <b>Claude 付費帳號</b>登入（Pro／Max／Team／Enterprise）→ 回到黑色視窗就能用了。<b>這只會做一次，之後不會再問。</b></p>
 <div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">⚠️ 登入不了？</span><span>如果登入後說方案不足，代表你用到<b>免費帳號</b>了。Claude Code 一定要付費方案，先找 4A 確認。</span></div>`,
      ok_one:'畫面出現 <code>Setup complete</code>、<b>桌面多出一個 Claude 捷徑</b>，而且按兩下捷徑後<b>用你的 Claude 付費帳號登入成功</b>、進到對話畫面 ＝ 完成。',
+     extra_one:'',
      winhtml:`<p class="do">① 先裝 <b>Git for Windows</b></p>
 <p class="do" style="font-weight:400">Claude Code 的搭檔工具。沒有它 Claude Code 也能跑，但很多功能會受限。</p>
 <div class="links"><a class="lk" href="https://git-scm.com/downloads/win" target="_blank" rel="noopener"><span>⬇️ 下載 Git for Windows（點我）</span><span class="u">git-scm.com/downloads/win ↗</span></a></div>
@@ -276,7 +277,7 @@
     if(o.cmd&&!blank){body+=`<div class="cmd"><div class="top"><span class="t">複製整行貼進去</span><button class="copy" data-cmd="${o.cmd.replace(/"/g,'&quot;')}">複製</button></div><pre>${o.cmd.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</pre></div>`;}
     if(s.links&&!blank){body+=`<div class="links">`+s.links.map(l=>`<a class="lk" href="https://${l.u}" target="_blank" rel="noopener"><span>${l.n}</span><span class="u">${l.u} ↗</span></a>`).join('')+`</div>`;}
     if(oktx&&!blank){body+=`<div class="ok"><span class="c">✓ 成功長這樣</span><span>${oktx}</span></div>`;}
-    if(s.extra&&!blank){body+=s.extra;}
+    var ex=(s['extra_'+os]!==undefined)?s['extra_'+os]:s.extra; if(ex&&!blank){body+=ex;}
     body+=`<div class="nav">${cur>0?'<button class="prev" id="prev">上一步</button>':''}<button class="next" id="next">✓ 我做好了，下一步</button></div>`;
     $('panel').innerHTML=body;
     $('panel').querySelectorAll('.copy').forEach(cp=>{cp.onclick=()=>{try{navigator.clipboard.writeText(cp.dataset.cmd.replace(/&quot;/g,'"'));}catch(e){}const t=cp.textContent;cp.textContent='已複製 ✓';setTimeout(()=>cp.textContent=t,1500);};});
