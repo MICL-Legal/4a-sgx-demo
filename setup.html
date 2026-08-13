@@ -75,9 +75,9 @@
   <header>
     <p class="eyebrow">1 · 會前會 · 上課前約 10 分鐘</p>
     <h1>4A 裝機精靈</h1>
-    <p class="lede">一步一步跟著做，把電腦準備好。整個「會前會」就是這 6 步（1-1 ～ 1-6），每一步只做一件事，做完按「下一步」——不會迷路。</p>
+    <p class="lede">一步一步跟著做，把電腦準備好。整個「會前會」就是這 7 步（1-1 ～ 1-7），每一步只做一件事，做完按「下一步」——不會迷路。</p>
     <div class="bar"><i id="fill"></i></div>
-    <div class="barlab" id="barlab">1-1 · 第 1 步 / 共 6 步</div>
+    <div class="barlab" id="barlab">1-1 · 第 1 步 / 共 7 步</div>
     <div class="osrow">
       <span class="k">你的電腦是：</span>
       <div class="seg"><button id="mac">Mac</button><button id="win" class="on">Windows</button></div>
@@ -92,34 +92,35 @@
 
 <script>
   const steps=[
-    {t:'貼上 API key',no:'1-1',desc:'讓 AI 動起來的鑰匙，工作坊直接發給你',
+    {t:'拿到你部門的 API key',no:'1-1',desc:'從 Notion「第一步驟」表格複製你部門的 key',why:'這是讓 AI 動起來的「鑰匙」。<b>工作坊發你一把「部門專用」key（公司的）</b>——你<b>不用有 Claude 帳號、不用訂閱、不用花錢</b>。你的 key 放在 <b>Notion 會前會頁「第一步驟」的表格</b>裡（上課當天才會貼上）。',doonly:'① 回到 Notion 會前會頁的「第一步驟」表格。② 找到<b>你的部門</b>那一列。③ 複製那一串 <code>sk-ant-…</code> 開頭的 key。④ 回到這裡，進 1-2 貼上。',ok:'手上有一串 <code>sk-ant-…</code> 開頭的 key = 準備好了，進 1-2 貼上。'},
+    {t:'貼上 API key',no:'1-2',desc:'讓 AI 動起來的鑰匙，工作坊直接發給你',
      why:'這是讓 AI 動起來的「鑰匙」。<b>工作坊直接發一把（公司的）key 給你</b>——你<b>不用有 Claude 帳號、不用訂閱、不用花錢</b>。<b>先把 key 放好（這一步），等下裝好打 claude 就直接能用，不會叫你登入任何帳號。</b>',
      keyslot:true,
-     ok:'終端機沒跳出紅色錯誤訊息 = 這把 key 已經放好。先別急著打 claude——下一步（1-2）把它裝起來，才會用到這把 key。'},
-    {t:'裝你的 AI 主角',no:'1-2',desc:'主角 Claude Code；Codex／Antigravity 下課自選',
+     ok:'終端機沒跳出紅色錯誤訊息 = 這把 key 已經放好。先別急著打 claude——下一步（1-3）把它裝起來，才會用到這把 key。'},
+    {t:'裝你的 AI 主角',no:'1-3',desc:'主角 Claude Code；Codex／Antigravity 下課自選',
      why:'今天的主角——一個坐你旁邊、聽你打字指揮、<b>直接幫你動手</b>的 AI（Claude Code），住在「終端機」裡。<b>上課統一用這個。</b>另外兩個（Codex、Antigravity）是下課想自己玩再裝，完整步驟都收在下面。',
      mac:{do:'① 用放大鏡（Spotlight）搜 <b>Terminal</b> 打開。② 把這行貼進去、按 Enter：',cmd:'curl -fsSL https://claude.ai/install.sh | bash'},
      win:{do:'① 開「Windows Terminal」（<b>不是 CMD</b>）。② 把這行貼進去、按 Enter：',cmd:'irm https://claude.ai/install.ps1 | iex'},
      ok:'裝好後重開終端機、打 claude → 它問「信任這把 key 嗎？」→ 按信任（y）→ 進到對話畫面 = 成功。因為 key 上一步已放好（重開也不會掉），不會叫你登入 Claude 帳號。',
      extra:'<details class="ex"><summary>加裝 Codex（OpenAI，用你自己的 ChatGPT）· 完整步驟</summary><div class="exb"><b>下課自選，上課用不到。</b>用你自己的 ChatGPT 訂閱（需 Plus 以上；免費版不一定能用）。<br><br><b>① 裝 · Mac：</b>終端機貼這行、按 Enter：<div class="cmd"><div class="top"><span class="t">Mac</span><button class="copy" data-cmd="curl -fsSL https://chatgpt.com/codex/install.sh | sh">複製</button></div><pre>curl -fsSL https://chatgpt.com/codex/install.sh | sh</pre></div><b>① 裝 · Windows：</b>Windows Terminal 貼這行、按 Enter：<div class="cmd"><div class="top"><span class="t">Windows</span><button class="copy" data-cmd="irm https://chatgpt.com/codex/install.ps1 | iex">複製</button></div><pre>irm https://chatgpt.com/codex/install.ps1 | iex</pre></div><b>② 開 + 登入：</b>打 <code>codex</code> 按 Enter → 選「Sign in with ChatGPT」→ 會自動跳出瀏覽器、用你的 ChatGPT 帳號登入 → 登入成功回到終端機就能用。<br><b>成功長這樣：</b>打 codex 出現對話畫面。</div></details><details class="ex"><summary>加裝 Antigravity（Google，終端機版 <code>agy</code>）· 完整步驟</summary><div class="exb"><b>下課自選，上課用不到。</b>Antigravity 也有<b>終端機版</b>——指令叫 <code>agy</code>，跟 Claude／Codex 一樣在終端機裡跑（它是 Gemini CLI 的後繼者）。<br><br><b>① 裝 · Mac：</b>終端機貼這行、按 Enter：<div class="cmd"><div class="top"><span class="t">Mac</span><button class="copy" data-cmd="curl -fsSL https://antigravity.google/cli/install.sh | bash">複製</button></div><pre>curl -fsSL https://antigravity.google/cli/install.sh | bash</pre></div><b>① 裝 · Windows：</b>Windows Terminal 貼這行、按 Enter：<div class="cmd"><div class="top"><span class="t">Windows</span><button class="copy" data-cmd="irm https://antigravity.google/cli/install.ps1 | iex">複製</button></div><pre>irm https://antigravity.google/cli/install.ps1 | iex</pre></div><b>② 開 + 登入：</b>打 <code>agy</code> 按 Enter → 第一次用你的 <b>Google 帳號</b>登入（<b>公司 Workspace 帳號可用</b>，不像舊桌面版只能個人 gmail）→ 跳出瀏覽器授權一次就好。<br><b>成功長這樣：</b>打 agy 出現 Antigravity CLI 的對話畫面。</div></details>'},
-    {t:'裝地基工具',no:'1-3',desc:'git、Python、Node，讓 AI 能做更多、能接工具',
-     why:'這些是地基（<b>git、Python、Node</b>），讓 AI 能幫你抓別人的專案、跑程式，還能接工具（1-5 要接的 Google Sheets 就靠 Node）。',
+    {t:'裝地基工具',no:'1-4',desc:'git、Python、Node，讓 AI 能做更多、能接工具',
+     why:'這些是地基（<b>git、Python、Node</b>），讓 AI 能幫你抓別人的專案、跑程式，還能接工具（1-6 要接的 Google Sheets 就靠 Node）。',
      mac:{do:'貼這一整行、按 Enter，等它跑完：',cmd:'xcode-select --install 2>/dev/null; curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH="$HOME/.local/bin:$PATH" && uv python install 3.11 && echo "地基裝好了"'},
      win:{do:'貼這一整行、按 Enter，等它跑完：',cmd:'winget install --id Git.Git -e --silent --accept-package-agreements --accept-source-agreements; winget install --id OpenJS.NodeJS.LTS -e --silent --accept-package-agreements --accept-source-agreements; irm https://astral.sh/uv/install.ps1 | iex; & "$env:USERPROFILE\\.local\\bin\\uv.exe" python install 3.11; Write-Host "地基裝好了"'},
      ok:'沒跳紅字、印出「地基裝好了」= 成功。',
-     extra:'<div class="ok" style="background:var(--card2);color:var(--soft);margin-top:.2rem"><span class="c" style="color:var(--accent);white-space:nowrap">＋ Node</span><span>1-5 接 Google Sheets 需要 Node。<b>Windows</b> 已含在上面那行。<b>Mac</b> 請另外到 <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> 下載 <b>LTS</b> 版、雙擊安裝（裝完打 <code>node -v</code> 看到 v20 以上就好）。</span></div>'},
-    {t:'裝 2 個工作坊 skill',no:'1-4',desc:'兩張方法卡，讓 AI 照工作坊的方法幫你',
+     extra:'<div class="ok" style="background:var(--card2);color:var(--soft);margin-top:.2rem"><span class="c" style="color:var(--accent);white-space:nowrap">＋ Node</span><span>1-6 接 Google Sheets 需要 Node。<b>Windows</b> 已含在上面那行。<b>Mac</b> 請另外到 <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> 下載 <b>LTS</b> 版、雙擊安裝（裝完打 <code>node -v</code> 看到 v20 以上就好）。</span></div>'},
+    {t:'裝 2 個工作坊 skill',no:'1-5',desc:'兩張方法卡，讓 AI 照工作坊的方法幫你',
      why:'這兩張「方法卡」（需求逼結構、交辦清單）讓 AI 自動照工作坊的方法幫你，你不用背任何口訣。',
      mac:{do:'貼這一行：',cmd:'curl -fsSL https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-skills.sh | bash'},
      win:{do:'貼這一行：',cmd:'irm https://raw.githubusercontent.com/MICL-Legal/4a-sgx-demo/main/install-skills.ps1 | iex'},
      ok:'螢幕出現「已裝好 2 個 skill」= 成功。'},
-    {t:'接 Google Sheets',no:'1-5',desc:'讓 Claude Code 能讀寫你的 Google 試算表（飲料店 demo 用）',
+    {t:'接 Google Sheets',no:'1-6',desc:'讓 Claude Code 能讀寫你的 Google 試算表（飲料店 demo 用）',
      why:'這一步讓你打一句話、Claude Code 就寫進你的 Google 試算表——就是 Devin 飲料店那個「說→做」。要先去 Google Cloud 拿一把「服務帳戶金鑰（JSON）」，再一行接好。',
      doonly:'跟著這頁做——每一步都有直接連結、結尾有卡關表，不會迷路：',
      links:[{n:'📄 打開 GCP → Sheets 完整教學（點我）',u:'micl-legal.github.io/4a-sgx-demo/gcp-sheets.html'}],
      ok:'照教學頁做完、跑最後那一行，打 claude mcp list 看到 mcp-gsheets ✔ Connected = 通了。',
      extra:'<details class="ex"><summary>想也接 Gmail？（選讀 · 比 Sheets 費工 · 回家自己玩）</summary><div class="exb"><b>先老實說：Gmail 比 Sheets 麻煩。</b>Sheets 用「服務帳戶」（分享表就好）；Gmail 讀不了服務帳戶，一定要走 <b>OAuth</b>（你在瀏覽器授權一次），步驟約 2 倍。好消息：你們是公司 Google，選 <b>Internal</b> 就免驗證、不會 7 天到期。<br><br><b>① 開 Gmail API：</b><a href="https://console.cloud.google.com/apis/library/gmail.googleapis.com" target="_blank" rel="noopener">console.cloud.google.com/apis/library/gmail.googleapis.com</a> → 按 Enable。<br><b>② 建 OAuth 用戶端：</b><a href="https://console.cloud.google.com/auth/clients" target="_blank" rel="noopener">console.cloud.google.com/auth/clients</a> → Create client → 類型選 <b>Desktop app</b> → 建立 → 下載 JSON（放到路徑不含空格的資料夾）。<br><b>③ 填這兩格，下面指令會自動長出來 → 按「複製整行」</b>（uvx 不用 Node、Windows 也不用 cmd /c）：<br><input id="gmp" oninput="gmw()" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.8rem;margin:.35rem 0" placeholder="貼上你的 JSON 完整路徑"><input id="gme" oninput="gmw()" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.8rem;margin:0 0 .4rem" placeholder="你的公司 email，例：you@medtecs.com"><div class="cmd keybox"><div class="top"><span class="t">你的接 Gmail 指令（Mac／Win 同一行）</span><button id="gmbtn" onclick="gmcopy()" style="font-family:inherit;font-size:.8rem;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:7px;padding:.35rem .8rem;cursor:pointer">複製整行</button></div><pre id="gmout">claude mcp add google-workspace --env GOOGLE_CLIENT_SECRET_PATH="你的JSON路徑" --env USER_GOOGLE_EMAIL="你的@medtecs.com" -- uvx workspace-mcp --tools gmail --tool-tier core --single-user</pre></div><b>④ 第一次用：</b>重開 Claude Code，叫它「查我的 Gmail」→ 跳出瀏覽器 → 選你的公司帳號 → 按<b>允許</b> → 好了。<br><b>成功長這樣：</b>打 <code>claude mcp list</code> 看到 <code>google-workspace ✔ Connected</code>。</div></details>'},
-    {t:'公司帳號（已幫你開好）',no:'1-6',desc:'Zapier、Make 公司已開通，不用自己辦',
+    {t:'公司帳號（已幫你開好）',no:'1-7',desc:'Zapier、Make 公司已開通，不用自己辦',
      why:'工作坊會用到的 <b>Zapier</b> 和 <b>Make</b>（自動化工具），公司已經幫各部門開通好了——<b>你不用自己註冊</b>。登入用的帳號當天由主辦提供。',
      links:[{n:'Make 登入',u:'make.com'},{n:'Zapier 登入',u:'zapier.com'}],
      ok:'兩個都能用主辦給的帳號登入，就準備好了。'}
@@ -138,7 +139,7 @@
     $('barlab').textContent=s.no+' · 第 '+(cur+1)+' 步 / 共 '+steps.length+' 步';
     let body=`<div class="stepno">${s.no}　·　第 ${cur+1} 步 / 共 ${steps.length} 步</div><h2>${s.t}</h2><div class="why">${s.why}</div>`;
     if(s.keyslot){
-      body+='<p class="do">第 1 步　把主辦發給你的 API key 貼在這個欄位：</p>';
+      body+='<p class="do">第 1 步　把你上一步從 Notion 拿到的部門 key 貼在這個欄位：</p>';
       body+='<input id="keyin" class="deptsel" style="max-width:100%;font-family:var(--mono);font-size:.86rem" placeholder="貼上 sk-ant-… 開頭那一整串" value="'+(userkey||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">';
       var kv=(userkey&&userkey.trim())?userkey.trim():'貼上你的KEY';
       var cmdline=(os==='win')?('setx ANTHROPIC_API_KEY "'+kv+'"'):('echo \'export ANTHROPIC_API_KEY="'+kv+'"\' >> ~/.zshrc && export ANTHROPIC_API_KEY="'+kv+'"');
@@ -167,7 +168,7 @@
   }
   function renderDone(){
     $('barlab').textContent='全部完成 🎉';$('fill').style.width='100%';
-    $('panel').innerHTML=`<div class="done-panel"><div class="stepno">DONE</div><div class="big">全部準備好了！</div><p>1-1 到 1-5 都完成，你跟全班站在同一條起跑線了。上課當天直接開跑，不會卡在裝機。</p><p style="margin-top:1rem"><button class="prev" id="again">← 回去檢查某一步</button></p></div>`;
+    $('panel').innerHTML=`<div class="done-panel"><div class="stepno">DONE</div><div class="big">全部準備好了！</div><p>1-1 到 1-7 都完成，你跟全班站在同一條起跑線了。上課當天直接開跑，不會卡在裝機。</p><p style="margin-top:1rem"><button class="prev" id="again">← 回去檢查某一步</button></p></div>`;
     $('again').onclick=()=>{cur=steps.length-1;render();};
   }
   function gmw(){var p=(document.getElementById('gmp').value||'你的JSON路徑');var e=(document.getElementById('gme').value||'你的@medtecs.com');var o=document.getElementById('gmout');if(o)o.textContent='claude mcp add google-workspace --env GOOGLE_CLIENT_SECRET_PATH="'+p+'" --env USER_GOOGLE_EMAIL="'+e+'" -- uvx workspace-mcp --tools gmail --tool-tier core --single-user';}
