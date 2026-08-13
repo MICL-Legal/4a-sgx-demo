@@ -3,11 +3,11 @@
 <style>
   :root{
     --paper:#f5f0e6;--card:#efe7d6;--card2:#e4dccb;--ink:#2b2620;--soft:#6d6456;--faint:#93897a;--line:#ddd1bc;
-    --accent:#9a6634;--accent2:#b98a52;--good:#5a7d4a;--good-bg:#e4ecdc;--paste:#2b2620;--paste-ink:#f0e6d4;
+    --accent:#9a6634;--accent2:#b98a52;--good:#5a7d4a;--good-bg:#e4ecdc;--paste:#2b2620;--paste-ink:#f0e6d4;--red:#b02a1e;
     --sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif;
     --serif:Georgia,"Songti TC","Noto Serif CJK TC",serif;--mono:ui-monospace,"SF Mono",Menlo,monospace;
   }
-  @media (prefers-color-scheme:dark){:root{--paper:#201c17;--card:#2a2419;--card2:#332b1e;--ink:#ece3d3;--soft:#b3a892;--faint:#8c8271;--line:#3a3226;--accent:#d09a5f;--accent2:#b6844f;--good:#8fb079;--good-bg:#2b3324;--paste:#15120d;--paste-ink:#ece3d3;}}
+  @media (prefers-color-scheme:dark){:root{--paper:#201c17;--card:#2a2419;--card2:#332b1e;--ink:#ece3d3;--soft:#b3a892;--faint:#8c8271;--line:#3a3226;--accent:#d09a5f;--accent2:#b6844f;--good:#8fb079;--good-bg:#2b3324;--paste:#15120d;--paste-ink:#ece3d3;--red:#f0776a;}}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;padding:clamp(.8rem,3vw,2rem)}
   .wrap{max-width:1000px;margin:0 auto}
@@ -235,7 +235,7 @@
 <p class="do" style="font-weight:400">查證日期 2026-06-25</p>`,
      ok_win:'打 <code>codex --version</code> 出現版本號，再打 <code>codex</code> → 選 <b>Sign in with ChatGPT</b>(或改用 API key)登入成功 ＝ 完成。'},
     {no:'3',hide_one:true,
-     t_mac:'裝 Antigravity',desc_mac:'終端機一行裝好 agy，重開視窗啟動並用 Google 帳號登入',
+     t_mac:'裝 Antigravity',desc_mac:'<span style="color:var(--red);font-weight:700">用你自己的公司信箱 xxxx@medtecs.com 安裝，公司已付費</span>',
      why_mac:'<b>Antigravity CLI</b> 是 <b>Google</b> 的終端機 AI 編碼助手(Gemini CLI 的繼任者)，背後是 <b>Gemini</b>。<b>命令是 agy</b>(a-g-y)，打 antigravity 會找不到。需要一個 <b>Google 帳號</b>(個人 Gmail 即可,免費)，建議裝 <b>Chrome</b>;安裝本體不需 Node.js。',
      machtml:`<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">先看這裡</span><span>這個是有自己訂閱的，是要登入自己訂閱的 AI 服務的帳號的。</span></div>
 
@@ -264,7 +264,7 @@
 <div class="links"><a class="lk" href="https://antigravity.google/download" target="_blank" rel="noopener"><span>官方來源 · Antigravity 下載頁</span><span class="u">antigravity.google ↗</span></a><a class="lk" href="https://github.com/google-antigravity/antigravity-cli" target="_blank" rel="noopener"><span>官方來源 · Antigravity CLI 專案頁</span><span class="u">github.com ↗</span></a></div>
 <p class="do" style="font-weight:400">查證日期 2026-06-25</p>`,
      ok_mac:'重開終端機後輸入 <code>agy</code>，出現登入流程或互動畫面 ＝ 成功(第一次會跳瀏覽器要你用 <b>Google 帳號</b>登入)。',
-     t_win:'裝 Antigravity',desc_win:'PowerShell 一行裝好 agy，重開視窗啟動並用 Google 帳號登入',
+     t_win:'裝 Antigravity',desc_win:'<span style="color:var(--red);font-weight:700">用你自己的公司信箱 xxxx@medtecs.com 安裝，公司已付費</span>',
      why_win:'<b>Antigravity</b> 是 <b>Google</b> 的終端機 AI 編碼助手(Gemini CLI 繼任者)。<b>命令是 agy</b>(a-g-y)，打 antigravity 會找不到。需要一個 <b>Google 帳號</b>(免費)，建議裝 <b>Chrome</b>；安裝本體不需 Node.js。',
      winhtml:`<div class="ok" style="background:var(--card2);color:var(--soft)"><span class="c" style="color:var(--accent);white-space:nowrap">先看這裡</span><span>這個是有自己訂閱的，是要登入自己訂閱的 AI 服務的帳號的。</span></div>
 
