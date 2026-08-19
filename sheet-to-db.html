@@ -32,76 +32,138 @@
   .cmd .top .t{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#b9a986;font-weight:700}
   .cmd .copy{font-family:inherit;font-size:.8rem;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:7px;padding:.35rem .8rem;cursor:pointer}
   .cmd pre{margin:0;padding:.9rem 1rem;font-family:var(--mono);font-size:.82rem;line-height:1.75;color:var(--paste-ink);white-space:pre-wrap;word-break:break-word}
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem;margin:0 0 1.25rem}
+  .flow span{border-top:4px solid var(--accent);background:var(--gray-bg);padding:.65rem .7rem;font-size:.84rem;font-weight:700;line-height:1.45}
+  .flow span:nth-child(2){border-color:#397f88}.flow span:nth-child(3){border-color:#5a7d4a}.flow span:nth-child(4){border-color:#b17d17}
+  .step{padding:1.25rem 0 .25rem;border-top:1px solid var(--line)}
+  .step:first-of-type{border-top:0}
+  .stephead{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.75rem}
+  .stepno{flex:0 0 auto;display:grid;place-items:center;width:2rem;height:2rem;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--mono);font-weight:700}
+  .step h2{font-family:var(--serif);font-size:1.18rem;line-height:1.45;margin:0}
+  .step p{color:var(--soft);font-size:.93rem;margin:.15rem 0 0}
+  .plain{font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--accent)}
   .foot{text-align:center;color:var(--faint);font-size:.78rem;margin-top:1.4rem}
+  @media(max-width:680px){.flow{grid-template-columns:1fr 1fr}.cmd pre{font-size:.76rem}.panel{padding:1rem}}
 </style>
 <div class="wrap">
   <header>
     <p class="eyebrow">3 · Billy 場 · 借力／GitHub／雲端</p>
     <h1>3-4 · 實作：把你的 Google Sheet 搬進真正的資料庫</h1>
-    <p class="lede">兩個階段、兩段提示詞，照順序複製貼上就好。每段都內建安全停止點——先分析、先別改。</p>
+    <p class="lede">四段任務說明，一段完成、確認，再貼下一段。先讓作品能開，再存版本，接著才搬資料。</p>
   </header>
 
   <div class="panel">
 
     <div class="co brown">
-      <span class="ic">🛠️</span>
-      <div><b>動手題:</b> 把你上週用 Google Sheet 做的東西，搬進真正的資料庫——全程有安全步驟（先分析別亂改 → 先搬少量回報筆數 → 動大改前先問）。這正好用到 Hailey 的「交辦清單」：放手前先講清楚、停止點放在不可逆動作前。</div>
+      <span class="plain">今天</span>
+      <div><b>把上週作品接穩，再把 Sheet 搬進資料庫。</b> 你不用學 SQL，也不用自己架網站。Claude 負責技術操作；你負責確認畫面、工作規則與結果。</div>
     </div>
 
     <div class="co gray">
-      <span class="ic">🔗</span>
-      <div><b>Billy 的專案（站在巨人肩膀上）:</b> 下載這個 repo，先讀完 README ＋ 任務說明，再照著做 → <a href="https://github.com/billychu-mectecs/workshop6-sheet-to-db" target="_blank" rel="noopener">github.com/billychu-mectecs/workshop6-sheet-to-db</a></div>
+      <span class="plain">先懂</span>
+      <div><b>Git 像電腦裡的遊戲存檔；GitHub 是線上作品資料夾。</b> 今天先用 Git 留下改造前版本，再借用講師放在 GitHub 的範本。作品不會因為讀了範本就自動公開。</div>
     </div>
 
-    <div class="co brown">
-      <span class="ic">1️⃣</span>
-      <div><b>第一階段 · 先分析、先別改</b> —— 把下面整段複製，貼給 Claude Code：</div>
+    <div class="co gray">
+      <span class="plain">範本</span>
+      <div><b>講師指定的 GitHub 專案：</b>先確認帳號與網址，再交給 AI 讀取 → <a href="https://github.com/billychu-mectecs/workshop6-sheet-to-db" target="_blank" rel="noopener">github.com/billychu-mectecs/workshop6-sheet-to-db</a></div>
     </div>
 
-    <div class="cmd">
-      <div class="top"><span class="t">第一階段提示詞</span><button class="copy" onclick="cp(this,'p1')">複製</button></div>
-      <pre id="p1">請閱讀 Workshop 6 GitHub 專案：
+    <div class="flow" aria-label="四段實作流程">
+      <span>1　恢復上週作品</span>
+      <span>2　Git 先存一份</span>
+      <span>3　只分析搬法</span>
+      <span>4　搬移、驗證、看差異</span>
+    </div>
+
+    <section class="step">
+      <div class="stephead"><span class="stepno">1</span><div><h2>先讓上週作品正常開啟</h2><p>這一段不改功能、不換資料來源，只把作品恢復到可以使用。</p></div></div>
+      <div class="cmd">
+        <div class="top"><span class="t">第 1 段任務說明</span><button class="copy" onclick="cp(this,'p1')">複製</button></div>
+        <pre id="p1">我現在開啟的是上週完成的作品。請先不要改功能，也不要接資料庫。
+
+請讀取目前資料夾的 README、啟動檔與主要程式，依序完成：
+1. 確認這是一個可執行的既有作品；若不像現有專案，請停止並提醒我選對資料夾。
+2. 使用這個專案原本的方式啟動。若缺少必要套件，先用白話說明，再安全地補齊。
+3. 若原本的啟動位置無法使用，請自動改用可用位置，不要叫我處理技術細節。
+4. 把可以點開的本機網址告訴我，讓我實際確認畫面與原有功能。
+
+不要部署到網路、不要重做畫面、不要更換資料來源，也不要先修改程式功能。
+作品能正常開啟後就停下來，整理你做了什麼，等我回答「可以」再進下一段。</pre>
+      </div>
+    </section>
+
+    <section class="step">
+      <div class="stephead"><span class="stepno">2</span><div><h2>用 Git 留下改造前存檔點</h2><p>作品能開之後先存一份。這一步只在自己的電腦，不會自動上傳 GitHub。</p></div></div>
+      <div class="cmd">
+        <div class="top"><span class="t">第 2 段任務說明</span><button class="copy" onclick="cp(this,'p2')">複製</button></div>
+        <pre id="p2">現在作品已能正常開啟。請先用 Git 留下一個「改造前存檔點」，暫時不要接資料庫。
+
+請依序完成：
+1. 檢查目前是否已有 Git 修改紀錄；沒有才建立。
+2. 檢查 .gitignore，排除 .env、API key、密碼、Token、憑證、真實資料與大型產生檔。
+3. 用白話告訴我哪些檔案會保存、哪些會排除；若發現疑似秘密或公司資料，先停止並提醒我。
+4. 確認安全後，建立一次本機版本，修改紀錄標題寫「改接資料庫前」。
+5. 告訴我：Git 像存檔，之後可以用它比較 AI 修改前後的差異。
+
+不要建立公開 GitHub 專案、不要上傳，也不要覆蓋原本的遠端內容。
+完成後停下來回報，等我回答「可以」再進下一段。</pre>
+      </div>
+    </section>
+
+    <section class="step">
+      <div class="stephead"><span class="stepno">3</span><div><h2>只分析 Sheet 怎麼搬，先不要改</h2><p>Claude 先讀講師範本與你的作品，說明計畫；你確認正確才往下。</p></div></div>
+      <div class="cmd">
+        <div class="top"><span class="t">第 3 段任務說明</span><button class="copy" onclick="cp(this,'p3')">複製</button></div>
+        <pre id="p3">請閱讀講師指定的 Workshop 6 GitHub 專案：
 https://github.com/billychu-mectecs/workshop6-sheet-to-db
 
-我目前開啟的是上週完成的作品，這才是修改目標。請先確認目前位置與主要檔案；若不像現有專案，請停止並提醒我選對資料夾。
+我目前開啟的資料夾是上週完成的作品，這才是修改目標。請把講師的 GitHub 專案下載到另一個暫存參考位置，讀完 README.md、CLAUDE.md、docs/connection-flow.md 與 prompts/04-migrate-and-verify.md。
 
-請把課堂 Repo 下載到另一個暫存位置，讀完 README.md、CLAUDE.md、prompts/sheet-to-db.md。不要執行課堂範例、不要覆蓋我的作品，也不要修改暫存 Repo。
+不要執行講師範例、不要用範例覆蓋我的作品，也不要修改暫存參考資料。先請 AI 檢查這個專案是否有可疑下載、外傳資料或索取帳密的行為。
 
-請找出我的作品讀寫 Google 試算表的位置，並用繁體中文告訴我：
-1. 我的作品與暫存 Repo 分別在哪裡
-2. 課堂 Repo 要我完成哪些步驟
-3. 目前資料如何讀寫 Google 試算表
-4. 搬到資料庫前，需要確認哪些欄位與工作規則
+依照課堂規則，只確認本機的安全資料庫連線是否完整，不要顯示任何實際值，也不要詢問我的部門、工號、主機、帳號、密碼或連線字串。
 
-先不要修改，等我確認後再開始。</pre>
-    </div>
+先不要修改。請用繁體中文與白話告訴我：
+1. 我的作品與暫存參考專案分別在哪裡。
+2. 我的作品目前怎麼讀寫 Google Sheet。
+3. 哪些資料會持續累積、需要多人使用，因此準備搬到資料庫。
+4. 哪些既有畫面、文字與功能會保留。
+5. 搬移前需要確認的欄位、必填、重複與工作規則。
+6. 會如何少量測試，以及完成後如何驗證。
 
-    <div class="co brown">
-      <span class="ic">2️⃣</span>
-      <div><b>第二階段 · 我確認後才搬</b> —— 我確認後，把下面整段複製，貼給 Claude Code：</div>
-    </div>
+一次只問我一個必要問題。提出完整計畫後停下來，等我回答「可以」再進下一段。</pre>
+      </div>
+    </section>
 
-    <div class="cmd">
-      <div class="top"><span class="t">第二階段提示詞</span><button class="copy" onclick="cp(this,'p2')">複製</button></div>
-      <pre id="p2">開始前先確認 DB helper 已安裝且設定完整；只回報「完整／不完整」，不要顯示任何值。不要詢問部門、工號、主機、帳號、密碼或連線字串。
+    <section class="step">
+      <div class="stephead"><span class="stepno">4</span><div><h2>搬移、驗證，再看 AI 改了什麼</h2><p>先搬少量資料並停下；你確認後，才完成搬移與第二次 Git 存檔。</p></div></div>
+      <div class="cmd">
+        <div class="top"><span class="t">第 4 段任務說明</span><button class="copy" onclick="cp(this,'p4')">複製</button></div>
+        <pre id="p4">我已確認搬移計畫。請依 README.md、CLAUDE.md 與 docs/connection-flow.md 開始執行。
 
-資料庫只能使用 helper 提供的 SQL Login、MEDTECS_DB_DATABASE 與 MEDTECS_DB_SCHEMA；若設定或權限不符，請停止並請講師協助。
+請依序完成：
+1. 保留原始 Google Sheet 與現有畫面，不直接刪除或覆蓋。
+2. 所有資料庫操作都使用已安裝的安全連線；不要詢問或顯示帳密，也不要寫入 .env、程式、Git 或 log。
+3. 只操作安全連線核發給我的個人練習資料區；範圍不明或權限不符就停止並請講師協助。
+4. 建立可重複執行的資料庫改造紀錄與白話資料字典。
+5. 先用少量假資料測試，回報成功、重複與失敗筆數，然後停下來等我確認。
 
-我確認後，請依序執行：
-1. 保留原始 Google 試算表，不直接刪除或修改
-2. 用白話列出欄位、必填、重複與其他工作規則
-3. 透過 DB helper 連線，不顯示帳密
-4. 先搬少量資料，回報成功、重複與失敗筆數
-5. 我確認後才搬完整資料並修改作品
-6. 重開作品，測試新增、修改、查詢與原有功能
-7. 整理修改內容、資料核對與測試結果
+我確認少量測試後，再繼續：
+6. 搬入完整練習資料，不製造重複紀錄。
+7. 讓我實際測試新增訂單、售完阻擋、取消訂單，以及重開作品後資料仍存在。
+8. 核對搬移前後筆數、重複筆數、失敗筆數與主要工作規則。
+9. 使用 Git 比較「改造前存檔點」與現在，白話說明 AI 改了哪些檔案與功能。
+10. 再掃描一次秘密與真實資料；確認安全且測試通過後，建立「完成資料庫改接」的本機版本。
 
-大量修改、刪除資料或公開內容前，一定先問我。</pre>
-    </div>
+大量修改、刪除、清空資料或公開上傳前，一定先問我。未經我確認，不要上傳 GitHub。
+完成後用「改了什麼、怎麼測、結果如何、還需要誰協助」四點回報。</pre>
+      </div>
+    </section>
 
     <div class="co warn">
-      <span class="ic">🔒</span>
-      <div><b>資料庫存取檔（install-db-access.bat）請在會前會就裝好 → 見 1-7</b>。每人一支、連公司內部資料庫，由 4A 在公司內部資料夾發放。<b>不放這頁、不放裝機精靈、不放公開網路</b>（內網基建，資安）。上課當天才發密碼。</div>
+      <span class="plain">DB</span>
+      <div><b>個人資料庫連線應在會前會完成安裝。</b> 你不需要輸入帳號、密碼或工號。若 Claude 回報連線不完整、範圍不明或權限不符，先停下來請講師協助，不要自己猜設定。</div>
     </div>
 
   </div>
