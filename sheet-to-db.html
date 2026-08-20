@@ -27,6 +27,14 @@
   .co b{color:var(--ink)}
   .co a{color:var(--accent);font-family:var(--mono);font-size:.9em;word-break:break-all}
 
+  .downloads{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin:0 0 1.1rem}
+  .download-btn{display:flex;align-items:center;justify-content:space-between;gap:.8rem;min-height:64px;padding:.8rem 1rem;border:1px solid var(--accent);border-radius:10px;background:var(--paper);color:var(--ink);text-decoration:none;font-weight:700}
+  .download-btn:hover{background:var(--good-bg)}
+  .download-btn:focus-visible{outline:3px solid var(--accent2);outline-offset:2px}
+  .download-btn small{display:block;color:var(--soft);font-size:.78rem;font-weight:500}
+  .file-type{flex:0 0 auto;border-radius:6px;background:var(--accent);color:#fff;padding:.25rem .45rem;font-family:var(--mono);font-size:.72rem}
+  @media (max-width:620px){.downloads{grid-template-columns:1fr}}
+
   .cmd{background:var(--paste);border-radius:12px;overflow:hidden;margin:.2rem 0 1.4rem}
   .cmd .top{display:flex;align-items:center;justify-content:space-between;padding:.5rem .8rem;border-bottom:1px solid rgba(255,255,255,.08)}
   .cmd .top .t{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#b9a986;font-weight:700}
@@ -46,6 +54,17 @@
     <div class="co brown">
       <span class="ic">🛠️</span>
       <div><b>動手題:</b> 把你上週用 Google Sheet 做的東西，搬進真正的資料庫——全程有安全步驟（先分析別亂改 → 先搬少量回報筆數 → 動大改前先問）。這正好用到 Hailey 的「交辦清單」：放手前先講清楚、停止點放在不可逆動作前。</div>
+    </div>
+
+    <div class="downloads" aria-label="課堂練習檔案">
+      <a class="download-btn" href="downloads/order-demo-3.rar" download>
+        <span>下載上週作品<small>飲料訂購系統練習檔</small></span>
+        <span class="file-type">RAR</span>
+      </a>
+      <a class="download-btn" href="downloads/order-demo-3_交接手冊.md" download>
+        <span>下載交接手冊<small>零基礎安裝與操作說明</small></span>
+        <span class="file-type">MD</span>
+      </a>
     </div>
 
     <div class="co gray">
