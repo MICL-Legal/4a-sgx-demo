@@ -53,6 +53,9 @@
   .quick-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin:.9rem 0 1rem}
   .model-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
   .model-steps .quick-step:first-child{grid-column:1 / -1}
+  .command-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .command-steps .quick-step{border-top-color:var(--good)}
+  .command-steps code{display:block;color:var(--accent);font-family:var(--mono);font-size:1.15rem;font-weight:800;margin-bottom:.25rem}
   .quick-step{padding:.85rem .9rem;border-top:4px solid var(--accent);background:var(--paper)}
   .quick-step b{display:block;margin-bottom:.2rem}
   .quick-step span{color:var(--ink);font-size:.9rem}
@@ -124,12 +127,19 @@
           <figcaption>按 <b>Shift + Tab</b> 切換模式。Manual 是手動確認；借用陌生 GitHub 專案時先用規劃模式，確認計畫後再切到接受修改。</figcaption>
         </figure>
 
-        <figure class="shot">
-          <a href="assets/workshop6/claude-commands-2.1.172.png" target="_blank" rel="noopener">
-            <img src="assets/workshop6/claude-commands-2.1.172.png" alt="Claude Code usage、resume 與 permissions 三個指令的教學圖">
-          </a>
-          <figcaption><b>/usage</b> 看用量、<b>/resume</b> 回到之前的對話、<b>/permissions</b> 查看允許與禁止的動作。</figcaption>
-        </figure>
+        <div class="quick-steps command-steps" aria-label="Claude Code 兩個常用指令">
+          <div class="quick-step">
+            <code>/usage</code>
+            <b>查看本次工作用了多少</b>
+            <span>像查看這一回合用了多少金幣。畫面顯示的是估算，不是部門剩餘額度。</span>
+          </div>
+          <div class="quick-step">
+            <code>/resume</code>
+            <b>回到之前的對話繼續做</b>
+            <span>像讀取之前的存檔。找不到時，先確認是否開在同一個作品資料夾。</span>
+          </div>
+        </div>
+        <p class="source-note">新手先記住這兩個就好；其他指令需要時輸入「/」再找。</p>
       </div>
     </section>
 
@@ -140,17 +150,26 @@
 
     <div class="cmd">
       <div class="top"><span class="t">第一階段提示詞</span><button class="copy" onclick="cp(this,'p1')">複製</button></div>
-      <pre id="p1">我現在開啟的是上週完成的作品。請先不要改功能，也不要接資料庫。
+      <pre id="p1">我要接續上週的「飲料訂購系統」。請先不要修改功能、不要接資料庫。
 
-請讀取目前資料夾的 README（作品說明）、啟動檔（讓作品開始運作的檔案）與主要程式，依序完成：
-1. 確認這是一個可執行的既有作品；若不像現有專案，請停止並提醒我選對資料夾。
-2. 使用這個專案原本的方式啟動。若缺少必要套件，先用白話說明，再安全地補齊。
-3. 若原本的啟動位置無法使用，請自動改用可用位置，不要叫我處理技術細節。
-4. 把只在這台電腦開啟的網址（本機網址）告訴我。
-5. 請我親自使用假姓名新增一筆飲料訂單，確認庫存減少；再取消這筆訂單，確認庫存恢復。一次告訴我一個要點的按鈕，不要代替我操作。
+正式課堂位置：
+C:\AI-Workspace\Claude\Project\005-Demo
 
-不要部署到網路、不要重做畫面、不要更換資料來源，也不要先修改程式功能。
-畫面能開啟，而且新增與取消測試都成功後就停下來，整理你做了什麼，等我回答「可以」再進下一段。</pre>
+請先確認作品位置：
+1. 如果正式位置已有 README、啟動檔與主要程式，直接使用，不要覆蓋。
+2. 如果不存在、是空的或不完整，只到「下載」資料夾尋找 order-demo-3 資料夾、order-demo-3.rar 與 order-demo-3_交接手冊.md。
+3. 將資料夾複製或將 RAR 安全解壓縮到正式位置。若多出一層 order-demo-3，整理成 README、啟動檔與主要程式直接位於 005-Demo；交接手冊也放入。
+4. 不刪除下載區原始檔，也不覆蓋完整作品。若有多份或同名檔，列出位置並問我一次。
+5. 如果仍找不到，停止並請我重新下載，不要重做系統。
+
+確認目前操作的是正式位置後，讀取 README、交接手冊、啟動檔與主要程式：
+1. 用原本方式啟動；缺少套件時先白話說明，再安全補齊。
+2. 若原本的啟動位置無法使用，自動選擇可用位置，不要叫我處理技術細節。
+3. 告訴我這台電腦可以開啟的網址。
+4. 一次指示一個按鈕，請我用假姓名新增一筆飲料訂單，確認庫存減少；再取消，確認庫存恢復。不要代替我操作。
+
+不要部署、重做畫面、更換資料來源或先修改功能。
+兩項測試都成功後停下來，整理你做了什麼，等我回答「可以」。</pre>
     </div>
 
     <div class="co brown">
