@@ -3,13 +3,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root{
-    --paper:#f5f0e6;--card:#efe7d6;--card2:#e4dccb;--ink:#2b2620;--soft:#6d6456;--faint:#93897a;--line:#ddd1bc;
+    --paper:#f5f0e6;--card:#efe7d6;--card2:#e4dccb;--ink:#211d18;--soft:#4e473d;--faint:#665e52;--line:#cdbfa8;
     --accent:#9a6634;--accent2:#b98a52;--good:#5a7d4a;--good-bg:#e4ecdc;--paste:#2b2620;--paste-ink:#f0e6d4;
     --warn:#8a6d1f;--warn-bg:#f3ead0;--gray-bg:#e8e4dc;
     --sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif;
     --serif:Georgia,"Songti TC","Noto Serif CJK TC",serif;--mono:ui-monospace,"SF Mono",Menlo,monospace;
   }
-  @media (prefers-color-scheme:dark){:root{--paper:#201c17;--card:#2a2419;--card2:#332b1e;--ink:#ece3d3;--soft:#b3a892;--faint:#8c8271;--line:#3a3226;--accent:#d09a5f;--accent2:#b6844f;--good:#8fb079;--good-bg:#2b3324;--paste:#15120d;--paste-ink:#ece3d3;--warn:#d8b45c;--warn-bg:#38301c;--gray-bg:#2f2a22;}}
+  @media (prefers-color-scheme:dark){:root{--paper:#201c17;--card:#2a2419;--card2:#332b1e;--ink:#f5eee3;--soft:#ddd2c0;--faint:#c2b6a2;--line:#5a4d3b;--accent:#e2a968;--accent2:#d3a061;--good:#a6c88d;--good-bg:#2b3825;--paste:#11100d;--paste-ink:#f5eee3;--warn:#edc86d;--warn-bg:#3e351f;--gray-bg:#332e26;}}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;padding:clamp(.8rem,3vw,2rem)}
   .wrap{max-width:860px;margin:0 auto}
@@ -40,13 +40,37 @@
   .cmd .top .t{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#b9a986;font-weight:700}
   .cmd .copy{font-family:inherit;font-size:.8rem;font-weight:700;background:var(--accent);color:#fff;border:0;border-radius:7px;padding:.35rem .8rem;cursor:pointer}
   .cmd pre{margin:0;padding:.9rem 1rem;font-family:var(--mono);font-size:.82rem;line-height:1.75;color:var(--paste-ink);white-space:pre-wrap;word-break:break-word}
+  .lesson{margin:1.6rem 0 1.9rem;padding-top:1.4rem;border-top:1px solid var(--line)}
+  .lesson:first-of-type{margin-top:.5rem}
+  .lesson h2{font-family:var(--serif);font-size:clamp(1.3rem,3.8vw,1.75rem);line-height:1.4;margin-bottom:.45rem}
+  .lesson-intro{color:var(--ink);margin-bottom:1rem}
+  .shot-grid{display:grid;grid-template-columns:1fr;gap:1rem}
+  .shot{margin:0}
+  .shot a{display:block;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#fff}
+  .shot img{display:block;width:100%;height:auto}
+  .shot figcaption{color:var(--ink);font-size:.9rem;font-weight:500;margin-top:.45rem}
+  .shot figcaption b{color:var(--accent)}
+  .quick-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin:.9rem 0 1rem}
+  .model-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .model-steps .quick-step:first-child{grid-column:1 / -1}
+  .quick-step{padding:.85rem .9rem;border-top:4px solid var(--accent);background:var(--paper)}
+  .quick-step b{display:block;margin-bottom:.2rem}
+  .quick-step span{color:var(--ink);font-size:.9rem}
+  .action-link{display:inline-flex;align-items:center;gap:.4rem;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;border-radius:8px;padding:.65rem .9rem;margin:.2rem 0 1rem}
+  .action-link:hover{background:var(--good)}
+  .source-note{font-size:.8rem;color:var(--soft);margin-top:.7rem}
+  .source-note a{color:var(--accent)}
+  .github-shots{display:grid;grid-template-columns:1fr;gap:1rem}
+  .github-shots .shot a{height:auto;min-height:0;display:flex;align-items:center;justify-content:center;padding:.55rem}
+  .github-shots .shot img{width:100%;max-height:360px;object-fit:contain}
+  @media (max-width:680px){.quick-steps,.model-steps,.github-shots{grid-template-columns:1fr}}
   .foot{text-align:center;color:var(--faint);font-size:.78rem;margin-top:1.4rem}
 </style>
 <div class="wrap">
   <header>
     <p class="eyebrow">3 · Billy 場 · 借力／GitHub／雲端</p>
     <h1>3-4 · 實作：把你的 Google Sheet 搬進真正的資料庫</h1>
-    <p class="lede">兩個階段、兩段提示詞，照順序複製貼上就好。每段都內建安全停止點——先分析、先別改。</p>
+    <p class="lede">四個階段、四段提示詞，照順序複製貼上就好。每段都會停下來確認，再進到下一段。</p>
   </header>
 
   <div class="panel">
@@ -71,6 +95,43 @@
       <span class="ic">🔗</span>
       <div><b>Billy 的專案（站在巨人肩膀上）:</b> 下載這個 repo，先讀完 README ＋ 任務說明，再照著做 → <a href="https://github.com/billychu-mectecs/workshop6-sheet-to-db" target="_blank" rel="noopener">github.com/billychu-mectecs/workshop6-sheet-to-db</a></div>
     </div>
+
+    <section class="lesson" aria-labelledby="claude-basics">
+      <h2 id="claude-basics">開始前：先認識 Claude 的模型與審核模式</h2>
+      <p class="lesson-intro">模型決定 AI 用哪一種思考方式；審核模式決定它動手前要不要先問你。兩件事不要混在一起。</p>
+
+      <div class="shot-grid">
+        <figure class="shot">
+          <a href="assets/workshop6/claude-model-2.1.172.png" target="_blank" rel="noopener">
+            <img src="assets/workshop6/claude-model-2.1.172.png" alt="Claude Code 輸入 model 指令後選擇模型的教學圖">
+          </a>
+          <figcaption>輸入 <b>/model</b>，用方向鍵選擇，再按 Enter。課堂不知道怎麼選時，保留 Default 即可。</figcaption>
+        </figure>
+
+        <div class="quick-steps model-steps" aria-label="Claude 模型差異">
+          <div class="quick-step"><b>Default</b><span>跟隨 Claude 建議的預設模型。目前教學畫面使用 Opus 4.8；不確定時就保留 Default。</span></div>
+          <div class="quick-step"><b>Opus</b><span>推理較深入，適合複雜工作、重要檢查與需要反覆思考的任務；通常較慢、用量較高。</span></div>
+          <div class="quick-step"><b>Fable</b><span>適合複雜、長時間或需要持續推進的大型任務。</span></div>
+          <div class="quick-step"><b>Sonnet</b><span>適合日常修改，在速度與處理能力之間取得平衡。</span></div>
+          <div class="quick-step"><b>Haiku</b><span>適合快速問答、簡單整理與較短的工作。</span></div>
+        </div>
+        <p class="source-note">每個帳號看到的模型可能不同。模型影響處理方式；審核模式才決定 Claude 動手前是否詢問。</p>
+
+        <figure class="shot">
+          <a href="assets/workshop6/claude-permission-modes-2.1.172.png" target="_blank" rel="noopener">
+            <img src="assets/workshop6/claude-permission-modes-2.1.172.png" alt="Claude Code 使用 Shift 加 Tab 切換 Manual、接受修改、規劃與自動模式的教學圖">
+          </a>
+          <figcaption>按 <b>Shift + Tab</b> 切換模式。Manual 是手動確認；借用陌生 GitHub 專案時先用規劃模式，確認計畫後再切到接受修改。</figcaption>
+        </figure>
+
+        <figure class="shot">
+          <a href="assets/workshop6/claude-commands-2.1.172.png" target="_blank" rel="noopener">
+            <img src="assets/workshop6/claude-commands-2.1.172.png" alt="Claude Code usage、resume 與 permissions 三個指令的教學圖">
+          </a>
+          <figcaption><b>/usage</b> 看用量、<b>/resume</b> 回到之前的對話、<b>/permissions</b> 查看允許與禁止的動作。</figcaption>
+        </figure>
+      </div>
+    </section>
 
     <div class="co brown">
       <span class="ic">1️⃣</span>
@@ -165,6 +226,48 @@ https://github.com/billychu-mectecs/workshop6-sheet-to-db
 大量修改、刪除、清空資料或公開上傳前，一定先問我。未經我確認，不要上傳 GitHub。
 完成後用「改了什麼、怎麼測、結果如何、還需要誰協助」四點回報。</pre>
     </div>
+
+    <section class="lesson" aria-labelledby="github-account">
+      <h2 id="github-account">完成後要上傳，先準備 GitHub 帳號</h2>
+      <p class="lesson-intro">GitHub 是放程式、說明與修改紀錄的地方。先建立帳號並驗證信箱；上傳公司作品時，一律先確認內容安全與公開範圍。</p>
+
+      <a class="action-link" href="https://github.com/signup" target="_blank" rel="noopener">前往 GitHub 註冊頁 ↗</a>
+
+      <div class="quick-steps" aria-label="GitHub 註冊步驟">
+        <div class="quick-step"><b>1　建立帳號</b><span>輸入信箱、帳號名稱與密碼；已有帳號可直接登入。</span></div>
+        <div class="quick-step"><b>2　驗證信箱</b><span>到信箱完成驗證，否則可能無法建立專案。</span></div>
+        <div class="quick-step"><b>3　加上兩步驟驗證</b><span>多一層登入保護，避免帳號被盜用。</span></div>
+      </div>
+
+      <h2>建立第一個 Private 專案</h2>
+      <p class="lesson-intro">按右上角「＋」選 New repository，選擇擁有者並輸入名稱。Visibility 請先選 <b>Private</b>，再按 Create repository。</p>
+
+      <div class="github-shots">
+        <figure class="shot">
+          <a href="assets/workshop6/github-new-repository-official.png" target="_blank" rel="noopener">
+            <img src="assets/workshop6/github-new-repository-official.png" alt="GitHub 右上角加號選單中的 New repository">
+          </a>
+          <figcaption>1. 按「＋」，選 New repository。</figcaption>
+        </figure>
+        <figure class="shot">
+          <a href="assets/workshop6/github-owner-official.png" target="_blank" rel="noopener">
+            <img src="assets/workshop6/github-owner-official.png" alt="GitHub 建立專案時選擇 Owner 的畫面">
+          </a>
+          <figcaption>2. 選擇專案要放在哪個帳號下。</figcaption>
+        </figure>
+        <figure class="shot">
+          <a href="assets/workshop6/github-repository-name-official.png" target="_blank" rel="noopener">
+            <img src="assets/workshop6/github-repository-name-official.png" alt="GitHub 建立專案時輸入 Repository name 的畫面">
+          </a>
+          <figcaption>3. 輸入專案名稱，Visibility 選 Private。</figcaption>
+        </figure>
+      </div>
+
+      <div class="co warn" style="margin-top:1rem">
+        <span class="ic">🔒</span>
+        <div><b>上傳前先檢查：</b>不要放入 .env、API key、密碼、Token、公司機密、個資或真實營運資料。Private 不是免檢查，仍要先讓 AI 掃描，再由人確認。</div>
+      </div>
+    </section>
 
     <div class="co warn">
       <span class="ic">🔒</span>
