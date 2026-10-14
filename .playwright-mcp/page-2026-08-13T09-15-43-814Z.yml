@@ -1,0 +1,82 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - paragraph [ref=e4]: 1 繚 ����� 繚 銝𡃏玨�滨� 10 ���
+    - heading "4A 鋆脲�蝎暸�" [level=1] [ref=e5]
+    - paragraph [ref=e6]: 銝�甇乩�甇亥��堒�嚗峕��餉�皞硋�憟賬��㟲�卝�峕��齿��滚停�舫�� 7 甇伐�1-1 嚚� 1-7嚗㚁�瘥譍�甇亙蘨�帋�隞嗡�嚗��摰峕��䔶�銝�甇乓�𨧀�婙�𥪯���蕙頝胯��
+    - generic [ref=e8]: 1-1 繚 蝚� 1 甇� / �� 7 甇�
+    - generic [ref=e9]:
+      - generic [ref=e10]: 雿删��餉��荔�
+      - generic [ref=e11]:
+        - button "Mac" [ref=e12] [cursor=pointer]
+        - button "Windows" [ref=e13] [cursor=pointer]
+        - button "銝��萄�鋆�" [ref=e14] [cursor=pointer]
+  - generic [ref=e15]:
+    - generic [ref=e16]:
+      - generic [ref=e17] [cursor=pointer]:
+        - generic [ref=e18]: "1"
+        - generic [ref=e19]:
+          - generic [ref=e20]: 1-1��鞎潔� API key
+          - generic [ref=e21]: 霈� AI �閗絲靘���啣�嚗�極雿𨅯��湔𦻖�潛策雿�
+      - generic [ref=e22] [cursor=pointer]:
+        - generic [ref=e23]: "2"
+        - generic [ref=e24]:
+          - generic [ref=e25]: 1-2��鋆苷��� AI 銝餉�
+          - generic [ref=e26]: Git �� PowerShell �� 鋆� Claude Code �� 閮剖末 PATH �� 撽𡑒�
+      - generic [ref=e27] [cursor=pointer]:
+        - generic [ref=e28]: "3"
+        - generic [ref=e29]:
+          - generic [ref=e30]: 1-3��鋆嘥𧑐�箏極��
+          - generic [ref=e31]: git��Python��Node嚗諹� AI �賢��游�����亙極��
+      - generic [ref=e32] [cursor=pointer]:
+        - generic [ref=e33]: "4"
+        - generic [ref=e34]:
+          - generic [ref=e35]: 1-4��鋆� 2 �见極雿𨅯� skill
+          - generic [ref=e36]: �拙撐�寞��∴�霈� AI �批極雿𨅯���䲮瘜訫鼠雿�
+      - generic [ref=e37] [cursor=pointer]:
+        - generic [ref=e38]: "5"
+        - generic [ref=e39]:
+          - generic [ref=e40]: 1-5���� Google Sheets
+          - generic [ref=e41]: 霈� Claude Code �質�撖思��� Google 閰衣�銵剁�憌脫�摨� demo �剁�
+      - generic [ref=e42] [cursor=pointer]:
+        - generic [ref=e43]: "6"
+        - generic [ref=e44]:
+          - generic [ref=e45]: 1-6���砍虬撣唾�嚗�歇撟思��见末嚗�
+          - generic [ref=e46]: Zapier��Make �砍虬撌脤��𡄯�銝滨鍂�芸楛颲�
+      - generic [ref=e47] [cursor=pointer]:
+        - generic [ref=e48]: "7"
+        - generic [ref=e49]:
+          - generic [ref=e50]: 1-7��鋆肽��坔澈摮睃�瑼�
+          - generic [ref=e51]: Billy �渲��剁�頛詨�撌亥��蹂��芸楛���銝������ Windows嚗�
+    - generic [ref=e52]:
+      - generic [ref=e53]: 1-1��繚��蝚� 1 甇� / �� 7 甇�
+      - heading "鞎潔� API key" [level=2] [ref=e54]
+      - generic [ref=e55]: �蹱糓霈� AI �閗絲靘���屸麯�踺�溻��撌乩��羓凒�亦䔄銝��𠺪��砍虬���key 蝯虫��婙�𥪯�銝滨鍂�� Claude 撣唾�����刻��晞����刻�������� key �曉末嚗��嗘�甇伐�嚗𣬚�銝贝�憟賣� claude 撠梁凒�亥��剁�銝齿��思��餃�隞颱�撣唾���
+      - paragraph [ref=e56]: 蝚� 1 甇乓���𠹺������ API key 鞎澆銁�坔�𧢲�雿㵪�
+      - textbox "鞎潔� sk-ant-�� �钅�����港葡" [ref=e57] [cursor=pointer]
+      - paragraph [ref=e58]: 蝚� 2 甇乓��雿删�摰峕㟲��誘��䌊�閖𩑈�箔� �婙�� �剹�諹�鋆賣㟲銵䎚�㵪�
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - generic [ref=e61]: Windows ���摮䀹�瘞訾�閮剖�嚗�
+          - button "銴�ˊ�渲�" [ref=e62] [cursor=pointer]
+        - generic [ref=e63]: "[System.Environment]::SetEnvironmentVariable('ANTHROPIC_API_KEY','鞎潔�雿删�KEY','User')"
+      - generic [ref=e64]:
+        - generic [ref=e65]: �� �曉�
+        - generic [ref=e66]: 雿㰘票�� key �芰��其��芸楛�坔蝱���讛汗�刻ㄐ嚗䔶�����喳�隞颱��唳䲮�婙�娪�䠷�瘝埝�隡箸��具���閮㗛�嚗偦��匧���停瘝雴���
+      - paragraph [ref=e67]:
+        - text: 蝚� 3 甇乓���� Win �� �� 頛詨� powershell �� �� Enter��閬𣇉�撌阡��钅�閬�� PS �拙�见�瘥�嚗�
+        - code [ref=e68]: PS C:\Users\雿删��滚�>
+        - text: 嚗争�婙�娍��� PS 撠望糓�钅𥲤閬𣇉�鈭���蝚� 4 甇乓��鞎潔��𥕦�銴�ˊ���銝��渲���� Enter���恍𢒰銝齿��劐遙雿訫��㚁��蹱糓甇�虜����
+      - generic [ref=e69]:
+        - generic [ref=e70]: �𩤃� 鞎潔��滨Ⅱ隤�
+        - generic [ref=e71]:
+          - text: �煾麯�滚�瘝埝�憭𡁻�蝛箇蒾嚗峕�隞�
+          - generic [ref=e72]:
+            - text: �拚���鱓撘閗�
+            - code [ref=e73]: "'"
+            - text: �質�靽萘�
+          - text: ��身摰朞�蝑� 1-2 ���屸��㕑�蝒烾��卝�齿�������婙�娪�蹱糓甇�虜���1-2 ��葆雿惩���
+      - generic [ref=e74]:
+        - generic [ref=e75]: �� �𣂼��琿�蹱見
+        - generic [ref=e76]: 鞎潔��� Enter 敺��恍𢒰摰��瘝埝��齿����瘝埝�蝝��嚗嗪�蹱� key 撌脩�摮䀹��峕偶銋�身摰𠾼�溻��摰厰�撠望糓�𣂼�����³��亥��� claude�婙�𥪯�銝�甇伐�1-2嚗㗇���� Claude Code 鋆肽絲靘���
+      - button "�� �穃�憟賭�嚗䔶�銝�甇�" [ref=e78] [cursor=pointer]
+  - paragraph [ref=e79]: 4A AI 撌乩��� 繚 ������璈毺移����|��銝𡃏玨蝯曹��� Claude Code嚗𡱰odex嚗苐ntigravity �箔�隤脰䌊��
