@@ -1,0 +1,35 @@
+- generic [ref=f1e2]:
+  - banner [ref=f1e3]:
+    - paragraph [ref=f1e4]: 3 · Billy 場 · 借力／GitHub／雲端
+    - heading "3-4 · 實作：把你的 Google Sheet 搬進真正的資料庫" [level=1] [ref=f1e5]
+    - paragraph [ref=f1e6]: 兩個階段、兩段提示詞，照順序複製貼上就好。每段都內建安全停止點——先分析、先別改。
+  - generic [ref=f1e7]:
+    - generic [ref=f1e8]:
+      - generic [ref=f1e9]: 🛠️
+      - generic [ref=f1e10]: "動手題: 把你上週用 Google Sheet 做的東西，搬進真正的資料庫——全程有安全步驟（先分析別亂改 → 先搬少量回報筆數 → 動大改前先問）。這正好用到 Hailey 的「交辦清單」：放手前先講清楚、停止點放在不可逆動作前。"
+    - generic [ref=f1e11]:
+      - generic [ref=f1e12]: 🔗
+      - generic [ref=f1e13]:
+        - text: "Billy 的專案（站在巨人肩膀上）: 下載這個 repo，先讀完 README ＋ 任務說明，再照著做 →"
+        - link "github.com/billychu-mectecs/workshop6-sheet-to-db" [ref=f1e14] [cursor=pointer]:
+          - /url: https://github.com/billychu-mectecs/workshop6-sheet-to-db
+    - generic [ref=f1e15]:
+      - generic [ref=f1e16]: 1️⃣
+      - generic [ref=f1e17]: 第一階段 · 先分析、先別改 —— 把下面整段複製，貼給 Claude Code：
+    - generic [ref=f1e18]:
+      - generic [ref=f1e19]:
+        - generic [ref=f1e20]: 第一階段提示詞
+        - button "複製" [ref=f1e21] [cursor=pointer]
+      - generic [ref=f1e22]: 請閱讀 Workshop 6 GitHub 專案： https://github.com/billychu-mectecs/workshop6-sheet-to-db 我目前開啟的是上週完成的作品，這才是修改目標。請先確認目前位置與主要檔案；若不像現有專案，請停止並提醒我選對資料夾。 請把課堂 Repo 下載到另一個暫存位置，讀完 README.md、CLAUDE.md、prompts/sheet-to-db.md。不要執行課堂範例、不要覆蓋我的作品，也不要修改暫存 Repo。 請找出我的作品讀寫 Google 試算表的位置，並用繁體中文告訴我： 1. 我的作品與暫存 Repo 分別在哪裡 2. 課堂 Repo 要我完成哪些步驟 3. 目前資料如何讀寫 Google 試算表 4. 搬到資料庫前，需要確認哪些欄位與工作規則 先不要修改，等我確認後再開始。
+    - generic [ref=f1e23]:
+      - generic [ref=f1e24]: 2️⃣
+      - generic [ref=f1e25]: 第二階段 · 我確認後才搬 —— 我確認後，把下面整段複製，貼給 Claude Code：
+    - generic [ref=f1e26]:
+      - generic [ref=f1e27]:
+        - generic [ref=f1e28]: 第二階段提示詞
+        - button "複製" [ref=f1e29] [cursor=pointer]
+      - generic [ref=f1e30]: 開始前先確認 DB helper 已安裝且設定完整；只回報「完整／不完整」，不要顯示任何值。不要詢問部門、工號、主機、帳號、密碼或連線字串。 資料庫只能使用 helper 提供的 SQL Login、MEDTECS_DB_DATABASE 與 MEDTECS_DB_SCHEMA；若設定或權限不符，請停止並請講師協助。 我確認後，請依序執行： 1. 保留原始 Google 試算表，不直接刪除或修改 2. 用白話列出欄位、必填、重複與其他工作規則 3. 透過 DB helper 連線，不顯示帳密 4. 先搬少量資料，回報成功、重複與失敗筆數 5. 我確認後才搬完整資料並修改作品 6. 重開作品，測試新增、修改、查詢與原有功能 7. 整理修改內容、資料核對與測試結果 大量修改、刪除資料或公開內容前，一定先問我。
+    - generic [ref=f1e31]:
+      - generic [ref=f1e32]: 🔒
+      - generic [ref=f1e33]: 資料庫存取檔（install-db-access.bat）請在會前會就裝好 → 見 1-7。每人一支、連公司內部資料庫，由 4A 在公司內部資料夾發放。不放這頁、不放裝機精靈、不放公開網路（內網基建，資安）。上課當天才發密碼。
+  - paragraph [ref=f1e34]: 4A AI 工作坊 · 第三堂 Billy 場 | 3-4 實作
