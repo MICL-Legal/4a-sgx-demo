@@ -1,0 +1,35 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - paragraph [ref=e4]: 3 繚 Billy �� 繚 �笔�嚗𣕚itHub嚗誯𤩅蝡�
+    - heading "3-4 繚 撖虫�嚗𡁏�雿删� Google Sheet �祇�脩�甇��鞈��摨�" [level=1] [ref=e5]
+    - paragraph [ref=e6]: �拙�钅�畾萸���畾菜�蝷箄�嚗𣬚����銴�ˊ鞎潔�撠勗末���畾菟��批遣摰匧��𨀣迫暺嫰�婙�𥪜��������交㺿��
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]: ��儭�
+      - generic [ref=e10]: "�閙�憿�: �𠹺�銝𢠃�梁鍂 Google Sheet �𡁶��梯正嚗峕𨯬�脩�甇��鞈��摨徉�婙�𥪜�蝔𧢲�摰匧�甇仿�嚗������乩��� �� ��𨯬撠煾��𧼮𥼚蝑�彍 �� �訫之�孵����嚗剹���蹱迤憟賜鍂�� Hailey ���䔶漱颲行��柴�㵪��暹��滚�雓𥟇�璆𠾼���甇ａ��曉銁銝滚虾���雿𨅯���"
+    - generic [ref=e11]:
+      - generic [ref=e12]: ��
+      - generic [ref=e13]:
+        - text: "Billy ���獢��蝡坔銁撌其犖�抵�銝𠺪�: 銝贝��坔�� repo嚗��霈�摰� README 嚗� 隞餃�隤芣�嚗���扯��� ��"
+        - link "github.com/billychu-mectecs/workshop6-sheet-to-db" [ref=e14] [cursor=pointer]:
+          - /url: https://github.com/billychu-mectecs/workshop6-sheet-to-db
+    - generic [ref=e15]:
+      - generic [ref=e16]: 1儭謿�
+      - generic [ref=e17]: 蝚砌��擧挾 繚 ����僐����交㺿 �婙�� �𠹺��Ｘ㟲畾菔�鋆踝�鞎潛策 Claude Code嚗�
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]: 蝚砌��擧挾�鞟內閰�
+        - button "銴�ˊ" [ref=e21] [cursor=pointer]
+      - generic [ref=e22]: 隢钅鰐霈� Workshop 6 GitHub 撠��嚗� https://github.com/billychu-mectecs/workshop6-sheet-to-db �𤑳𤌍�漤��毺��臭��勗��鞟�雿𨅯�嚗屸�蹱��臭耨�寧𤌍璅踺�����Ⅱ隤滨𤌍�滢�蝵株�銝餉�瑼娍�嚗𥡝𥅾銝滚��暹�撠��嚗諹��𨀣迫銝行��埝��詨�鞈��憭整�� 隢𧢲�隤脣� Repo 銝贝��啣𡖂銝��𧢲麱摮䀝�蝵殷�霈�摰� README.md��CLAUDE.md��prompts/sheet-to-db.md���閬�嘑銵諹玨���靘卝���閬���𧢲�������銋煺�閬�耨�寞麱摮� Repo�� 隢𧢲𪄳�箸�������撖� Google 閰衣�銵函�雿滨蔭嚗䔶蒂�函�擃𥪯葉���閮湔�嚗� 1. �𤑳�雿𨅯���麱摮� Repo ��³��典𪑛鋆� 2. 隤脣� Repo 閬��摰峕��芯�甇仿� 3. �桀�鞈��憒��霈�撖� Google 閰衣�銵� 4. �砍�鞈��摨怠�嚗屸�閬�Ⅱ隤滚𪑛鈭𥟇�雿滩�撌乩�閬誩� ���閬�耨�對�蝑㗇�蝣箄�敺���见���
+    - generic [ref=e23]:
+      - generic [ref=e24]: 2儭謿�
+      - generic [ref=e25]: 蝚砌��擧挾 繚 �𤑳Ⅱ隤滚��齿𨯬 �婙�� �𤑳Ⅱ隤滚�嚗峕�銝钅𢒰�湔挾銴�ˊ嚗諹票蝯� Claude Code嚗�
+    - generic [ref=e26]:
+      - generic [ref=e27]:
+        - generic [ref=e28]: 蝚砌��擧挾�鞟內閰�
+        - button "銴�ˊ" [ref=e29] [cursor=pointer]
+      - generic [ref=e30]: �见��滚�蝣箄� DB helper 撌脣�鋆苷�閮剖�摰峕㟲嚗𥕦蘨�𧼮𥼚����湛�銝滚��氬�㵪�銝滩�憿舐內隞颱��潦���閬�岷�誯�����極�麄��蜓璈麄��董�麄���蝣潭����摮𦯀葡�� 鞈��摨怠蘨�賭蝙�� helper �𣂷��� SQL Login��MEDTECS_DB_DATABASE �� MEDTECS_DB_SCHEMA嚗𥡝𥅾閮剖��𡝗��𣂷�蝚佗�隢见�甇Ｖ蒂隢贝�撣怠��押�� �𤑳Ⅱ隤滚�嚗諹�靘嘥��瑁�嚗� 1. 靽萘��笔� Google 閰衣�銵剁�銝滨凒�亙⏛�斗�靽格㺿 2. �函蒾閰勗��箸�雿溻���憛怒���銴���嗡�撌乩�閬誩� 3. �誯� DB helper ���嚗䔶�憿舐內撣喳� 4. ��𨯬撠煾�鞈��嚗���望��麄���銴��憭望�蝑�彍 5. �𤑳Ⅱ隤滚��齿𨯬摰峕㟲鞈��銝虫耨�嫣��� 6. �漤�雿𨅯�嚗峕葫閰行鰵憓𠺶��耨�嫘��䰻閰Ｚ�����蠘� 7. �渡�靽格㺿�批捆����蹱瓲撠滩�皜祈岫蝯鞉� 憭折�靽格㺿��⏛�方��蹱��祇��批捆�㵪�銝�摰𡁜��𤩺���
+    - generic [ref=e31]:
+      - generic [ref=e32]: ��
+      - generic [ref=e33]: 鞈��摨怠��𡝗�嚗ǎnstall-db-access.bat嚗㕑��冽��齿�撠梯�憟� �� 閬� 1-7���鈭箔��胯������詨��刻��坔澈嚗𣬚眏 4A �典��詨��刻��坔冗�潭𦆮��銝齿𦆮�䠷�����曇�璈毺移������曉��讠雯頝�嚗��蝬脣抅撱綽�鞈��嚗剹���隤脩訜憭拇��澆�蝣潦��
+  - paragraph [ref=e34]: 4A AI 撌乩��� 繚 蝚砌��� Billy �氬��|��3-4 撖虫�
